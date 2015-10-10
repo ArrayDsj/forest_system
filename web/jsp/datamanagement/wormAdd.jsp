@@ -56,7 +56,7 @@
                                     <label for = "sonImg" class = " control-label " >幼虫图片:</label >
                                 </div >
                                 <div class = "col-lg-4 col-sm-4" style = "float: left;margin-left: -50px" >
-                                    <input type = "file" class = "form-control" id = "sonImg" style = "display: none" >
+                                    <input type = "file" class = "form-control" id = "sonImg"  style="display: none">
                                     <input id = "inputSonImg" type = "text" class = "form-control" style = "width: 150px" />
                                 </div >
                                 <div class = "col-lg-4 col-sm-4" style = "float: left;margin-left: 10px" >

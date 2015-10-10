@@ -81,12 +81,12 @@
                     <!--第一行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <span class = "col-lg-4  control-label " >幼虫图片:</span >
-                        <img src = "image/yworm.jpg" />
+                        <img src = "../image/yworm.jpg" />
                     </div >
                     <!--第二行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <span class = "col-lg-4  control-label " >成虫图片:</span >
-                        <img src = "image/worm.jpg" />
+                        <img src = "../image/worm.jpg" />
                     </div >
                 </div >
             </div >

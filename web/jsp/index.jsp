@@ -43,34 +43,34 @@
                         <div class = "link" ><i class = "glyphicon glyphicon-briefcase" ></i >灾情防治<i
                                 class = "glyphicon glyphicon-chevron-down" style = "margin-left: 160px" ></i ></div >
                         <ul class = "submenu" >
-                            <li ><a href = "javascript:void(0)" onclick = "jump('#otherHtml','html/areaPanel.html')" >区域一览</a ></li >
-                            <li ><a href = "javascript:void(0)" onclick = "jump('#otherHtml','html/classPanel.html')" >小班管理</a ></li >
-                            <li ><a href = "javascript:void(0)" onclick = "jump('#otherHtml','html/thingPanel.html')" >事件记录</a ></li >
+                            <li ><a href = "#areaPanel" onclick = "jump('#otherHtml','disastercontrol/areaPanel.jsp')" >区域一览</a ></li >
+                            <li ><a href = "#classPanel" onclick = "jump('#otherHtml','disastercontrol/classPanel.jsp')" >小班管理</a ></li >
+                            <li ><a href = "#thingPanel" onclick = "jump('#otherHtml','disastercontrol/thingPanel.jsp')" >事件记录</a ></li >
                         </ul >
                     </li >
                     <li >
                         <div class = "link" ><i class = "glyphicon glyphicon-user" ></i >专家会商<i class = "glyphicon glyphicon-chevron-down" style = "margin-left: 160px" ></i ></div >
                         <ul class = "submenu" >
-                            <li ><a href = "javascript:void(0)" onclick = "jump('#otherHtml','html/proficientPanel.html')" >专家一览</a ></li >
-                            <li ><a href = "javascript:void(0)" onclick = "jump('#otherHtml','html/conferPanel.html')" >会商灾情</a ></li >
+                            <li ><a href = "#proficientPanel" onclick = "jump('#otherHtml','expertconsultation/proficientPanel.jsp')" >专家一览</a ></li >
+                            <li ><a href = "#conferPanel" onclick = "jump('#otherHtml','expertconsultation/conferPanel.jsp')" >会商灾情</a ></li >
                         </ul >
                     </li >
                     <li >
                         <div class = "link" ><i class = "glyphicon glyphicon-cutlery" ></i >药剂器械出库管理<i
                                 class = "glyphicon glyphicon-chevron-down" style = "margin-left: 160px" ></i ></div >
                         <ul class = "submenu" >
-                            <li ><a href = "javascript:void(0)" onclick = "jump('#otherHtml','html/drugPanel.html')" >药剂管理</a ></li >
-                            <li ><a href = "javascript:void(0)" onclick = "jump('#otherHtml','html/apparatusPanel.html')" >器械管理</a ></li >
-                            <li ><a href = "javascript:void(0)"
-                                    onclick = "jump('#otherHtml','html/outwarehousePanel.html')" >出库管理</a ></li >
+                            <li ><a href = "#drugPanel" onclick = "jump('#otherHtml','resourcemanagement/drugPanel.jsp')" >药剂管理</a ></li >
+                            <li ><a href = "#apparatusPanel" onclick = "jump('#otherHtml','resourcemanagement/apparatusPanel.jsp')" >器械管理</a ></li >
+                            <li ><a href = "#outwarehousePanel"
+                                    onclick = "jump('#otherHtml','resourcemanagement/outwarehousePanel.jsp')" >出库管理</a ></li >
                         </ul >
                     </li >
                     <li >
                         <div class = "link" ><i class = "glyphicon glyphicon-comment" ></i >系统信息<i
                                 class = "glyphicon glyphicon-chevron-down" style = "margin-left: 160px" ></i ></div >
                         <ul class = "submenu" >
-                            <li ><a href = "javascript:void(0)" onclick = "jump('#otherHtml','html/userPanel.html')" >用户信息</a ></li >
-                            <li ><a href = "javascript:void(0)" onclick = "jump('#otherHtml','html/logs.html')" >日志一览</a ></li >
+                            <li ><a href = "#userPanel" onclick = "jump('#otherHtml','systemmessage/userPanel.jsp')" >用户信息</a ></li >
+                            <li ><a href = "#logs" onclick = "jump('#otherHtml','systemmessage/logs.jsp')" >日志一览</a ></li >
                         </ul >
                     </li >
                 </ul >
