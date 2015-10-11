@@ -11,6 +11,7 @@
 <head >
     <meta charset = "UTF-8" >
     <title >事件记录</title >
+
     <style >
         #thingPanelDiv {
             /*圆角*/
@@ -48,7 +49,7 @@
                 </tr >
             </table >
 
-            <div style = "overflow-y: auto;height: 170px;" class = "row-fluid" id = "tableTD" >
+            <div id = "tableTD" class = "row-fluid" style = "overflow-y: auto;height: 208px;margin-top: -20px" >
                     <table class = "table table-striped table-bordered table-hover table-condensed" >
                     <tr >
                         <td class = "col-lg-2" >正西松毛虫事件</td >
@@ -88,11 +89,14 @@
         <div class = "row-fluid" >
             <div class = "span12" >
                 <div >
-                    <button id = "previousPage" class = "btn btn-sm" type = "button" style = "line-height:0px" >
-                        <span class = "glyphicon glyphicon-chevron-left" ></span >
-                    </button >
-                    <input id = "pageNum" type = "text" style = "width: 40px;height: 20px" />
-                    <label >/10</label >
+                    <div style = "float:left" >
+                        <button id = "previousPage" class = "btn btn-sm" type = "button" style = "line-height:0px" >
+                            <span class = "glyphicon glyphicon-chevron-left" ></span >
+                        </button >
+                    </div >
+                    <input id = "pageNum" type = "text" class = "form-control" style =
+                            "width: 45px;height: 20px;margin-left: 2px;margin-top: 2px;float:left" />
+                    <label id = "num" name = "num" style = "margin-left: 2px" >/10</label >
                     <button id = "go" class = "btn btn-sm" type = "button" style = "line-height:0px" >
                         <span class = "glyphicon glyphicon-step-forward" ></span >
                     </button >
@@ -109,7 +113,7 @@
                 <div class = "col-lg-3 col-sm-2 col-sm-offset-2" >
                     <button class = "btn" type = "button" onclick = "jump('#thingPanelDiv','disastercontrol/thingAdd.jsp')" >添加事件</button >
                 </div >
-                <div class = "col-lg-3 col-sm-2 col-sm-offset-2" >
+                <div class = "col-lg-3 col-sm-2 col-sm-offset-3 col-lg-offset-2" >
                     <button class = "btn" type = "button" onclick = "jump('#thingPanelDiv','disastercontrol/thingInfo.jsp')" >查看事件信息</button >
                 </div >
             </div >
@@ -125,85 +129,74 @@
         <!--查询-->
         <div class = "row-fluid" id = "rightBtns" style = "float: left; " >
             <!--xs自动 lg>=1200px sm<=768px offset列移动-->
-            <div class = "col-xs-3 col-lg-6 col-sm-6  col-sm-offset-4" style = "margin-top: -165px;margin-left: 440px" >
+            <div class = "col-xs-3 col-lg-6 col-sm-6  col-sm-offset-4" style = "margin-top: -175px;margin-left: 440px" >
                 <fieldset >
                     <legend >查询事件信息</legend >
-                    <div class = "row" >
+                    <div class = "row" style="margin-top: -15px;margin-left:10px">
                         <div class = "col-xs-10 col-sm-6 col-lg-6" >
                             <div class = "input-group" >
                                 <div class = "input-group-btn" >
-                                    <button id = "thingInfo" type = "button" class = "btn btn-default dropdown-toggle" data-toggle =
-                                            "dropdown" >事件名称<span class = "caret" ></span ><!--这个span的作用是提供一个下拉图标-->
+                                    <button name = "name" id = "selected" type = "button" class = "btn btn-default dropdown-toggle"
+                                            data-toggle = "dropdown" >事件名称<span >&nbsp;</span ><span class = "caret" ></span >
                                     </button >
-                                    <ul id = "ul" class = "dropdown-menu" >
-                                        <li ><a href = "javascript:void(0)" >灾情状态</a ></li >
-                                        <li ><a href = "javascript:void(0)" >发生位置</a ></li >
-                                        <li ><a href = "javascript:void(0)" >防治方案</a ></li >
-
-                                    </ul >
+                                        <ul id = "ul" class = "dropdown-menu" >
+                                            <li ><a id = 'li1' name = "state" href = "#"
+                                                    onclick = "return querySelect(this,'selected')" >灾情状况</a ></li >
+                                            <li ><a id = 'li2' name = "place" href = "#"
+                                                    onclick = "return querySelect(this,'selected')" >发生位置</a ></li >
+                                        </ul >
                                 </div >
                                 <!-- /btn-group -->
                                 <input id = "inputText" type = "text" class = "form-control" style = "width: 130px" >
                             </div >
                             <!-- /input-group -->
                         </div >
-                        <div class = "col-lg-6 col-sm-6" >
-                            <button id = "search1" type = "submit" class = "btn" >查找</button >
+                        <div class = "col-lg-5 col-sm-5" style = "margin-left: 20px">
+                            <button  type = "button" class = "btn" onclick = "submitQuery('inputText')" >查找</button >
                         </div >
                     </div >
                 </fieldset >
             </div >
-            <div class = "col-xs-3 col-lg-6 col-sm-6  col-sm-offset-4" style = "margin-top: -60px;margin-left: 440px" >
+
+            <div class = "col-xs-3 col-lg-6 col-sm-6  col-sm-offset-4" style = "margin-top: -100px;margin-left: 440px" >
+                <%--时间控件--%>
+                <form action = "" class = "form-horizontal" role = "form" >
                 <fieldset >
                     <legend >日期查询</legend >
-
-                    <!--<div id="datetimepicker" class = "input-group date form_date col-md-5" data-date = "" data-date-format = "" data-link-field = "dtp_input2"-->
-                         <!--data-link-format = "yyyy-mm-dd">-->
-                        <!--<input class = "form-control" size = "16" type = "text" value = "" readonly>-->
-                        <!--<span  class = "input-group-addon">-->
-                            <!--<span class = "glyphicon glyphicon-remove"></span>-->
-                        <!--</span>-->
-                        <!--<span  class = "input-group-addon">-->
-                            <!--<a  href = "javascript:void(0)" onclick = "time()"><span class = "glyphicon glyphicon-calendar"></span></a>-->
-                        <!--</span>-->
-                    <!--</div>-->
-
-                    <div class = "row" >
-                        <div style = "float: left;margin-top:5px" >
-                            <label class = "control-label col-lg-12" >起始日期</label >
-                        </div >
-                        <div style = "float: left" >
-                            <input id = "start" type = "date" style = "display: none" />
-                            <input id = "inputStart" type = "text" class = "form-control" style = "width: 150px" />
-                        </div >
-                        <div style = "float: left;margin-top:1px" >
-                            <button type = "button" class = "btn btn-default btn-sm" onclick = "startDate()" >
-                                <span class = "glyphicon glyphicon-calendar" ></span >
-                            </button >
+                    <div class = "form-group " style="margin-top: -15px">
+                        <label class = "col-md-3 control-label" >起始日期</label >
+                        <div id = "datetimepickerStar" class = "input-group date form_date col-md-6" data-date = "" data-date-format =
+                                "yyyy-mm-dd"
+                             data-link-format = "yyyy-mm-dd" >
+                            <input class = "form-control" size = "10" type = "text" value = "" readonly = "readonly" onclick =
+                                    "selectTime()" >
+                            <span class = "input-group-addon" ><span class = "glyphicon glyphicon-remove" ></span ></span >
+                            <span class = "input-group-addon" ><span class = "glyphicon glyphicon-calendar"
+                                                                     onclick = "selectTime('datetimepickerStar')" ></span ></span >
                         </div >
                     </div >
-                    <div class = "row" >
-                        <div style = "float: left;margin-top:5px" >
-                            <label class = "control-label col-lg-12" >结束日期</label >
+                    <div class = "form-group" style = "margin-top: -15px" >
+                        <label class = "col-md-3 control-label" >结束日期</label >
+                        <div id = "datetimepickerEnd" class = "input-group date form_date col-md-6" data-date = ""
+                             data-date-format = "yyyy-mm-dd"
+                             data-link-format = "yyyy-mm-dd" >
+                            <input class = "form-control" size = "10" type = "text" value = "" readonly = "readonly"
+                                   onclick = "selectTime()" >
+                            <span class = "input-group-addon" ><span class = "glyphicon glyphicon-remove" ></span ></span >
+                            <span class = "input-group-addon" ><span class = "glyphicon glyphicon-calendar"
+                                                                     onclick = "selectTime('datetimepickerEnd')" ></span ></span >
                         </div >
-                        <div style = "float: left" >
-                            <input id = "end" type = "date" style = "display: none" />
-                            <input id = "inputEnd" type = "text" class = "form-control" style = "width: 150px" />
-                        </div >
-                        <div style = "float: left;margin-top:1px" >
-                            <button type = "button" class = "btn btn-default btn-sm" onclick = "endDate()" >
-                                <span class = "glyphicon glyphicon-calendar" ></span >
-                            </button >
-                        </div >
-                        <div style = " float: left;margin-left: 10px" >
-                            <button id = "search" type = "submit" class = "btn" >查找</button >
-                        </div >
+                        <button type = "button" class = "btn" onclick = "submitQuery('inputText')" style="margin-top: -34px;margin-left: 350px;">查找
+                        </button >
                     </div >
+
                 </fieldset >
+                </form >
             </div >
         </div >
     </div >
 </div >
+
 <script type = "text/javascript" >
     function ask() {
         alert("专家会审");
@@ -235,20 +228,6 @@
     function endDate() {
 
     }
-
-    //    function time(){
-    //        alert("ssss");
-    //        $('#aaaaa').datetimepicker({
-    //            language: 'zh-CN', /*加载日历语言包，可自定义*/
-    //            weekStart: 1,
-    //            todayBtn: 1,
-    //            autoclose: 1,
-    //            todayHighlight: 1,
-    //            startView: 2,
-    //            minView: 2,
-    //            forceParse: 0
-    //        });
-    //    }
 </script >
 </body >
 </html >

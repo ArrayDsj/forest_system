@@ -77,23 +77,26 @@
         </div>
         <br />
         <!--分页按钮-->
-        <div class = "row-fluid">
-            <div class = "span12">
-                <div>
-                    <button id = "previousPage" class = "btn btn-sm" type = "button" style = "line-height:0px">
-                        <span class = "glyphicon glyphicon-chevron-left"></span>
-                    </button>
-                    <input id = "pageNum" type = "text" style = "width: 40px;height: 20px" />
-                    <label>/10</label>
-                    <button id = "go" class = "btn btn-sm" type = "button" style = "line-height:0px">
-                        <span class = "glyphicon glyphicon-step-forward"></span>
-                    </button>
-                    <button id = "nextPage" class = "btn  btn-sm" type = "button" style = "line-height:0px">
-                        <span class = "glyphicon glyphicon-chevron-right"></span>
-                    </button>
-                </div>
-            </div>
-        </div>
+        <div class = "row-fluid" >
+            <div class = "span12" >
+                <div >
+                    <div style = "float:left" >
+                        <button id = "previousPage" class = "btn btn-sm" type = "button" style = "line-height:0px" >
+                            <span class = "glyphicon glyphicon-chevron-left" ></span >
+                        </button >
+                    </div >
+                    <input id = "pageNum" type = "text" class = "form-control" style =
+                            "width: 45px;height: 20px;margin-left: 2px;margin-top: 2px;float:left" />
+                    <label id = "num" name = "num" style = "margin-left: 2px" >/10</label >
+                    <button id = "go" class = "btn btn-sm" type = "button" style = "line-height:0px" >
+                        <span class = "glyphicon glyphicon-step-forward" ></span >
+                    </button >
+                    <button id = "nextPage" class = "btn  btn-sm" type = "button" style = "line-height:0px" >
+                        <span class = "glyphicon glyphicon-chevron-right" ></span >
+                    </button >
+                </div >
+            </div >
+        </div >
         <br /><br />
         <!--按钮-->
         <div class = "row-fluid">

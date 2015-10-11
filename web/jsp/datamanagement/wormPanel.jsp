@@ -11,7 +11,7 @@
     <meta charset = "UTF-8" >
     <title >虫害一览</title >
 
-    <link href = "../../css/Pager.css" rel = "stylesheet" type = "text/css" >
+    <%--<link href = "../../css/Pager.css" rel = "stylesheet" type = "text/css" >--%>
 
     <style >
         #wormPanelDiv {
@@ -47,9 +47,8 @@
                         <th class = "col-lg-6 col-sm-6" >主要危害</th >
                     </tr >
                 </table >
-                <div style = "overflow-y: auto;height: 170px;" class = "row-fluid" id = "tableTD" >
+                <div id = "tableTD" class = "row-fluid" style = "overflow-y: auto;height: 208px;margin-top: -20px" >
                     <table class = "table table-striped table-bordered table-hover table-condensed" >
-
                         <tr >
                             <%--到时候直接循环输入信息--%>
                             <td id = "name" class = "col-lg-3" >黄刺蛾</td >
@@ -97,25 +96,28 @@
             <%--<br />--%>
             <%--<br />--%>
             <%--<br />--%>
-
+            <!--分页按钮-->
             <div class = "row-fluid" >
-            <div class = "span12" >
-                <div >
-                    <button id = "previousPage" class = "btn btn-sm" type = "button" style = "line-height:0px" >
-                        <span class = "glyphicon glyphicon-chevron-left" ></span >
-                    </button >
-                    <input id = "pageNum" type = "text" style = "width: 40px;height: 20px" />
-                    <label >/10</label >
-                    <button id = "go" class = "btn btn-sm" type = "button" style = "line-height:0px" >
-                        <span class = "glyphicon glyphicon-step-forward" ></span >
-                    </button >
-                    <button id = "nextPage" class = "btn  btn-sm" type = "button" style = "line-height:0px" >
-                        <span class = "glyphicon glyphicon-chevron-right" ></span >
-                    </button >
+                <div class = "span12" >
+                    <div >
+                        <div style="float:left">
+                            <button id = "previousPage" class = "btn btn-sm" type = "button" style = "line-height:0px" >
+                                <span class = "glyphicon glyphicon-chevron-left" ></span >
+                            </button >
+                        </div>
+                        <input id = "pageNum" type = "text" class = "form-control" style =
+                                "width: 45px;height: 20px;margin-left: 2px;margin-top: 2px;float:left" />
+                        <label id="num" name="num" style="margin-left: 2px">/10</label >
+                        <button id = "go" class = "btn btn-sm" type = "button" style = "line-height:0px" >
+                            <span class = "glyphicon glyphicon-step-forward" ></span >
+                        </button >
+                        <button id = "nextPage" class = "btn  btn-sm" type = "button" style = "line-height:0px" >
+                            <span class = "glyphicon glyphicon-chevron-right" ></span >
+                        </button >
+                    </div >
                 </div >
             </div >
-        </div >
-        <br /><br />
+            <br /><br />
 
 
 
@@ -135,14 +137,14 @@
                             <div class = "col-xs-10 col-sm-6" >
                                 <div class = "input-group" >
                                     <div class = "input-group-btn" >
-                                        <button id = "selected" type = "button" class = "btn btn-default dropdown-toggle" data-toggle =
-                                                "dropdown" >病害名<span>&nbsp;</span><span class = "caret" ></span >
+                                        <button name = "name"  id = "selected" type = "button" class = "btn btn-default dropdown-toggle"
+                                                data-toggle =
+                                                "dropdown" >害虫名<span>&nbsp;</span><span class = "caret" ></span >
                                         </button >
                                         <ul id = "ul" class = "dropdown-menu" >
-                                            <li
-                                                    ><a id = 'li1' name="li1" value="0" href = "javascript:querySelect('#li1','selected')" >危害</a ></li >
-                                            <li
-                                                    ><a id = 'li2' name="li2" value="1" href = "javascript:querySelect('#li2','selected')" >发病症状</a ></li >
+                                            <li ><a id = 'li1' name="hoster"  href = "#" onclick="return querySelect(this,'selected')">寄主</a ></li >
+                                            <li ><a id = 'li2' name = "xxxxx"  href = "#"
+                                                    onclick = "return querySelect(this,'selected')" >不知道</a ></li >
                                         </ul >
                                     </div >
                                     <!-- /btn-group -->
@@ -151,7 +153,7 @@
                                 <!-- /input-group -->
                             </div >
                             <div class = "col-xs-6 col-sm-6" >
-                                <button id = "search" type = "button" class = "btn" >查找</button >
+                                <button id = "search" type = "button" class = "btn" onclick="submitQuery('inputText')">查找</button >
                             </div >
                         </div >
                     </fieldset >
@@ -160,36 +162,20 @@
         </div >
     </div >
 
-    <script type = "text/javascript" src = "../../js/jquery-1.11.3.min.js" ></script >
-    <script type = "text/javascript" src = "../../js/jquery.pager.js"  ></script >
-    <script type = "text/javascript" src = "../../js/page_context.js"  ></script >
+    <%--<script type = "text/javascript" src = "../../js/jquery-1.11.3.min.js" ></script >--%>
+    <%--<script type = "text/javascript" src = "../../js/jquery.pager.js"  ></script >--%>
+    <%--<script type = "text/javascript" src = "../../js/page_context.js"  ></script >--%>
 
     <script >
         <%--分页操作--%>
-        $(document).ready(function () {
-            $("#pager").pager({pagenumber: 1, pagecount: 15, buttonClickCallback: PageClick});
-        });
-
-        PageClick = function (pageclickednumber) {
-            $("#pager").pager({pagenumber: pageclickednumber, pagecount: 15, buttonClickCallback: PageClick});
-            $("#result").html("Clicked Page " + pageclickednumber);
-        }
-
-        //保存被选中项的索引
-        var index;
-        <!--查询按钮动作-->
-        function querySelect(id1, id2) {
-            var str = $(id1).text();
-            var old = $('#' + id2).text();
-            document.getElementById(id2).innerHTML = $(id1).text() + "<span>&nbsp;</span><span class = 'caret' ></span >";
-            index = $(id1).attr("value");
-        }
-
-        <!--查询按钮-->
-        $('#search').click(function(){
-            var str = $('#inputText').val();
-            alert('?index=' +  index + '&' + 'str=' + str);
-        });
+//        $(document).ready(function () {
+//            $("#pager").pager({pagenumber: 1, pagecount: 15, buttonClickCallback: PageClick});
+//        });
+//
+//        PageClick = function (pageclickednumber) {
+//            $("#pager").pager({pagenumber: pageclickednumber, pagecount: 15, buttonClickCallback: PageClick});
+//            $("#result").html("Clicked Page " + pageclickednumber);
+//        };
 
 
 

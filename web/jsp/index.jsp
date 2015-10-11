@@ -6,22 +6,21 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType = "text/html;charset=UTF-8" language = "java" pageEncoding = "UTF-8" %>
-
 <html lang = "en" >
 <head >
     <meta charset = "UTF-8" >
     <meta name = "viewport" content = "width=device-width, initial-scale=1" >
     <title >森林病虫害防治系统</title >
+
     <link rel = "stylesheet" href = "../bootstrap/css/bootstrap.min.css" />
-    <link rel = "stylesheet" href = "../bootstrap/css/bootstrap-table.css" />
+    <link href = "../bootstrap/css/bootstrap-datetimepicker.css" rel = "stylesheet" >
+    <%--<link rel = "stylesheet" href = "../bootstrap/css/bootstrap-table.css" />--%>
     <link rel = "stylesheet" href = "../css/index.css" />
 
-    <title >主页</title >
 </head >
 <body >
     <!--整个页面-->
     <div class = "container" >
-
         <div id = "header" >
             <h3 >森林病虫害防治系统</h3 >
         </div >
@@ -90,14 +89,12 @@
 
         </div >
     </div >
-
-
-
     <script type = "text/javascript" src = "../js/jquery-1.11.3.min.js" ></script >
     <script type = "text/javascript" src = "../bootstrap/js/bootstrap.min.js" ></script >
     <script type = "text/javascript" src = "../bootstrap/js/bootstrap-table.js" ></script >
+    <script type = "text/javascript" src = "../bootstrap/js/bootstrap-datetimepicker.js" charset = "UTF-8" ></script >
+    <script type = "text/javascript" src = "../bootstrap/js/locales/bootstrap-datetimepicker.zh-CN.js" charset = "UTF-8" ></script >
     <script type = "text/javascript" src = "../js/index.js" ></script >
-
 
 </body >
 </html >

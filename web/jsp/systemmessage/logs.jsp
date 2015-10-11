@@ -50,12 +50,11 @@
         <!--表格-->
         <div class = "row-fluid" style = "border: solid">
             <table class = "table table-hover active">
-                <tr class = "active">
+                <tr >
                     <th class = "col-lg-3 col-sm-3">日志内容</th>
                     <th class = "col-lg-3 col-sm-3">日期</th>
                 </tr>
             </table>
-            <div></div>
             <div style = "overflow-y: auto;overflow-x: auto;height: 170px;" class = "row-fluid" id = "tableTD">
                 <table class = "table table-striped table-bordered table-hover table-condensed" >
                     <tr class="rom">
@@ -97,40 +96,64 @@
         <br />
 
         <!--分页按钮-->
-        <div class = "row-fluid">
-            <div class = "span12">
-                <div>
-                    <button id = "previousPage" class = "btn btn-sm" type = "button" style = "line-height:0px">
-                        <span class = "glyphicon glyphicon-chevron-left"></span>
-                    </button>
-                    <input id = "pageNum" type = "text" style = "width: 40px;height: 20px" />
-                    <label>/10</label>
-                    <button id = "go" class = "btn btn-sm" type = "button" style = "line-height:0px">
-                        <span class = "glyphicon glyphicon-step-forward"></span>
-                    </button>
-                    <button id = "nextPage" class = "btn  btn-sm" type = "button" style = "line-height:0px">
-                        <span class = "glyphicon glyphicon-chevron-right"></span>
-                    </button>
-                </div>
-            </div>
-        </div>
+        <div class = "row-fluid" >
+            <div class = "span12" >
+                <div >
+                    <div style = "float:left" >
+                        <button id = "previousPage" class = "btn btn-sm" type = "button" style = "line-height:0px" >
+                            <span class = "glyphicon glyphicon-chevron-left" ></span >
+                        </button >
+                    </div >
+                    <input id = "pageNum" type = "text" class = "form-control" style =
+                            "width: 45px;height: 20px;margin-left: 2px;margin-top: 2px;float:left" />
+                    <label id = "num" name = "num" style = "margin-left: 2px" >/10</label >
+                    <button id = "go" class = "btn btn-sm" type = "button" style = "line-height:0px" >
+                        <span class = "glyphicon glyphicon-step-forward" ></span >
+                    </button >
+                    <button id = "nextPage" class = "btn  btn-sm" type = "button" style = "line-height:0px" >
+                        <span class = "glyphicon glyphicon-chevron-right" ></span >
+                    </button >
+                </div >
+            </div >
+        </div >
         <br /><br />
         <!--按钮-->
-        <div class = "row-fluid">
-            <div id = "query" style = "margin-left: 400px" class = "btn-group">
-                <fieldset>
-                    <legend>查询器械信息</legend>
-                    起始日期：<input type = "date" /><br />
-                    结束日期：<input type = "date" />
+        <div class = "col-xs-3 col-lg-6 col-sm-6  col-sm-offset-4" style = "margin-top: -40px;margin-left: 320px" >
+                <%--时间控件--%>
+                <form action = "" class = "form-horizontal" role = "form" >
+                <fieldset >
+                    <legend >日期查询</legend >
+                    <div class = "form-group " style = "margin-top: -15px" >
+                        <label class = "col-md-3 control-label" >起始日期</label >
+                        <div id = "datetimepickerStar" class = "input-group date form_date col-md-6" data-date = "" data-date-format =
+                                "dd MM yyyy"
+                             data-link-format = "yyyy-mm-dd" >
+                            <input class = "form-control" size = "10" type = "text" value = "" readonly = "readonly" onclick =
+                                    "selectTime()" >
+                            <span class = "input-group-addon" ><span class = "glyphicon glyphicon-remove" ></span ></span >
+                            <span class = "input-group-addon" ><span class = "glyphicon glyphicon-calendar"
+                                                                     onclick = "selectTime('datetimepickerStar')" ></span ></span >
+                        </div >
+                    </div >
+                    <div class = "form-group" style = "margin-top: -15px" >
+                        <label class = "col-md-3 control-label" >结束日期</label >
+                        <div id = "datetimepickerEnd" class = "input-group date form_date col-md-6" data-date = ""
+                             data-date-format = "dd MM yyyy"
+                             data-link-format = "yyyy-mm-dd" >
+                            <input class = "form-control" size = "10" type = "text" value = "" readonly = "readonly"
+                                   onclick = "selectTime()" >
+                            <span class = "input-group-addon" ><span class = "glyphicon glyphicon-remove" ></span ></span >
+                            <span class = "input-group-addon" ><span class = "glyphicon glyphicon-calendar"
+                                                                     onclick = "selectTime('datetimepickerEnd')" ></span ></span >
+                        </div >
+                        <button type = "button" class = "btn" onclick = "submitQuery('inputText')"
+                                style = "margin-top: -34px;margin-left: 350px;" >查找
+                        </button >
+                    </div >
 
-                    <div class = "btn-group">
-                        <button type = "button" class = "btn btn-default"
-                                style = "margin-left: 140px;margin-top: 30px">查询
-                        </button>
-                    </div>
-                </fieldset>
-            </div>
-        </div>
+                </fieldset >
+                </form >
+            </div >
     </div>
 </div>
 

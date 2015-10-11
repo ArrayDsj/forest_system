@@ -88,7 +88,6 @@
                             %>
                         </div>
                     </form >
-                    <input type = "text" class = "form-control" >
                 </div >
             </div >
         </div >
