@@ -1,6 +1,8 @@
 package com.code.bean;
 
-public class UserBean {
+import java.io.Serializable;
+
+public class UserBean implements Serializable{
     private int    id;
     private String name;
     private String password;
