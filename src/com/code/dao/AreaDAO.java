@@ -22,5 +22,5 @@ public interface AreaDAO {
     public int getAllCounts();
 
     //得到没有条件下的所有记录的分页数据
-    public ArrayList<AreaBean> getAllAreas(int pageNow) ;
+    public ArrayList<AreaBean> getAllAreas(int pageNow, int pageSize) ;
 }

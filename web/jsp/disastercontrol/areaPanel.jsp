@@ -52,6 +52,7 @@
 
             <div id = "tableTD" class = "row-fluid" style = "overflow-y: auto;height: 208px;margin-top: -20px" >
                     <table class = "table table-striped table-bordered table-hover table-condensed" >
+
                     <c:if test="${requestScope.info == null}">
                         <c:forEach items = "${requestScope.allAreas}" var = "area" >
                             <tr >
@@ -77,9 +78,11 @@
                             <span class = "glyphicon glyphicon-chevron-left" ></span >
                         </button >
                     </div >
-                    <input id = "pageNum" type = "text" class = "form-control" style =
-                            "width: 45px;height: 20px;margin-left: 2px;margin-top: 2px;float:left" />
-                    <label id = "num" name = "num" style = "margin-left: 2px" >/10</label >
+                    <input id = "pageNow" type = "text" class = "form-control" style =
+                            "width: 40px;height: 25px;margin-left: 2px;margin-top: 0px;float:left" value="${requestScope.pageNow}"/>
+                    <label id = "num" name = "num" style = "margin-left: 2px" >
+                        /${requestScope.pageNum}
+                    </label >
                     <button id = "go" class = "btn btn-sm" type = "button" style = "line-height:0px" >
                         <span class = "glyphicon glyphicon-step-forward" ></span >
                     </button >
@@ -130,23 +133,62 @@
 
 <script >
     //数据有效性验证
-    $("#pageNum").keydown(function () {
-        //只能输入数字
-    });
+//    $("#pageNum").keydown(function () {
+//        //只能输入数字
+//
+//    });
+    $('#pageNow').keydown = function (eve) {
+        if (event) {
+            if ((event.keyCode >= 48 && event.keyCode <= 57) ||
+                    (event.keyCode >= 96 && event.keyCode <= 105) ||
+                    event.keyCode == 8) {
+                return true;
+            }
+            //取消默认事件
+            return false;
+        } else {
+            if ((eve.charCode >= 48 && eve.charCode <= 57) ||
+                    (eve.charCode >= 96 && eve.charCode <= 105) ||
+                    eve.charCode == 8) {
+                return true;
+            }
+            //取消默认事件
+            return false;
+        }
+    };
+
+
+
+
+
+
 
     //事件处理
     $("#previousPage").click(function () {
         //上一页点击事件
-        alert("上一页");
+        if(${requestScope.pageNow} > 1 ){
+            $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": ${requestScope.pageNow} - 1});
+        }else{
+            alert("已是第一页！");
+        }
     });
+
+
     $("#nextPage").click(function () {
         //下一页点击事件
-        alert("下一页");
+        if (${requestScope.pageNow} < ${requestScope.pageNum}){
+            //这里是一个json数据格式
+            $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": ${requestScope.pageNow} + 1});
+        }else{
+            alert("已是最后一页！");
+        }
     });
+
+
     $("#go").click(function () {
         //跳转到指定页点击事件
-        var num = $("#pageNum").val();
-        alert(num);
+        var num = $("#pageNow").val();
+        $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": num});
     });
 
     //查询模块事件

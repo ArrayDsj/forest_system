@@ -110,7 +110,7 @@ public class AreaDAOImp implements AreaDAO{
         String sql = "select count(*) from t_area";
         Statement st = null;
         ResultSet rs = null;
-        int reslut = -1 ;
+        int reslut = 0 ;
         try {
             st = connection.createStatement();
             rs = st.executeQuery(sql);
@@ -128,11 +128,11 @@ public class AreaDAOImp implements AreaDAO{
 
     //得到没有条件下的所有记录的分页数据
     @Override
-    public ArrayList<AreaBean> getAllAreas(int pageNow){
+    public ArrayList<AreaBean> getAllAreas(int pageNow, int pageSize){
         Connection connection = DBUtil.getConnection();
         ArrayList<AreaBean> all = new ArrayList<AreaBean>();
         String    sql    = "select * from t_area as area join t_class as class\n" +
-                           "on area.fk_class = class.pk_id limit " + (pageNow-1)*2 + ",2";
+                           "on area.fk_class = class.pk_id limit " + (pageNow-1)* pageSize + "," + pageSize;
         Statement st     = null;
         ResultSet rs     = null;
         AreaBean areaBean = null;

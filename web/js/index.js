@@ -32,9 +32,9 @@ $(function () {
  * @param url
  * @returns {boolean}
  */
-function jump(id, url) {
+function jump(id, url, now) {
     //跳转到指定jsp,然后这个jsp在加载的时候初始化自身数据
-    $(id).load(url);
+    $(id).load(url,{'pageNow':now});
     //去掉a标签的默认动作
     return false;
 }

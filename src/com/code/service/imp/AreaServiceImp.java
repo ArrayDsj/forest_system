@@ -36,16 +36,19 @@ public class AreaServiceImp implements AreaService{
 
     //初始化数据
     @Override
-    public ArrayList<AreaBean> getInitData(){
+    public ArrayList<AreaBean> getInitData(int pageNow, int pageSize){
         AreaDAO areaDao = new AreaDAOImp();
-        //总数
+        //1. 得到总记录数
         int counts = areaDao.getAllCounts();
-        //得到分页数据
-        ArrayList<AreaBean> all = areaDao.getAllAreas(1);
-        //最后一个是总记录条数
-        AreaBean areaBean = new AreaBean();
-        areaBean.setId(counts);
-        all.add(areaBean);
-        return all;
+        if(counts != 0){
+            //得到分页数据
+            ArrayList<AreaBean> all = areaDao.getAllAreas(pageNow, pageSize );
+            //最后一个是总记录条数
+            AreaBean areaBean = new AreaBean();
+            areaBean.setId(counts);
+            all.add(areaBean);
+            return all;
+        }
+        return null;
     }
 }
