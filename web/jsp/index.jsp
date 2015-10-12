@@ -42,7 +42,7 @@
                         <div class = "link" ><i class = "glyphicon glyphicon-briefcase" ></i >灾情防治<i
                                 class = "glyphicon glyphicon-chevron-down" style = "margin-left: 160px" ></i ></div >
                         <ul class = "submenu" >
-                            <li ><a href = "#areaPanel" onclick = "jump('#otherHtml','disastercontrol/areaPanel.jsp')" >区域一览</a ></li >
+                            <li ><a href = "#areaPanel" onclick = " jump('#otherHtml','../areaPanel.av')" >区域一览</a ></li >
                             <li ><a href = "#classPanel" onclick = "jump('#otherHtml','disastercontrol/classPanel.jsp')" >小班管理</a ></li >
                             <li ><a href = "#thingPanel" onclick = "jump('#otherHtml','disastercontrol/thingPanel.jsp')" >事件记录</a ></li >
                         </ul >

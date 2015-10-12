@@ -11,9 +11,19 @@ public class AreaBean implements Serializable{
     //林种
     private String forestType;
     //地类
-    private String lanType;
+    private String landType;
     //优势树种
     private String treeType;
+
+    private ClassBean classBean;
+
+    public ClassBean getClassBean() {
+        return classBean;
+    }
+
+    public void setClassBean(ClassBean classBean) {
+        this.classBean = classBean;
+    }
 
     public AreaBean() {
     }
@@ -43,12 +53,12 @@ public class AreaBean implements Serializable{
         this.forestType = forestType;
     }
 
-    public String getLanType() {
-        return lanType;
+    public String getLandType() {
+        return landType;
     }
 
-    public void setLanType(String lanType) {
-        this.lanType = lanType;
+    public void setLandType(String lanType) {
+        this.landType = lanType;
     }
 
     public String getTreeType() {

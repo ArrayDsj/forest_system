@@ -12,9 +12,15 @@ public interface AreaDAO {
     //添加新地区
     public boolean addArea(AreaBean areaBean);
     //得到所有fk_class为空的地区(用于添加班级时初始化地区下拉列表)
-    public ArrayList<AreaBean> getAllAreas();
+    public ArrayList<AreaBean> getAllAreasByClass();
     //按条件查询(分页查询)
     public ArrayList<AreaBean> getAreasByCondition(String queryType, String queryStr,int pageNow);
     //返回当前条件下满足条件的总个数
     public int getAreasByCondition(String queryType, String queryStr);
+
+    //得到没有条件下的所有记录的总数
+    public int getAllCounts();
+
+    //得到没有条件下的所有记录的分页数据
+    public ArrayList<AreaBean> getAllAreas(int pageNow) ;
 }

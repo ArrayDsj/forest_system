@@ -1,3 +1,4 @@
+<%@ page import = "com.code.bean.AreaBean" %><%@ page import = "java.util.ArrayList" %>
 <%--
   Created by IntelliJ IDEA.
   User: Code.Ai
@@ -6,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType = "text/html;charset=UTF-8" pageEncoding = "UTF-8" language = "java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang = "en" >
 <head >
@@ -50,35 +52,17 @@
 
             <div id = "tableTD" class = "row-fluid" style = "overflow-y: auto;height: 208px;margin-top: -20px" >
                     <table class = "table table-striped table-bordered table-hover table-condensed" >
-                    <tr >
-                        <td class = "col-lg-3" >雅林一号地区</td >
-                        <td class = "col-lg-2" >白杨林</td >
-                        <td class = "col-lg-3" >林地</td >
-                        <td class = "col-lg-2" >柏树</td >
-                        <td class = "col-lg-2" >雅林一般</td >
-                    </tr >
-                    <tr >
-                        <td >雅安三号地区</td >
-                        <td >郑阔林</td >
-                        <td >林地</td >
-                        <td >松树</td >
-                        <td >雅安一班</td >
-                    </tr >
-                    <tr >
-                        <td >卧龙二号地区</td >
-                        <td >桐树</td >
-                        <td >疏林地</td >
-                        <td >泡桐</td >
-                        <td >卧龙一班</td >
-                    </tr >
-                    <tr >
-                        <td >卧龙自然保护区</td >
-                        <td >竹林</td >
-                        <td >灌木林</td >
-                        <td >剑灵</td >
-                        <td >卧龙二班</td >
-                    </tr >
-
+                    <c:if test="${requestScope.info == null}">
+                        <c:forEach items = "${requestScope.allAreas}" var = "area" >
+                            <tr >
+                                <td class = "col-lg-3" >${area.name}</td >
+                                <td class = "col-lg-2" >${area.forestType}</td >
+                                <td class = "col-lg-3" >${area.landType}</td >
+                                <td class = "col-lg-2" >${area.treeType}</td >
+                                <td class = "col-lg-2" >${area.classBean.name}</td >
+                            </tr >
+                        </c:forEach >
+                    </c:if>
                 </table >
             </div >
             </table>

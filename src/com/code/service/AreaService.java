@@ -12,4 +12,8 @@ public interface AreaService {
 
     //得到分页数据
     public ArrayList<AreaBean> getLimitData(String queryType, String queryStr,int pageNow);
+
+    //得到初始化分页数据
+    public ArrayList<AreaBean> getInitData();
+
 }
