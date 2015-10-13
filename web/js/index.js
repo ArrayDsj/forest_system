@@ -44,7 +44,7 @@ function jump(id, url, now) {
  * 组合下拉列表框组件的处理函数
  */
 //保存下拉列表的值,默认是button中的name
-var query = 'nothing';
+var query = 'f_name';
 //取得按钮控件中的第一个子节点的text文本值
 function querySelect(obj, id) {
     query = document.getElementById(id).name;
@@ -59,11 +59,15 @@ function querySelect(obj, id) {
     obj.text = str;
     obj.name = query;
     query = arr[1];
+    return false;
 }
+
 <!--查询按钮-->
-function submitQuery(id) {
-    var str = document.getElementById(id).value;
+function submitQuery(id1,id2,url,now) {
+    var str = $(id1).val();
+    str = "'%" + str + "%'";
     alert('?query=' + query + '&str=' + str);
+    $(id2).load(url, {'pageNow': now,'query':query,'str':str});
 }
 /*********************************************************************/
 

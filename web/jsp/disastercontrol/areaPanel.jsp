@@ -8,6 +8,7 @@
 --%>
 <%@ page contentType = "text/html;charset=UTF-8" pageEncoding = "UTF-8" language = "java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html lang = "en" >
 <head >
@@ -107,14 +108,14 @@
                         <div class = "col-lg-6 col-sm-6" >
                             <div class = "input-group" >
                                 <div class = "input-group-btn" >
-                                    <button name = "name" id = "selected" type = "button" class = "btn btn-default dropdown-toggle" data-toggle = "dropdown" >区域名称<span >&nbsp;</span ><span class = "caret" ></span >
+                                    <button name = "f_name" id = "selected" type = "button" class = "btn btn-default dropdown-toggle" data-toggle = "dropdown" >区域名称<span >&nbsp;</span ><span class = "caret" ></span >
                                     </button >
-                                        <ul id = "ul" class = "dropdown-menu" >
-                                            <li ><a id = 'li1' name = "foresttype" href = "#"
-                                                    onclick = "return querySelect(this,'selected')" >林种</a ></li >
-                                            <li ><a id = 'li2' name = "goodtype" href = "#"
-                                                    onclick = "return querySelect(this,'selected')" >优势树种</a ></li >
-                                        </ul >
+                                    <ul id = "ul" class = "dropdown-menu" >
+                                        <li ><a id = 'li1' name = "f_foresttype" href = "#"
+                                                onclick = "return querySelect(this,'selected')" >林种</a ></li >
+                                        <li ><a id = 'li2' name = "f_treetype" href = "#"
+                                                onclick = "return querySelect(this,'selected')" >优势树种</a ></li >
+                                    </ul >
                                 </div >
                                 <!-- /btn-group -->
                                 <input id = "inputText" type = "text" class = "form-control" style="width: 130px">
@@ -122,7 +123,9 @@
                             <!-- /input-group -->
                         </div >
                         <div class = "col-lg-5 col-sm-5" style="margin-left: 10px">
-                            <button id = "search" type = "button" class = "btn" onclick = "submitQuery('inputText')" >查找</button >
+                            <button id = "search" type = "button" class = "btn" onclick =
+                                    "submitQuery('#inputText','#areaPanelDiv','../areaPanel.av','1')" >查找
+                            </button >
                         </div >
                     </div >
                 </fieldset >
@@ -156,12 +159,6 @@
             return false;
         }
     };
-
-
-
-
-
-
 
     //事件处理
     $("#previousPage").click(function () {

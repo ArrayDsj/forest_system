@@ -21,7 +21,7 @@ public class AreaDAOImp implements AreaDAO{
     }
 
     @Override
-    public ArrayList<AreaBean> getAllAreasByClass() {
+    public ArrayList<AreaBean> getAreasByClass() {
         return null;
     }
 
@@ -29,16 +29,11 @@ public class AreaDAOImp implements AreaDAO{
 
     //得到满足条件的所有记录的总数
     @Override
-    public int getAreasByCondition(String queryType, String queryStr) {
-        if(queryType.equals("name")){
-            queryType = "f_name";
-        }else {
-            queryType = "f_foresttype";
-        }
+    public int getCountsByCondition(String queryType, String queryStr) {
         Connection connection = DBUtil.getConnection();
 
         String sql = "select count(*) from t_area where " +
-                         queryType + "like '%" + queryStr +"%'";
+                         queryType + " like " + queryStr ;
 
         Statement st     = null;
         ResultSet rs     = null;
@@ -61,13 +56,13 @@ public class AreaDAOImp implements AreaDAO{
 
     //得到满足条件的记录集合
     @Override
-    public ArrayList<AreaBean> getAreasByCondition(String queryType, String queryStr, int pageNow) {
+    public ArrayList<AreaBean> getAreasByCondition(String queryType, String queryStr, int pageNow, int pageSize) {
         Connection          connection = DBUtil.getConnection();
         ArrayList<AreaBean> all        = new ArrayList<AreaBean>();
-        String sql = "select * from t_area as area join t_class as class\n" +
-                "on area.fk_class = class.pk_id limit \n"+
-                "where " + queryType + "like '%" + queryStr + "%'\n" +
-                (pageNow - 1) * 2 + ",2";
+        String sql = "select * from t_area as area  left join  t_class as class\n" +
+                "on area.fk_class = class.pk_id  \n"+
+                "where area." + queryType + " like " + queryStr + "\n" +
+                "limit " + (pageNow - 1) * pageSize + "," + pageSize;
         Statement st       = null;
         ResultSet rs       = null;
         AreaBean  areaBean = null;
@@ -105,7 +100,7 @@ public class AreaDAOImp implements AreaDAO{
 
     //得到没有条件下的所有记录的总数
     @Override
-    public int getAllCounts(){
+    public int getCounts(){
         Connection connection = DBUtil.getConnection();
         String sql = "select count(*) from t_area";
         Statement st = null;
@@ -128,10 +123,10 @@ public class AreaDAOImp implements AreaDAO{
 
     //得到没有条件下的所有记录的分页数据
     @Override
-    public ArrayList<AreaBean> getAllAreas(int pageNow, int pageSize){
+    public ArrayList<AreaBean> getAreas(int pageNow, int pageSize){
         Connection connection = DBUtil.getConnection();
         ArrayList<AreaBean> all = new ArrayList<AreaBean>();
-        String    sql    = "select * from t_area as area join t_class as class\n" +
+        String    sql    = "select * from t_area as area  left join  t_class as class\n" +
                            "on area.fk_class = class.pk_id limit " + (pageNow-1)* pageSize + "," + pageSize;
         Statement st     = null;
         ResultSet rs     = null;

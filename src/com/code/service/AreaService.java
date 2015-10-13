@@ -10,10 +10,10 @@ import java.util.ArrayList;
 public interface AreaService {
     public boolean addArea(AreaBean areaBean);
 
-    //得到分页数据
-    public ArrayList<AreaBean> getLimitData(String queryType, String queryStr,int pageNow);
+    //得到条件分页数据
+    public ArrayList<AreaBean> getLimitData(String queryType, String queryStr,int pageNow, int pageSize);
 
-    //得到初始化分页数据
+    //得到初始分页数据
     public ArrayList<AreaBean> getInitData(int pageNow, int pageSize);
 
 }

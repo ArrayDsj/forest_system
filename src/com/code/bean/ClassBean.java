@@ -1,6 +1,7 @@
 package com.code.bean;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by CodeA on 2015/10/11.
@@ -12,6 +13,15 @@ public class ClassBean implements Serializable{
     private String manager;
     private String phone;
     private int number;
+    private Date foundDay;
+
+    public Date getFoundDay() {
+        return foundDay;
+    }
+
+    public void setFoundDay(Date foundDay) {
+        this.foundDay = foundDay;
+    }
 
     public int getId() {
         return id;

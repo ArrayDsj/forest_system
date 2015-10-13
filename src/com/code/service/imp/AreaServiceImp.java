@@ -17,14 +17,15 @@ public class AreaServiceImp implements AreaService{
         return areaDao.addArea(areaBean);
     }
 
+    //得到条件分页数据
     @Override
-    public ArrayList<AreaBean> getLimitData(String queryType, String queryStr, int pageNow) {
+    public ArrayList<AreaBean> getLimitData(String queryType, String queryStr, int pageNow, int pageSize) {
         AreaDAO areaDao = new AreaDAOImp();
         //得到满足条件的总个数
-        int counts = areaDao.getAreasByCondition(queryType, queryStr);
+        int counts = areaDao.getCountsByCondition(queryType, queryStr);
         if(counts != -1){
             //得到满足条件的集合
-            ArrayList<AreaBean> all = areaDao.getAreasByCondition(queryType, queryStr, pageNow);
+            ArrayList<AreaBean> all = areaDao.getAreasByCondition(queryType, queryStr, pageNow,pageSize);
             AreaBean areaBean = new AreaBean();
             areaBean.setId(counts);
             all.add(areaBean);
@@ -34,15 +35,15 @@ public class AreaServiceImp implements AreaService{
         return null;
     }
 
-    //初始化数据
+    //得到初始分页数据
     @Override
     public ArrayList<AreaBean> getInitData(int pageNow, int pageSize){
         AreaDAO areaDao = new AreaDAOImp();
         //1. 得到总记录数
-        int counts = areaDao.getAllCounts();
+        int counts = areaDao.getCounts();
         if(counts != 0){
             //得到分页数据
-            ArrayList<AreaBean> all = areaDao.getAllAreas(pageNow, pageSize );
+            ArrayList<AreaBean> all = areaDao.getAreas(pageNow, pageSize);
             //最后一个是总记录条数
             AreaBean areaBean = new AreaBean();
             areaBean.setId(counts);

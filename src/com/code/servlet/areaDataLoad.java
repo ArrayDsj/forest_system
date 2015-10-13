@@ -23,6 +23,9 @@ public class areaDataLoad extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("areaDataLoad.java:success");
+
+        //分页条件
+
         AreaService areaService = new AreaServiceImp();
         // 初始页
         int pageNow = 1;
@@ -33,7 +36,7 @@ public class areaDataLoad extends HttpServlet{
         //总页数
         int pageNum = 0;
         //分页大小
-        int pageSize = 2;
+        int pageSize = 1;
         System.out.println(pageNow);
         // 数据
         ArrayList<AreaBean> all = null;
@@ -42,7 +45,7 @@ public class areaDataLoad extends HttpServlet{
         String query = req.getParameter("query");
         System.out.println(query);
         //1. 判断有无条件(无条件,初始化;有条件,按条件分页查询)
-        if(query ==null){
+        if(query == null){
             //按无条件查询数据
             all = areaService.getInitData(pageNow,pageSize);
             if(all != null){
@@ -52,15 +55,22 @@ public class areaDataLoad extends HttpServlet{
                 req.setAttribute("pageNum",pageNum);
                 req.setAttribute("pageNow",pageNow);
                 req.setAttribute("allAreas", all);
-
             }else
                 req.setAttribute("info", "无数据");
         }else{
             //有条件查询
             String str = req.getParameter("str");
-            all = areaService.getLimitData(query, str, pageNow);
+
+            str = new String(str.getBytes("ISO-8859-1"),"UTF-8");
+
+            System.out.println(str);
+            all = areaService.getLimitData(query, str, pageNow,pageSize);
             if (all != null) {
                 counts = all.get(all.size() - 1).getId();
+                //计算总页数
+                pageNum = (int) Math.ceil(counts / (pageSize * 1.0));
+                req.setAttribute("pageNum", pageNum);
+                req.setAttribute("pageNow", pageNow);
                 req.setAttribute("allAreas", all);
             }else
                 req.setAttribute("info", "无数据");
