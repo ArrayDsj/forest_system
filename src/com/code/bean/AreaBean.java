@@ -28,6 +28,12 @@ public class AreaBean implements Serializable{
     public AreaBean() {
     }
 
+    public AreaBean(String name, String forestType, String landType, String treeType) {
+        this.name = name;
+        this.forestType = forestType;
+        this.landType = landType;
+        this.treeType = treeType;
+    }
 
     public int getId() {
         return id;

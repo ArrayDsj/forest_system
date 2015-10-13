@@ -96,5 +96,14 @@
     <script type = "text/javascript" src = "../bootstrap/js/locales/bootstrap-datetimepicker.zh-CN.js" charset = "UTF-8" ></script >
     <script type = "text/javascript" src = "../js/index.js" ></script >
 
+<script >
+    $(function(){
+        var showPage = '${requestScope.showPage}';
+        if(showPage == 'areaPanel'){
+            jump('#otherHtml', '../areaPanel.av', '1');
+        }
+    })
+</script >
+
 </body >
 </html >

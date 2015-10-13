@@ -1,4 +1,4 @@
-package com.code.servlet;
+package com.code.servlet.areaservlet;
 
 import com.code.bean.AreaBean;
 import com.code.service.AreaService;
@@ -58,10 +58,11 @@ public class areaDataLoad extends HttpServlet{
             }else
                 req.setAttribute("info", "无数据");
         }else{
+            req.setCharacterEncoding("UTF-8");
             //有条件查询
             String str = req.getParameter("str");
 
-            str = new String(str.getBytes("ISO-8859-1"),"UTF-8");
+            str = new String(str.getBytes(),"UTF-8");
 
             System.out.println(str);
             all = areaService.getLimitData(query, str, pageNow,pageSize);

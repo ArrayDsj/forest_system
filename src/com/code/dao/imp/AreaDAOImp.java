@@ -5,10 +5,7 @@ import com.code.bean.ClassBean;
 import com.code.dao.AreaDAO;
 import com.code.util.DBUtil;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 /**
@@ -17,7 +14,28 @@ import java.util.ArrayList;
 public class AreaDAOImp implements AreaDAO{
     @Override
     public boolean addArea(AreaBean areaBean) {
-        return false;
+        Connection connection = DBUtil.getConnection();
+        String sql = "insert into t_area(f_name,f_foresttype,f_landtype,f_treetype) \n" +
+                        "values(?,?,?,?) ";
+
+        PreparedStatement ps = null;
+        int result = -1 ;
+        try {
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, areaBean.getName());
+            ps.setString(2, areaBean.getForestType());
+            ps.setString(3, areaBean.getLandType());
+            ps.setString(4, areaBean.getTreeType());
+
+            result = ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if(result != 1){
+            return false;
+        }
+        return true;
     }
 
     @Override
