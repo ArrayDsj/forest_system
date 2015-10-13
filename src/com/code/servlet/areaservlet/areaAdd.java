@@ -21,16 +21,17 @@ public class areaAdd extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String landType = req.getParameter("hidden");
+        System.out.println("areaAdd.java:success");
+        String landType = req.getParameter("landType");
         String forestType = req.getParameter("forestType");
         String name = req.getParameter("name");
         String treeType = req.getParameter("treeType");
         AreaBean areaAdd = new AreaBean(name, forestType, landType, treeType);
 
         AreaService areaService = new AreaServiceImp();
-
         if(areaService.addArea(areaAdd)){
             req.setAttribute("showPage","areaPanel");
+
             req.getRequestDispatcher("jsp/index.jsp").forward(req, resp);
         }
     }

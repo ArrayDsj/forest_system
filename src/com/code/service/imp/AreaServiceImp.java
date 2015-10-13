@@ -42,7 +42,7 @@ public class AreaServiceImp implements AreaService{
         //1. 得到总记录数
         int counts = areaDao.getCounts();
         if(counts != 0){
-            //得到分页数据
+            //2. 得到分页数据
             ArrayList<AreaBean> all = areaDao.getAreas(pageNow, pageSize);
             //最后一个是总记录条数
             AreaBean areaBean = new AreaBean();

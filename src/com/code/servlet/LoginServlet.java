@@ -22,16 +22,16 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        //´Ólogin.jspÇëÇóÖĞµÃµ½Êı¾İ
+        //ï¿½ï¿½login.jspï¿½ï¿½ï¿½ï¿½ï¿½ĞµÃµï¿½ï¿½ï¿½ï¿½ï¿½
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        //·â×°Êı¾İ
+        //ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½
         UserBean loginUser = new UserBean();
         loginUser.setName(username);
         loginUser.setPassword(password);
 
-        //ÇëÇó·şÎñ
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         UserService userService = new UserServiceImp();
         loginUser = userService.login(loginUser);
         if(loginUser != null){
@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
             //req.getRequestDispatcher("jsp/index.jsp").forward(req,resp);
             resp.sendRedirect(req.getContextPath()+"/jsp/index.jsp");
         }else{
-            req.setAttribute("info", "ÓÃ»§ÃûÃÜÂëÓĞÎó£¡");
+            req.setAttribute("info", "ç”¨æˆ·åå¯†ç é”™è¯¯");
             req.getRequestDispatcher("login.jsp").forward(req, resp);
         }
     }

@@ -43,6 +43,91 @@ public class AreaDAOImp implements AreaDAO{
         return null;
     }
 
+    @Override
+    public AreaBean getAreaById(int fk_class) {
+        Connection connection = DBUtil.getConnection();
+        String sql = "select * from t_area where fk_class = " + fk_class;
+        AreaBean areaBean = new AreaBean();
+        Statement st     = null;
+        ResultSet rs     = null;
+        int       reslut = 0;
+        try {
+            st = connection.createStatement();
+            rs = st.executeQuery(sql);
+
+            if (rs.next()) {
+                areaBean.setName(rs.getString("f_name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close(rs, st, connection);
+        }
+        return areaBean;
+    }
+
+
+    //得到没有条件下的所有记录的总数
+    @Override
+    public int getCounts() {
+        Connection connection = DBUtil.getConnection();
+        String    sql    = "select count(*) from t_area";
+        Statement st     = null;
+        ResultSet rs     = null;
+        int       reslut = 0;
+        try {
+            st = connection.createStatement();
+            rs = st.executeQuery(sql);
+
+            if (rs.next()) {
+                reslut = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close(rs, st, connection);
+        }
+        return reslut;
+    }
+
+    //得到没有条件下的所有记录的分页数据
+    @Override
+    public ArrayList<AreaBean> getAreas(int pageNow, int pageSize) {
+        Connection          connection = DBUtil.getConnection();
+        ArrayList<AreaBean> all        = new ArrayList<AreaBean>();
+        String sql = "select * from t_area as area  left join  t_class as class\n" +
+                "on area.fk_class = class.pk_id limit " + (pageNow - 1) * pageSize + "," + pageSize;
+        Statement st       = null;
+        ResultSet rs       = null;
+        AreaBean  areaBean = null;
+        try {
+            st = connection.createStatement();
+            rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                areaBean = new AreaBean();
+                areaBean.setId(rs.getInt("pk_id"));
+                areaBean.setName(rs.getString("f_name"));
+                areaBean.setForestType(rs.getString("f_foresttype"));
+                areaBean.setLandType(rs.getString("f_landtype"));
+                areaBean.setTreeType(rs.getString("f_treetype"));
+                ClassBean classBean = new ClassBean();
+                classBean.setName(rs.getString(8));
+                areaBean.setClassBean(classBean);
+                all.add(areaBean);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close(rs, st, connection);
+        }
+        return all;
+    }
+
+
+
+
+
 
 
     //得到满足条件的所有记录的总数
@@ -116,60 +201,5 @@ public class AreaDAOImp implements AreaDAO{
 
 
 
-    //得到没有条件下的所有记录的总数
-    @Override
-    public int getCounts(){
-        Connection connection = DBUtil.getConnection();
-        String sql = "select count(*) from t_area";
-        Statement st = null;
-        ResultSet rs = null;
-        int reslut = 0 ;
-        try {
-            st = connection.createStatement();
-            rs = st.executeQuery(sql);
 
-            if(rs.next()){
-                reslut = rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally{
-            DBUtil.close(rs,st,connection);
-        }
-        return reslut;
-    }
-
-    //得到没有条件下的所有记录的分页数据
-    @Override
-    public ArrayList<AreaBean> getAreas(int pageNow, int pageSize){
-        Connection connection = DBUtil.getConnection();
-        ArrayList<AreaBean> all = new ArrayList<AreaBean>();
-        String    sql    = "select * from t_area as area  left join  t_class as class\n" +
-                           "on area.fk_class = class.pk_id limit " + (pageNow-1)* pageSize + "," + pageSize;
-        Statement st     = null;
-        ResultSet rs     = null;
-        AreaBean areaBean = null;
-        try {
-            st = connection.createStatement();
-            rs = st.executeQuery(sql);
-
-            while (rs.next()) {
-                areaBean = new AreaBean();
-                areaBean.setId(rs.getInt("pk_id"));
-                areaBean.setName(rs.getString("f_name"));
-                areaBean.setForestType(rs.getString("f_foresttype"));
-                areaBean.setLandType(rs.getString("f_landtype"));
-                areaBean.setTreeType(rs.getString("f_treetype"));
-                ClassBean classBean = new ClassBean();
-                classBean.setName(rs.getString(8));
-                areaBean.setClassBean(classBean);
-                all.add(areaBean);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DBUtil.close(rs, st, connection);
-        }
-        return all;
-    }
 }

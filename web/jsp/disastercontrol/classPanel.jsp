@@ -1,3 +1,7 @@
+<%@ page import = "com.code.bean.AreaBean" %>
+<%@ page import = "com.code.bean.ClassBean" %>
+<%@ page import = "java.util.ArrayList" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Code.Ai
@@ -6,6 +10,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType = "text/html;charset=UTF-8" pageEncoding = "UTF-8" language = "java" %>
+
 <!DOCTYPE html>
 <html lang = "en" >
 <head >
@@ -48,30 +53,40 @@
             </table >
             <div id = "tableTD" class = "row-fluid" style = "overflow-y: auto;height: 208px;margin-top: -20px" >
                     <table class = "table table-striped table-bordered table-hover table-condensed" >
-                    <tr >
-                        <td class = "col-lg-3" >雅林一班</td >
-                        <td class = "col-lg-3" >何元庆</td >
-                        <td class = "col-lg-3" >13754821641</td >
-                        <td class = "col-lg-3" >雅林一号地区</td >
-                    </tr >
-                    <tr >
-                        <td >雅林二班</td >
-                        <td >于华龙</td >
-                        <td >13954842587</td >
-                        <td >雅安二号地区</td >
-                    </tr >
-                    <tr >
-                        <td >卧龙一班</td >
-                        <td >杨再兴</td >
-                        <td >15087564158</td >
-                        <td >卧龙二号地区</td >
-                    </tr >
-                    <tr >
-                        <td >卧龙二班</td >
-                        <td >地雷</td >
-                        <td >15246875420</td >
-                        <td >卧龙四号地区</td >
-                    </tr >
+
+                    <%--<c:if test="${requestScope.info==null}">--%>
+                        <%--<c:forEach items="${requestScope.allClasses}" var="class">--%>
+                             <%--<tr onclick = "select(this)" >--%>
+                                <%--<input type = "hidden"  value="${class.id}"/>--%>
+                                <%--<td class = "col-lg-3" >雅林一班</td >--%>
+                                <%--<td class = "col-lg-3" >何元庆</td >--%>
+                                <%--<td class = "col-lg-3" >13754821641</td >--%>
+                                <%--<td class = "col-lg-3" >雅林一号地区</td >--%>
+                            <%--</tr>--%>
+
+                        <%--</c:forEach>--%>
+                        <%--</c:if>--%>
+
+
+                        <%
+                            ArrayList<ClassBean> all = (ArrayList<ClassBean>)request.getAttribute("allClasses");
+                            for(int i = 0 ; i < all.size() ; i++){
+
+                        %>
+                            <tr onclick = "select(this)" >
+                                <input type = "hidden" value="<%=all.get(i).getId()%>"/>
+                                <td class = "col-lg-3" ><%=all.get(i).getName()%></td >
+                                <td class = "col-lg-3" ><%=all.get(i).getManager()%></td >
+                                <td class = "col-lg-3" ><%=all.get(i).getPhone()%></td >
+                                <td class = "col-lg-3" ><%=all.get(i).getAreaBean()%></td >
+                            </tr>
+                        <%
+                            }
+                        %>
+
+
+
+
 
                 </table >
             </div >
@@ -87,9 +102,14 @@
                             <span class = "glyphicon glyphicon-chevron-left" ></span >
                         </button >
                     </div >
-                    <input id = "pageNum" type = "text" class = "form-control" style =
-                            "width: 45px;height: 20px;margin-left: 2px;margin-top: 2px;float:left" />
-                    <label id = "num" name = "num" style = "margin-left: 2px" >/10</label >
+                    <input id = "pageNow" type = "text" class = "form-control" style =
+                            "width: 45px;height: 20px;margin-left: 2px;margin-top: 2px;float:left"
+                            <%--当前页数--%>
+                            value="${requestScope.pageNow}"/>
+                    <label id = "num" style = "margin-left: 2px" >
+                        <%--总的分页数--%>
+                        /${requestScope.pageNum}
+                    </label >
                     <button id = "go" class = "btn btn-sm" type = "button" style = "line-height:0px" >
                         <span class = "glyphicon glyphicon-step-forward" ></span >
                     </button >
@@ -126,21 +146,23 @@
                         <div class = " col-sm-6 col-lg-6" >
                             <div class = "input-group" >
                                 <div class = "input-group-btn" >
-                                    <button name = "name" id = "selected" type = "button" class = "btn btn-default dropdown-toggle"
+                                    <button name = "f_name" id = "selected" type = "button" class = "btn btn-default dropdown-toggle"
                                             data-toggle = "dropdown" >小班名称<span >&nbsp;</span ><span class = "caret" ></span >
                                     </button >
                                         <ul id = "ul" class = "dropdown-menu" >
-                                            <li ><a id = 'li1' name = "zone" href = "#"
+                                            <li ><a id = 'li1' name = "f_area" href = "#"
                                                     onclick = "return querySelect(this,'selected')" >负责区域</a ></li >
                                         </ul >
                                 </div >
-                                <!-- /btn-group -->
-                                <input id = "inputText" type = "text" class = "form-control" style = "width: 130px" >
+                                <%--条件输入框--%>
+                                <input id = "inputText" type = "text" class = "form-control" style = "width: 130px" value = "" >
                             </div >
                             <!-- /input-group -->
                         </div >
                         <div class = "col-lg-4 col-sm-4" style = "margin-left: 40px">
-                            <button id = "search" type = "button" class = "btn" onclick = "submitQuery('inputText')" >查找</button >
+                            <button id = "search" type = "button" class = "btn" onclick =
+                                    "submitQuery('#inputText','#classPanelDiv','../classPanel.av','1')" >查找
+                            </button >
                         </div >
                     </div >
                 </fieldset >
@@ -151,26 +173,54 @@
 </div >
 
 <script >
-    //数据有效性验证
-    $("#pageNum").keydown(function () {
-        //只能输入数字
-    });
+    <%--只能输入数字--%>
+    $('#pageNow').keydown = function (eve) {
+        if (event) {
+            if ((event.keyCode >= 48 && event.keyCode <= 57) ||
+                    (event.keyCode >= 96 && event.keyCode <= 105) ||
+                    event.keyCode == 8) {
+                return true;
+            }
+            //取消默认事件
+            return false;
+        } else {
+            if ((eve.charCode >= 48 && eve.charCode <= 57) ||
+                    (eve.charCode >= 96 && eve.charCode <= 105) ||
+                    eve.charCode == 8) {
+                return true;
+            }
+            //取消默认事件
+            return false;
+        }
+    };
 
-    //事件处理
+    //上一页事件
     $("#previousPage").click(function () {
-        //上一页点击事件
-        alert("上一页");
-    });
-    $("#nextPage").click(function () {
-        //下一页点击事件
-        alert("下一页");
-    });
-    $("#go").click(function () {
-        //跳转到指定页点击事件
-        var num = $("#pageNum").val();
-        alert(num);
+        if (${requestScope.pageNow} >1){
+            $("#classPanelDiv").load("../classPanel.av", {"pageNow": ${requestScope.pageNow} -1});
+        }
+        else{
+            alert("已是第一页！");
+        }
     });
 
+    //下一页事件
+    $("#nextPage").click(function () {
+        if (${requestScope.pageNow} <
+        ${requestScope.pageNum}){
+            //这里是一个json数据格式
+            $("#classPanelDiv").load("../classPanel.av", {"pageNow": ${requestScope.pageNow} +1});
+        }
+        else{
+            alert("已是最后一页！");
+        }
+    });
+
+    //跳转到指定页点击事件
+    $("#go").click(function () {
+        var num = $("#pageNow").val();
+        $("#classPanelDiv").load("../classPanel.av", {"pageNow": num});
+    });
     //查询模块事件
 
 </script >

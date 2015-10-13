@@ -32,7 +32,7 @@
         <!--内容-->
         <div style = "margin-left:310px;margin-top: 10px" >
             <!--表单-->
-            <form class = "form-horizontal" role = "form" action = "/areaAdd.av" method="POST" onsubmit="return check()">
+            <form class = "form-horizontal" role = "form" action = "#" method="POST" onsubmit="return check()">
                 <div id = "body" >
                     <!--第一行-->
                     <div class = "row" style = "margin-top: 20px" >
@@ -106,18 +106,7 @@
 
 
 <script >
-    //取得按钮控件中的第一个子节点的text文本值
-    function getSelect(obj, id) {
-        //下拉列表被选中的选项
-        var checked = obj.text;
-        //原来的文本
-        var str = document.getElementById(id).childNodes[0].nodeValue;
-        //交换
-        document.getElementById(id).innerHTML = checked + "<span>&nbsp;</span><span class = 'caret' ></span > ";
-        obj.text = str;
-        $("#hidden").val(checked);
-        return false;
-    }
+
 
 
     //判断输入信息
@@ -129,7 +118,7 @@
         //本地验证
         var strMessage = "";
         if (name == null || name.trim() == "") {
-            strMessage += "用户名不能为空\n";
+            strMessage += "名称不能为空\n";
         }
         if (forestType == null || forestType.trim() == "") {
             strMessage += "林地不能为空\n";
@@ -139,6 +128,15 @@
         }
         if (strMessage.length != 0) {
             alert(strMessage);
+            return false;
+        }else{
+            $("#areaAddDiv").load("../areaAdd.av",
+                    {
+                        'name': name,
+                        'forestType': forestType,
+                        'treeType': treeType,
+                        'landType': $("#hidden").val()
+                    });
             return false;
         }
     }

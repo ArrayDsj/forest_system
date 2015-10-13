@@ -26,8 +26,7 @@
         <!--内容-->
         <div style = "margin-left:50px;margin-top: 10px" >
             <!--表单-->
-            <form class = "form-horizontal" role = "form" action = "javascript:void(0)" onsubmit = "jump(
-            '#classAddDiv','disastercontrol/classPanel.jsp')" >
+            <form class = "form-horizontal" role = "form" action = "#" method = "POST" onsubmit = "return check()" >
                 <!--左边-->
                 <div id = "left" style = "width: 370px;height: 390px;float: left" >
                     <!--第一行-->
@@ -50,21 +49,24 @@
                             </div >
                         </div >
                     </div >
-                    <!--第四行-->
+                    <!--第三行-->
                     <div class = "row" style = "margin-top: 20px;margin-left: 11px" >
                         <div class = "form-group" style = "float: left" >
                             <label class = " control-label " >负责区域:</label >
                             <div class = "btn-group" style = "margin-left: 24px" >
-                                <button type = "button" class = "btn btn-default" style = "width: 120px" >一号地区</button >
-                                <button type = "button" class = "btn btn-default dropdown-toggle" data-toggle = "dropdown" >
-                                    <span class = "caret" ></span >
-                                    <span class = "sr-only" >Toggle Dropdown</span >
+                                <button name = "area" id = "selected" type = "button" class = "btn btn-default  dropdown-toggle"
+                                        data-toggle = "dropdown" style = "width: 165px" >林地<span >&nbsp;</span ><span class = "caret"
+                                        ></span >
                                 </button >
-                                <ul class = "dropdown-menu" role = "menu" >
-                                    <li ><a href = "#" >二号地区</a ></li >
-                                    <li ><a href = "#" >三号地区</a ></li >
-                                    <li ><a href = "#" >四号地区</a ></li >
+                                <ul id = "ul" class = "dropdown-menu" >
+                                    <li ><a href = "#"
+                                            onclick = "return getSelect(this,'selected','hidden')" >疏林地</a ></li >
+                                    <li ><a href = "#"
+                                            onclick = "return getSelect(this,'selected','hidden')" >灌木林</a ></li >
+                                    <li ><a href = "#"
+                                            onclick = "return getSelect(this,'selected','hidden')" >苗圃地</a ></li >
                                 </ul >
+                                <input id = "hidden" name = "hidden" type = "hidden" value = "林地" />
                             </div >
                         </div >
                     </div >
@@ -76,20 +78,20 @@
                     <!--第一行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <div class = "form-group" style = "float: left" >
-                            <label for = "principal" class = "col-lg-4 col-sm-4   control-label " >负责人:</label >
+                            <label for = "manager" class = "col-lg-4 col-sm-4   control-label " >负责人:</label >
 
                             <div class = "col-lg-8 col-sm-8" >
-                                <input type = "text" class = "form-control" id = "principal" >
+                                <input type = "text" class = "form-control" id = "manager" >
                             </div >
                         </div >
                     </div >
                     <!--第二行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <div class = "form-group" style = "float: left" >
-                            <label for = "num" class = "col-lg-4 col-sm-4   control-label " >人员数量:</label >
+                            <label for = "number" class = "col-lg-4 col-sm-4   control-label " >人员数量:</label >
 
                             <div class = "col-lg-8 col-sm-8" >
-                                <input type = "text" class = "form-control" id = "num" >
+                                <input type = "text" class = "form-control" id = "number" >
                             </div >
                         </div >
                     </div >
@@ -108,5 +110,47 @@
         </div >
     </div >
 </div >
+
+<script >
+
+
+
+    //判断输入信息
+    function check() {
+        var name = $("#name").val();
+        var phone = $("#phone").val();
+        var manager = $("#manager").val();
+        var number = $("#number").val();
+        //本地验证
+        var strMessage = "";
+        if (name == null || name.trim() == "") {
+            strMessage += "名称不能为空\n";
+        }
+        if (phone == null || phone.trim() == "") {
+            strMessage += "电话不能为空\n";
+        }
+        if (manager == null || manager.trim() == "") {
+            strMessage += "负责人不能为空\n";
+        }if (number == null || number.trim() == "") {
+            strMessage += "人数不能为空\n";
+        }
+        if (strMessage.length != 0) {
+            alert(strMessage);
+            return false;
+        } else {
+            $("#classAddDiv").load("../classAdd.av",
+                    {
+                        'name': name,
+                        'phone': phone,
+                        'manager': manager,
+                        'number': number,
+                        'area': $("#hidden").val()
+                    });
+            return false;
+        }
+    }
+
+
+</script >
 </body >
 </html >

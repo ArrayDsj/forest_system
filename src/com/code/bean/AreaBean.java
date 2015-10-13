@@ -74,4 +74,16 @@ public class AreaBean implements Serializable{
     public void setTreeType(String treeType) {
         this.treeType = treeType;
     }
+
+    @Override
+    public String toString() {
+        return "AreaBean{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", forestType='" + forestType + '\'' +
+                ", landType='" + landType + '\'' +
+                ", treeType='" + treeType + '\'' +
+                ", classBean=" + classBean +
+                '}';
+    }
 }

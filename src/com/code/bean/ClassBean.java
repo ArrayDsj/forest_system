@@ -14,6 +14,15 @@ public class ClassBean implements Serializable{
     private String phone;
     private int number;
     private Date foundDay;
+    private String areaBean;
+
+    public String getAreaBean() {
+        return areaBean;
+    }
+
+    public void setAreaBean(String areaBean) {
+        this.areaBean = areaBean;
+    }
 
     public Date getFoundDay() {
         return foundDay;
@@ -61,5 +70,18 @@ public class ClassBean implements Serializable{
 
     public void setNumber(int number) {
         this.number = number;
+    }
+
+    @Override
+    public String toString() {
+        return "ClassBean{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", manager='" + manager + '\'' +
+                ", phone='" + phone + '\'' +
+                ", number=" + number +
+                ", foundDay=" + foundDay +
+                ", areaBean=" + areaBean +
+                '}';
     }
 }

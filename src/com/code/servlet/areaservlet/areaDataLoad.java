@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 /**
  * Created by CodeA on 2015/10/12.
+ * 每次点击index.jsp中的areaPanel将调用此servlet
+ * 负责初始化数据
  */
 public class areaDataLoad extends HttpServlet{
     @Override
@@ -22,9 +24,8 @@ public class areaDataLoad extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         System.out.println("areaDataLoad.java:success");
-
-        //分页条件
 
         AreaService areaService = new AreaServiceImp();
         // 初始页
@@ -37,45 +38,33 @@ public class areaDataLoad extends HttpServlet{
         int pageNum = 0;
         //分页大小
         int pageSize = 1;
-        System.out.println(pageNow);
         // 数据
-        ArrayList<AreaBean> all = null;
+        ArrayList<AreaBean> allAreas = null;
 
         // 得到查询条件
         String query = req.getParameter("query");
-        System.out.println(query);
+
         //1. 判断有无条件(无条件,初始化;有条件,按条件分页查询)
         if(query == null){
             //按无条件查询数据
-            all = areaService.getInitData(pageNow,pageSize);
-            if(all != null){
-                counts = all.get(all.size()-1).getId();
-                //计算总页数
-                pageNum = (int)Math.ceil(counts / (pageSize * 1.0));
-                req.setAttribute("pageNum",pageNum);
-                req.setAttribute("pageNow",pageNow);
-                req.setAttribute("allAreas", all);
-            }else
-                req.setAttribute("info", "无数据");
+            allAreas = areaService.getInitData(pageNow,pageSize);
         }else{
-            req.setCharacterEncoding("UTF-8");
-            //有条件查询
+            //按条件查询
             String str = req.getParameter("str");
-
             str = new String(str.getBytes(),"UTF-8");
-
-            System.out.println(str);
-            all = areaService.getLimitData(query, str, pageNow,pageSize);
-            if (all != null) {
-                counts = all.get(all.size() - 1).getId();
-                //计算总页数
-                pageNum = (int) Math.ceil(counts / (pageSize * 1.0));
-                req.setAttribute("pageNum", pageNum);
-                req.setAttribute("pageNow", pageNow);
-                req.setAttribute("allAreas", all);
-            }else
-                req.setAttribute("info", "无数据");
+            //有条件查询
+            allAreas = areaService.getLimitData(query, str, pageNow,pageSize);
         }
+
+        if (allAreas != null) {
+            counts = allAreas.get(allAreas.size() - 1).getId();
+            //计算总页数
+            pageNum = (int) Math.ceil(counts / (pageSize * 1.0));
+            req.setAttribute("pageNum", pageNum);
+            req.setAttribute("pageNow", pageNow);
+            req.setAttribute("allAreas", allAreas);
+        } else req.setAttribute("info", "无数据");
+        System.out.println(allAreas.get(0));
         //2. 跳转到areaPanel.jsp
         req.getRequestDispatcher("jsp/disastercontrol/areaPanel.jsp").forward(req, resp);
     }

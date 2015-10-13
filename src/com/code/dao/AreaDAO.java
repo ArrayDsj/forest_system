@@ -13,6 +13,10 @@ public interface AreaDAO {
     public boolean addArea(AreaBean areaBean);
     //得到所有fk_class为空的地区(用于添加班级时初始化地区下拉列表)
     public ArrayList<AreaBean> getAreasByClass();
+    //通过fk_class查询AreaBean
+    public AreaBean getAreaById(int fk_class);
+
+
 
     //得到没有条件下的所有记录的总数
     public int getCounts();

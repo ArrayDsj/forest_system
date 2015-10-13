@@ -64,7 +64,9 @@ function querySelect(obj, id) {
 
 <!--查询按钮-->
 function submitQuery(id1,id2,url,now) {
+    //得到条件
     var str = $(id1).val();
+    //得到模糊查询值
     str = "'%" + str + "%'";
     alert('?query=' + query + '&str=' + str);
     $(id2).load(url, {'pageNow': now,'query':query,'str':str});
@@ -90,4 +92,23 @@ function selectTime(id) {
 }
 
 
+/*********************************************************************/
 
+//表格点击事件
+function select(obj) {
+    alert(obj.firstElementChild.value);
+}
+
+/*********************************************************************/
+//取得按钮控件中的第一个子节点的text文本值
+function getSelect(obj, id, id1) {
+    //下拉列表被选中的选项
+    var checked = obj.text;
+    //原来的文本
+    var str = document.getElementById(id).childNodes[0].nodeValue;
+    //交换
+    document.getElementById(id).innerHTML = checked + "<span>&nbsp;</span><span class = 'caret' ></span > ";
+    obj.text = str;
+    $("#" + id1).val(checked);
+    return false;
+}
