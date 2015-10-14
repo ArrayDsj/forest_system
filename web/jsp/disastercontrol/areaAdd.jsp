@@ -137,7 +137,7 @@
                         'treeType': treeType,
                         'landType': $("#hidden").val()
                     },function(data){
-
+                        alert("aaaa");
                     });
             return false;
         }

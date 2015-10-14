@@ -70,4 +70,15 @@ public class UserBean implements Serializable{
     public void setRight(int right) {
         this.right = right;
     }
+
+    @Override
+    public String toString() {
+        return "UserBean{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", realName='" + realName + '\'' +
+                ", right=" + right +
+                '}';
+    }
 }

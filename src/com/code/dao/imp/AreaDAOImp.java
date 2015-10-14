@@ -65,7 +65,9 @@ public class AreaDAOImp implements AreaDAO{
     //按area表id查找area对象
     public AreaBean getAreaByPkID(int pk_id){
         Connection connection = DBUtil.getConnection();
-        String    sql      = "select * from t_area where pk_id = " + pk_id;
+        String    sql      = "select * from t_area as area  left join  t_class as class\n" +
+                "on area.fk_class = class.pk_id\n" +
+                "where area.pk_id = " + pk_id;
         AreaBean  areaBean = new AreaBean();
         Statement st       = null;
         ResultSet rs       = null;
@@ -75,8 +77,12 @@ public class AreaDAOImp implements AreaDAO{
             rs = st.executeQuery(sql);
 
             if (rs.next()) {
-                areaBean.setId(rs.getInt("pk_id"));
-                areaBean.setName(rs.getString("f_name"));
+                areaBean.setId(rs.getInt("area.pk_id"));
+                areaBean.setName(rs.getString("area.f_name"));
+                ClassBean classBean = new ClassBean();
+                classBean.setId(rs.getInt("class.pk_id"));
+                classBean.setName(rs.getString("class.f_name"));
+                areaBean.setClassBean(classBean);
             }
         } catch (SQLException e) {
             e.printStackTrace();

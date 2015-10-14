@@ -21,7 +21,7 @@ public class areaAdd extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("areaAdd.java:success");
+        System.out.println("AreaAdd.java:success");
         String landType = req.getParameter("landType");
         String forestType = req.getParameter("forestType");
         String name = req.getParameter("name");
