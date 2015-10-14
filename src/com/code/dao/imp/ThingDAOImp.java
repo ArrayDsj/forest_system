@@ -39,8 +39,19 @@ public class ThingDAOImp implements ThingDAO{
 
     @Override
     public int getCountsByCondtion(String query, String str) {
+        if(query.equals("f_name")){
+            query = "t";
+        }
+        query += ".f_name";
         Connection connection = DBUtil.getConnection();
-        String sql = "select count(*) from t_thing where " + query + " like " + str;
+        String sql = "select * from \n" +
+                "t_thing t, t_findway f, \n" +
+                "t_stage s, t_disastertype d, t_area a\n" +
+                "where t.fk_findway=f.pk_id\n" +
+                "and t.fk_stage=s.pk_id\n" +
+                "and t.fk_area=a.pk_id\n" +
+                "and t.fk_disastertype=d.pk_id \n" +
+                "and " + query + " like " + str + "\n";
         ResultSet rs = null;
         int result = -1;
         Statement st = null;
@@ -135,6 +146,10 @@ public class ThingDAOImp implements ThingDAO{
 
     @Override
     public ArrayList<ThingBean> getThingsByCondtion(String query, String str, int pageNow, int pageSize) {
+        if (query.equals("f_name")) {
+            query = "t";
+        }
+        query += ".f_name";
         Connection connection = DBUtil.getConnection();
         String sql = "select * from \n" +
                     "t_thing t, t_findway f, \n" +
@@ -143,7 +158,7 @@ public class ThingDAOImp implements ThingDAO{
                     "and t.fk_stage=s.pk_id\n" +
                     "and t.fk_area=a.pk_id\n" +
                     "and t.fk_disastertype=d.pk_id \n" +
-                     "where " + query + " like " + str + "\n" +
+                     "and " + query + " like " + str + "\n" +
                      "limit " + (pageNow - 1) * pageSize + "," + pageSize;;
         ResultSet rs = null;
         Statement st = null;

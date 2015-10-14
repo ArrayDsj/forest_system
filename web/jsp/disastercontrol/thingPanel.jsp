@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType = "text/html;charset=UTF-8" pageEncoding = "UTF-8" language = "java" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang = "en" >
 <head >
@@ -51,34 +52,19 @@
 
             <div id = "tableTD" class = "row-fluid" style = "overflow-y: auto;height: 208px;margin-top: -20px" >
                     <table class = "table table-striped table-bordered table-hover table-condensed" >
-                    <tr >
-                        <td class = "col-lg-2" >正西松毛虫事件</td >
-                        <td class = "col-lg-3" >2013-2-3</td >
-                        <td class = "col-lg-3" >雅安一号地区</td >
-                        <td class = "col-lg-2" >硼砂敌百虫,黑光灯诱惑</td >
-                        <td class = "col-lg-2" >已经得到控制</td >
-                    </tr >
-                    <tr >
-                        <td >雅林鼠害事件</td >
-                        <td >2013-2-3</td >
-                        <td >雅安三号地区</td >
-                        <td >大量放置捕捉老鼠的</td >
-                        <td >已经得到控制</td >
-                    </tr >
-                    <tr >
-                        <td >攀枝花枯萎病事件</td >
-                        <td >2013-2-3</td >
-                        <td >攀枝花一号地区</td >
-                        <td >喷洒波美度十六合计</td >
-                        <td >防治中</td >
-                    </tr >
-                    <tr >
-                        <td >成都松林病害事件</td >
-                        <td >2013-2-3</td >
-                        <td >成都城北区</td >
-                        <td >喷洒多菌灵</td >
-                        <td >无法解决,申请专家会审</td >
-                    </tr >
+
+                    <c:if test = "${requestScope.info == null}" >
+                    <c:forEach items = "${requestScope.allThings}" var = "thing" >
+                        <tr onclick = "select(this)" >
+                            <input type = "hidden" value = "${thing.id}" />
+                            <td class = "col-md-2" >${thing.name}</td >
+                            <td class = "col-md-2" >${thing.foundDay}</td >
+                            <td class = "col-md-2" >${thing.areaBean.name}</td >
+                            <td class = "col-md-3" >${thing.scheme}</td >
+                            <td class = "col-md-2" >${thing.stage.name}</td >
+                        </tr >
+                    </c:forEach >
+                    </c:if >
 
                 </table >
             </div >
@@ -95,8 +81,14 @@
                         </button >
                     </div >
                     <input id = "pageNum" type = "text" class = "form-control" style =
-                            "width: 45px;height: 20px;margin-left: 2px;margin-top: 2px;float:left" />
-                    <label id = "num" name = "num" style = "margin-left: 2px" >/10</label >
+                            "width: 45px;height: 25px;margin-left: 2px;margin-top: 2px;float:left"
+                    <%--当前页数--%>
+                           value = "${requestScope.pageNow}"
+                            />
+                    <label id = "num" name = "num" style = "margin-left: 2px" >
+                        <%--总的分页数--%>
+                        /${requestScope.pageNum}
+                    </label >
                     <button id = "go" class = "btn btn-sm" type = "button" style = "line-height:0px" >
                         <span class = "glyphicon glyphicon-step-forward" ></span >
                     </button >
@@ -111,7 +103,8 @@
         <div id = "leftBtns" style = "float: left" >
             <div class = "row-fluid" >
                 <div class = "col-lg-3 col-sm-2 col-sm-offset-2" >
-                    <button class = "btn" type = "button" onclick = "jump('#thingPanelDiv','disastercontrol/thingAdd.jsp')" >添加事件</button >
+                    <button class = "btn" type = "button" onclick = " addThing()" >添加事件
+                    </button >
                 </div >
                 <div class = "col-lg-3 col-sm-2 col-sm-offset-3 col-lg-offset-2" >
                     <button class = "btn" type = "button" onclick = "jump('#thingPanelDiv','disastercontrol/thingInfo.jsp')" >查看事件信息</button >
@@ -136,23 +129,23 @@
                         <div class = "col-xs-10 col-sm-6 col-lg-6" >
                             <div class = "input-group" >
                                 <div class = "input-group-btn" >
-                                    <button name = "name" id = "selected" type = "button" class = "btn btn-default dropdown-toggle"
+                                    <button name = "t" id = "selected" type = "button" class = "btn btn-default dropdown-toggle"
                                             data-toggle = "dropdown" >事件名称<span >&nbsp;</span ><span class = "caret" ></span >
                                     </button >
                                         <ul id = "ul" class = "dropdown-menu" >
-                                            <li ><a id = 'li1' name = "state" href = "#"
+                                            <li ><a id = 'li1' name = "s" href = "#"
                                                     onclick = "return querySelect(this,'selected')" >灾情状况</a ></li >
-                                            <li ><a id = 'li2' name = "place" href = "#"
+                                            <li ><a id = 'li2' name = "a" href = "#"
                                                     onclick = "return querySelect(this,'selected')" >发生位置</a ></li >
                                         </ul >
                                 </div >
                                 <!-- /btn-group -->
-                                <input id = "inputText" type = "text" class = "form-control" style = "width: 130px" >
+                                <input id = "inputText" type = "text" class = "form-control" style = "width: 130px" value="">
                             </div >
                             <!-- /input-group -->
                         </div >
                         <div class = "col-lg-5 col-sm-5" style = "margin-left: 20px">
-                            <button  type = "button" class = "btn" onclick = "submitQuery('inputText')" >查找</button >
+                            <button  type = "button" class = "btn" onclick = "submitQuery('#inputText','#thingPanelDiv','../thingPanel.av','1')" >查找</button >
                         </div >
                     </div >
                 </fieldset >
@@ -198,6 +191,33 @@
 </div >
 
 <script type = "text/javascript" >
+
+
+//        $.ajax({
+//            type: "post",
+//            //同步加载
+//            async: false,
+//            //请求data.jsp
+//            url: "../thingAdd.av",
+//            //向data.jsp传递参数
+//            data: {"post":"aaa"},
+//            //返回的值时json对象
+//            dataType: "json",
+//            //成功之后要做的事 data是返回的数据
+//            success: function (data) {
+//                alert("aaaa");
+//            }
+//        });
+function addThing() {
+    $("#thingPanelDiv").load("../thingAdd.av", {"time": "time"}, function (data) {
+
+
+//        jump('#thingPanelDiv', 'disastercontrol/thingAdd.jsp');
+    })
+
+}
+
+
     function ask() {
         alert("专家会审");
     }
@@ -207,19 +227,41 @@
     });
 
     //事件处理
+    //上一页事件
     $("#previousPage").click(function () {
-        //上一页点击事件
-        alert("上一页");
+        if (${requestScope.pageNow} >
+        1
+        )
+        {
+            $("#thingPanelDiv").load("../thingPanel.av", {"pageNow": ${requestScope.pageNow} -1});
+        }
+        else
+        {
+            alert("已是第一页！");
+        }
     });
+
+    //下一页事件
     $("#nextPage").click(function () {
-        //下一页点击事件
-        alert("下一页");
+        if (${requestScope.pageNow} <
+        ${requestScope.pageNum})
+        {
+            //这里是一个json数据格式
+            $("#thingPanelDiv").load("../thingPanel.av", {"pageNow": ${requestScope.pageNow} +1});
+        }
+        else
+        {
+            alert("已是最后一页！");
+        }
     });
+
+    //跳转到指定页点击事件
     $("#go").click(function () {
-        //跳转到指定页点击事件
-        var num = $("#pageNum").val();
-        alert(num);
+        var num = $("#pageNow").val();
+        $("#thingPanelDiv").load("../thingPanel.av", {"pageNow": num});
     });
+
+
 
     function startDate() {
         $("#start").click();

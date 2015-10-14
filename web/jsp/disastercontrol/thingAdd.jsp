@@ -1,3 +1,5 @@
+<%@ page import = "com.code.bean.StageBean" %><%@ page import = "java.util.ArrayList" %><%@ page import = "com.code.bean.DisasterBean" %><%@ page
+        import = "com.code.bean.FindwayBean" %><%@ page import = "com.code.bean.AreaBean" %>
 <%--
   Created by IntelliJ IDEA.
   User: Code.Ai
@@ -6,6 +8,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType = "text/html;charset=UTF-8" pageEncoding = "UTF-8" language = "java" %>
+<%
+    ArrayList<StageBean> stageData = (ArrayList<StageBean>)request.getAttribute("stageData");
+    ArrayList<DisasterBean> disasterData = (ArrayList<DisasterBean>)request.getAttribute("disasterData");
+    ArrayList<FindwayBean> findwayData = (ArrayList<FindwayBean>)request.getAttribute("findwayData");
+    ArrayList<AreaBean> areaData = (ArrayList<AreaBean>)request.getAttribute("areaData");
+%>
 <!DOCTYPE html>
 <html lang = "en" >
 <head >
@@ -25,8 +33,8 @@
         </div >
 
         <div style = "margin-left:50px;margin-top: 10px" >
-            <form class = "form-horizontal" role = "form" action = "javascript:void(0)" onsubmit = "jump(
-            '#thingAddDiv','disastercontrol/thingPanel.jsp')" >
+            <%--<form class = "form-horizontal" role = "form" action = "javascript:void(0)" onsubmit = "jump(--%>
+            <%--'#thingAddDiv','disastercontrol/thingPanel.jsp')" >--%>
                 <!--left-->
                 <div id = "left" style = "width: 370px;height: 390px;float: left;" >
                     <!--第一行-->
@@ -52,15 +60,28 @@
                         <div class = "form-group" style = "float: left" >
                             <label class = " control-label " >灾情阶段:</label >
                             <div class = "btn-group" style = "margin-left: 24px" >
-                                <button type = "button" class = "btn btn-default" style = "width: 120px" >已经得到控制</button >
-                                <button type = "button" class = "btn btn-default dropdown-toggle" data-toggle = "dropdown" >
+
+
+                                <button id = "stageDataSelect" value = "<%=stageData.get(0).getId()%>" type = "button" class = "btn btn-default"
+                                        style = "width: 120px" ><%=stageData.get(0).getName()%></button >
+                                <button type = "button" class = "btn btn-default dropdown-toggle" data-toggle = "dropdown" style = "width:
+                                27px;height: 34px" >
                                     <span class = "caret" ></span >
                                     <span class = "sr-only" >Toggle Dropdown</span >
                                 </button >
                                 <ul class = "dropdown-menu" role = "menu" >
-                                    <li ><a href = "#" >防治中</a ></li >
-                                    <li ><a href = "#" >无法解决,申请专家会商</a ></li >
+                                <%
+                                    for (int i = 1; i < stageData.size(); i++) {
+                                %>
+                                    <li ><a href = "#" value = "<%=stageData.get(i).getId()%>"
+                                            onclick = "return selectOption(this,'#stageDataSelect','#stageDataHidden')" ><%=stageData.get(i).getName()%></a ></li >
+                                <%
+                                    }
+                                %>
                                 </ul >
+                                <input id = "stageDataHidden" name = "hidden" type = "hidden" value = "<%=stageData.get(0).getId()%>" />
+
+
                             </div >
                         </div >
                     </div >
@@ -81,16 +102,30 @@
                             <label class = " control-label " >发生位置:</label >
 
                             <div class = "btn-group" style = "margin-left: 24px" >
-                                <button type = "button" class = "btn btn-default" style = "width: 120px" >一号地区</button >
-                                <button type = "button" class = "btn btn-default dropdown-toggle" data-toggle = "dropdown" >
+                                <button id = "areaDataselect"
+                                        value = "<%=areaData.get(0).getId() + "&" + areaData.get(0).getClassBean().getName()%>"
+                                        type = "button" class = "btn btn-default" style = "width: 120px" >
+                                    <%=areaData.get(0).getName()%>
+                                </button >
+                                <button type = "button" class = "btn btn-default dropdown-toggle" data-toggle = "dropdown" style = "width:
+                                27px;height: 34px" >
                                     <span class = "caret" ></span >
                                     <span class = "sr-only" >Toggle Dropdown</span >
                                 </button >
                                 <ul class = "dropdown-menu" role = "menu" >
-                                    <li ><a href = "#" >二号地区</a ></li >
-                                    <li ><a href = "#" >三号地区</a ></li >
-                                    <li ><a href = "#" >四号地区</a ></li >
+                                <%
+                                    for (int i = 1; i < areaData.size(); i++) {
+                                %>
+                                    <li ><a href = "#"
+                                            value = "<%=areaData.get(i).getId() + "&" + areaData.get(i).getClassBean().getName()%>"
+                                            onclick = "return selectArea(this,'#areaDataselect','#areaDataHidden')" ><%=areaData.get(i).getName()%></a ></li >
+                                <%
+                                    }
+                                %>
                                 </ul >
+                                <input id = "areaDataHidden" name = "hidden" type = "hidden"
+                                       value = "<%=areaData.get(0).getId() + "&" + areaData.get(0).getClassBean().getName()%>" />
+
                             </div >
                         </div >
                     </div >
@@ -128,7 +163,7 @@
                                 <input id = "inputImg" type = "text" class = "form-control" style = "width: 150px" />
                             </div >
                             <div class = "col-lg-4 col-sm-4" style = "float: left;margin-left: 10px" >
-                                <button class = "btn btn-default" onclick = "browse()" >浏览</button >
+                                <button class = "btn btn-default" onclick = "browse('#img','#inputImg')" >浏览</button >
                             </div >
                         </div >
                     </div >
@@ -140,15 +175,25 @@
                             <label class = " control-label " >灾情类型:</label >
 
                             <div class = "btn-group" style = "margin-left: 24px" >
-                                <button type = "button" class = "btn btn-default" style = "width: 120px" >虫害</button >
-                                <button type = "button" class = "btn btn-default dropdown-toggle" data-toggle = "dropdown" >
+                                <button id = "disasterDataSelected" value = "<%=disasterData.get(0).getId()%>" type = "button" class = "btn btn-default"
+                                        style = "width: 120px" ><%=disasterData.get(0).getName()%></button >
+                                <button type = "button" class = "btn btn-default dropdown-toggle" data-toggle = "dropdown" style = "width:
+                                27px;height: 34px" >
                                     <span class = "caret" ></span >
                                     <span class = "sr-only" >Toggle Dropdown</span >
                                 </button >
                                 <ul class = "dropdown-menu" role = "menu" >
-                                    <li ><a href = "#" >鼠害</a ></li >
-                                    <li ><a href = "#" >病害</a ></li >
+                                <%
+                                    for (int i = 1; i < disasterData.size(); i++) {
+                                %>
+                                    <li ><a href = "#" value = "<%=disasterData.get(i).getId()%>"
+                                            onclick = "return selectOption(this,'#disasterDataSelected','#disasterDataHidden')" ><%=disasterData.get(i).getName()%></a ></li >
+                                <%
+                                    }
+                                %>
                                 </ul >
+                                <input id = "disasterDataHidden" name = "hidden" type = "hidden" value =
+                                        "<%=disasterData.get(0).getId()%>" />
                             </div >
                         </div >
                     </div >
@@ -159,34 +204,38 @@
                             <label class = " control-label " >发现途径:</label >
 
                             <div class = "btn-group" style = "margin-left: 24px" >
-                                <button type = "button" class = "btn btn-default" style = "width: 120px" >小班巡逻发现</button >
-                                <button type = "button" class = "btn btn-default dropdown-toggle" data-toggle = "dropdown" >
+
+
+
+                                <button id = "selected" value= "<%=findwayData.get(0).getId()%>" type = "button" class = "btn btn-default" style = "width: 120px" ><%=findwayData.get(0).getName()%></button >
+                                <button type = "button" class = "btn btn-default dropdown-toggle" data-toggle = "dropdown" style = "width:
+                                27px;height: 34px">
                                     <span class = "caret" ></span >
                                     <span class = "sr-only" >Toggle Dropdown</span >
                                 </button >
                                 <ul class = "dropdown-menu" role = "menu" >
-                                    <li ><a href = "#" >公众发现</a ></li >
-                                    <li ><a href = "#" >上级部门通报</a ></li >
+                                <%
+                                    for (int i = 1; i < findwayData.size(); i++) {
+                                %>
+                                    <li ><a href = "#" value = "<%=findwayData.get(i).getId()%>"
+                                            onclick = "return selectOption(this,'#selected','#hidden')"><%=findwayData.get(i).getName()%></a ></li >
+                                <%
+                                    }
+                                %>
                                 </ul >
+                                <input id = "hidden" name = "hidden" type = "hidden" value = "<%=findwayData.get(0).getId()%>" />
+
                             </div >
                         </div >
                     </div >
 
                     <!--第四行-->
-                    <div class = "row" style = "margin-top: 20px;margin-left: 11px" >
+                    <div class = "row" style = "margin-top: 10px;margin-left: -25px" >
                         <div class = "form-group" style = "float: left" >
-                            <label class = " control-label " >所在小班:</label >
-
-                            <div class = "btn-group" style = "margin-left: 24px" >
-                                <button type = "button" class = "btn btn-default" style = "width: 120px" >1</button >
-                                <button type = "button" class = "btn btn-default dropdown-toggle" data-toggle = "dropdown" >
-                                    <span class = "caret" ></span >
-                                    <span class = "sr-only" >Toggle Dropdown</span >
-                                </button >
-                                <ul class = "dropdown-menu" role = "menu" >
-                                    <li ><a href = "#" >2</a ></li >
-                                    <li ><a href = "#" >3</a ></li >
-                                </ul >
+                            <label for = "thingName" class = "col-lg-4 col-sm-4   control-label " >所在班级:</label >
+                            <div class = "col-lg-8 col-sm-8" >
+                                <input type = "text" class = "form-control" id = "className" disabled = "disabled"
+                                       value="<%=areaData.get(0).getClassBean().getName()%>"/>
                             </div >
                         </div >
                     </div >
@@ -217,26 +266,48 @@
                     <div class = "row" >
                         <div class = "form-group" >
                             <div class = "col-sm-offset-5 col-sm-5" style = "margin-top:10px" >
-                                <button type = "submit" class = "btn btn-default" >添加</button >
+                                <button type = "button" class = "btn btn-default" >添加</button >
                             </div >
                         </div >
                     </div >
                 </div >
-            </form >
+            <%--</form >--%>
         </div >
     </div >
 </div >
 
 
 <script type = "text/javascript" >
-    function browse() {
-        //调用文件选择组件的默认点击事件
-        $("#img").click();
-        $("#img").change(function () {
-            //给input设置值
-            $("#inputImg").val($("#img").val());
-        });
-    }
+
+function selectArea(liObj, btnId, hidden){
+    //下拉列表被选中的选项
+    var liText = liObj.text;
+    //得到选中的下拉列表中的value
+    var liValue = liObj.getAttribute("value");
+    //原来的文本
+    var btnText = $(btnId).text();
+    //原来的value
+    var btnValue = $(btnId).val();
+    //交换
+    $(btnId).text(liText);
+    $(btnId).val(liValue);
+    liObj.text = btnText;
+    liObj.setAttribute("value", btnValue);
+    $(hidden).val($(btnId).val());
+
+
+    //设置班级
+    var strArray = $(hidden).val().split("&");
+    var className = strArray[1];
+    className = isNull(className);
+    $("#className").val(className);
+    return false;
+}
+
+
+
+
+
 </script >
 </body >
 </html >

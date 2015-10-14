@@ -20,4 +20,5 @@ public interface AreaService {
     public ArrayList<AreaBean> getAreas();
 
 
+    ArrayList<AreaBean> getAllAreas();
 }

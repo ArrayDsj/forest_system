@@ -44,7 +44,7 @@
                         <ul class = "submenu" >
                             <li ><a href = "#区域一览" onclick = "jump('#otherHtml','../areaPanel.av','1')">区域一览</a ></li >
                             <li ><a href = "#小班管理" onclick = "jump('#otherHtml','../classPanel.av','1')" >小班管理</a ></li >
-                            <li ><a href = "#thingPanel" onclick = "jump('#otherHtml','../thingPanel.av',1)" >事件记录</a ></li >
+                            <li ><a href = "#事件记录" onclick = "jump('#otherHtml','../thingPanel.av','1')" >事件记录</a ></li >
                         </ul >
                     </li >
                     <li >

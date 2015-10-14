@@ -112,3 +112,55 @@ function getSelect(obj, id, id1) {
     $("#" + id1).val(checked);
     return false;
 }
+
+
+/*********************************************************************/
+/**
+ * 不带输入框的下拉列表
+ * @param liObj
+ * @param btnId
+ * @param hidden
+ * @returns {boolean}
+ */
+function selectOption(liObj, btnId, hidden) {
+    //下拉列表被选中的选项
+    var liText = liObj.text;
+    //得到选中的下拉列表中的value
+    var liValue = liObj.getAttribute("value");
+    //原来的文本
+    var btnText = $(btnId).text();
+    //原来的value
+    var btnValue = $(btnId).val();
+    //交换
+    $(btnId).text(liText);
+    $(btnId).val(liValue);
+    liObj.text = btnText;
+    liObj.setAttribute("value", btnValue);
+    $(hidden).val($(btnId).val());
+    return false;
+}
+
+/*********************************************************************/
+/**
+ * 图片选择控件
+ * @param img
+ * @param inputImg
+ */
+function browse(img, inputImg) {
+    //调用文件选择组件的默认点击事件
+    $(img).click();
+    $(img).change(function () {
+        //给input设置值
+        $(inputImg).val($(img).val());
+    });
+}
+
+/*********************************************************************/
+/**
+ * 非空验证
+ * @param data
+ * @returns {*}
+ */
+function isNull(data) {
+    return (data == "" || data == undefined || data == "null") ? "暂无" : data;
+}

@@ -58,4 +58,10 @@ public class AreaServiceImp implements AreaService{
         AreaDAO areaDao = new AreaDAOImp();
         return areaDao.getAreasByClass();
     }
+
+    @Override
+    public ArrayList<AreaBean> getAllAreas(){
+        AreaDAO areaDao = new AreaDAOImp();
+        return areaDao.getAllAreas();
+    }
 }

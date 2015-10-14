@@ -64,7 +64,7 @@ public class thingDataLoad extends HttpServlet {
             req.setAttribute("pageNow", pageNow);
             req.setAttribute("allThings", allThings);
         } else req.setAttribute("info", "无数据");
-        System.out.println(allThings.get(0));
+        //System.out.println(allThings.get(0));
         //2. 跳转到areaPanel.jsp
         req.getRequestDispatcher("jsp/disastercontrol/thingPanel.jsp").forward(req, resp);
     }

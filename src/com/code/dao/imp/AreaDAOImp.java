@@ -115,6 +115,43 @@ public class AreaDAOImp implements AreaDAO{
         return areaBean;
     }
 
+    //得到全部的地区信息
+    @Override
+    public ArrayList<AreaBean> getAllAreas(){
+        Connection          connection = DBUtil.getConnection();
+        ArrayList<AreaBean> all        = new ArrayList<AreaBean>();
+        String    sql      = "select * from t_area as area  left join  t_class as class\n" +
+                                "on area.fk_class = class.pk_id\n";
+        Statement st       = null;
+        ResultSet rs       = null;
+        AreaBean  areaBean = null;
+        try {
+            st = connection.createStatement();
+            rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                areaBean = new AreaBean();
+                areaBean.setId(rs.getInt("area.pk_id"));
+                areaBean.setName(rs.getString("area.f_name"));
+                ClassBean classBean = new ClassBean();
+                classBean.setId(rs.getInt("class.pk_id"));
+                classBean.setName(rs.getString("class.f_name"));
+                areaBean.setClassBean(classBean);
+                all.add(areaBean);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close(rs, st, connection);
+        }
+        return all;
+    }
+
+
+
+
+
+
 
     //得到没有条件下的所有记录的总数
     @Override

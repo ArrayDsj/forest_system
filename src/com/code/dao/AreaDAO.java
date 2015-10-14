@@ -17,6 +17,8 @@ public interface AreaDAO {
     public AreaBean getAreaById(int fk_class);
 
 
+    //得到全部的地区信息
+    public ArrayList<AreaBean> getAllAreas();
 
     //得到没有条件下的所有记录的总数
     public int getCounts();
