@@ -37,7 +37,7 @@ public class areaDataLoad extends HttpServlet{
         //总页数
         int pageNum = 0;
         //分页大小
-        int pageSize = 1;
+        int pageSize = 2;
         // 数据
         ArrayList<AreaBean> allAreas = null;
 

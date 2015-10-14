@@ -17,7 +17,6 @@ public class AreaDAOImp implements AreaDAO{
         Connection connection = DBUtil.getConnection();
         String sql = "insert into t_area(f_name,f_foresttype,f_landtype,f_treetype) \n" +
                         "values(?,?,?,?) ";
-
         PreparedStatement ps = null;
         int result = -1 ;
         try {
@@ -26,23 +25,67 @@ public class AreaDAOImp implements AreaDAO{
             ps.setString(2, areaBean.getForestType());
             ps.setString(3, areaBean.getLandType());
             ps.setString(4, areaBean.getTreeType());
-
             result = ps.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally{
+            DBUtil.close(ps,connection);
         }
-        if(result != 1){
-            return false;
-        }
-        return true;
+        return result == 1;
     }
 
+    //初始化下拉列表是使用
     @Override
     public ArrayList<AreaBean> getAreasByClass() {
-        return null;
+        Connection          connection = DBUtil.getConnection();
+        ArrayList<AreaBean> all        = new ArrayList<AreaBean>();
+        String sql = "select * from t_area where fk_class is null;";
+        Statement st       = null;
+        ResultSet rs       = null;
+        AreaBean  areaBean = null;
+        try {
+            st = connection.createStatement();
+            rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                areaBean = new AreaBean();
+                areaBean.setId(rs.getInt("pk_id"));
+                areaBean.setName(rs.getString("f_name"));
+                all.add(areaBean);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close(rs, st, connection);
+        }
+        return all;
     }
 
+    //按area表id查找area对象
+    public AreaBean getAreaByPkID(int pk_id){
+        Connection connection = DBUtil.getConnection();
+        String    sql      = "select * from t_area where pk_id = " + pk_id;
+        AreaBean  areaBean = new AreaBean();
+        Statement st       = null;
+        ResultSet rs       = null;
+        int       reslut   = 0;
+        try {
+            st = connection.createStatement();
+            rs = st.executeQuery(sql);
+
+            if (rs.next()) {
+                areaBean.setId(rs.getInt("pk_id"));
+                areaBean.setName(rs.getString("f_name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close(rs, st, connection);
+        }
+        return areaBean;
+    }
+    //按小班表的id查找对象
     @Override
     public AreaBean getAreaById(int fk_class) {
         Connection connection = DBUtil.getConnection();

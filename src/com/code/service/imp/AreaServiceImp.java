@@ -52,4 +52,11 @@ public class AreaServiceImp implements AreaService{
         }
         return null;
     }
+
+    @Override
+    public ArrayList<AreaBean> getAreas() {
+        AreaDAO areaDao = new AreaDAOImp();
+
+        return areaDao.getAreasByClass();
+    }
 }

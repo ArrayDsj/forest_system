@@ -1,3 +1,4 @@
+<%@ page import = "com.code.bean.AreaBean" %><%@ page import = "java.util.ArrayList" %>
 <%--
   Created by IntelliJ IDEA.
   User: Code.Ai
@@ -54,19 +55,28 @@
                         <div class = "form-group" style = "float: left" >
                             <label class = " control-label " >负责区域:</label >
                             <div class = "btn-group" style = "margin-left: 24px" >
-                                <button name = "area" id = "selected" type = "button" class = "btn btn-default  dropdown-toggle"
-                                        data-toggle = "dropdown" style = "width: 165px" >林地<span >&nbsp;</span ><span class = "caret"
-                                        ></span >
-                                </button >
+
+
+                                <%
+                                    ArrayList<AreaBean> allSelects = (ArrayList<AreaBean>)request.getAttribute("allSelects");
+                                %>
+                                    <button name = "area" id = "selected" type = "button" class = "btn btn-default  dropdown-toggle"
+                                            data-toggle = "dropdown" style = "width: 165px" value="<%=allSelects.get(0).getId()%>">
+                                            <%=allSelects.get(0).getName()%>
+                                            <span >&nbsp;</span ><span class = "caret" ></span >
+                                    </button >
                                 <ul id = "ul" class = "dropdown-menu" >
-                                    <li ><a href = "#"
-                                            onclick = "return getSelect(this,'selected','hidden')" >疏林地</a ></li >
-                                    <li ><a href = "#"
-                                            onclick = "return getSelect(this,'selected','hidden')" >灌木林</a ></li >
-                                    <li ><a href = "#"
-                                            onclick = "return getSelect(this,'selected','hidden')" >苗圃地</a ></li >
+                                <%
+                                    for(int i = 1; i < allSelects.size(); i++){
+                                %>
+                                    <li ><a href = "#" value = "<%=allSelects.get(i).getId()%>"
+                                            onclick = "return getID(this,'selected','#hidden')" ><%=allSelects.get(i).getName()%></a
+                                            ></li >
+                                <%
+                                    }
+                                %>
                                 </ul >
-                                <input id = "hidden" name = "hidden" type = "hidden" value = "林地" />
+                                <input id = "hidden" name = "hidden" type = "hidden" value = "<%=allSelects.get(0).getId()%>" />
                             </div >
                         </div >
                     </div >
@@ -101,6 +111,7 @@
                     <div class = "row" >
                         <div class = "form-group" >
                             <div class = "col-sm-offset-5 col-sm-5" style = "margin-top:10px" >
+                                <input type = "hidden" id="once" name="once" value="initSelect"/>
                                 <button type = "submit" class = "btn btn-default" >添加</button >
                             </div >
                         </div >
@@ -112,9 +123,6 @@
 </div >
 
 <script >
-
-
-
     //判断输入信息
     function check() {
         var name = $("#name").val();
@@ -135,11 +143,15 @@
             strMessage += "人数不能为空\n";
         }
         if (strMessage.length != 0) {
+            alert($("#hidden").val());
             alert(strMessage);
             return false;
         } else {
+            $("#once").val("add");
             $("#classAddDiv").load("../classAdd.av",
                     {
+                        //添加操作
+                        'option': $("#once").val(),
                         'name': name,
                         'phone': phone,
                         'manager': manager,
@@ -148,6 +160,29 @@
                     });
             return false;
         }
+    }
+
+
+    function getID(obj, id, id1) {
+        //下拉列表被选中的选项
+        var checked = obj.text;
+        //得到选中的下拉列表中的value
+        var selectValue = obj.getAttribute("value");
+        //原来的文本
+        var str = document.getElementById(id).childNodes[0].nodeValue;
+        //原来的value
+        var oldValue = $("#"+id).val();
+        //交换
+        document.getElementById(id).innerHTML = checked + "<span>&nbsp;</span><span class = 'caret' ></span > ";
+        $("#"+id).val(selectValue);
+
+        obj.text = str;
+        obj.setAttribute("value", oldValue);
+
+
+
+        $(id1).val(obj.getAttribute("value"));
+        return false;
     }
 
 

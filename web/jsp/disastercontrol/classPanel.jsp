@@ -78,7 +78,7 @@
                                 <td class = "col-lg-3" ><%=all.get(i).getName()%></td >
                                 <td class = "col-lg-3" ><%=all.get(i).getManager()%></td >
                                 <td class = "col-lg-3" ><%=all.get(i).getPhone()%></td >
-                                <td class = "col-lg-3" ><%=all.get(i).getAreaBean()%></td >
+                                <td class = "col-lg-3" ><%=all.get(i).getArea()%></td >
                             </tr>
                         <%
                             }
@@ -103,7 +103,7 @@
                         </button >
                     </div >
                     <input id = "pageNow" type = "text" class = "form-control" style =
-                            "width: 45px;height: 20px;margin-left: 2px;margin-top: 2px;float:left"
+                            "width: 40px;height: 25px;margin-left: 2px;margin-top: 0px;float:left"
                             <%--当前页数--%>
                             value="${requestScope.pageNow}"/>
                     <label id = "num" style = "margin-left: 2px" >
@@ -124,7 +124,8 @@
         <div id = "leftBtns" style = "float: left" >
             <div class = "row-fluid" >
                 <div class = "col-lg-3 col-sm-2 col-sm-offset-2" >
-                    <button class = "btn" type = "button" onclick = "jump('#classPanelDiv','disastercontrol/classAdd.jsp')" >添加小班</button >
+                    <button class = "btn" type = "button" onclick = "jump('#classPanelDiv','../classAdd.av')" >添加小班
+                    </button >
                 </div >
                 <div class = "col-lg-3 col-sm-2 col-sm-offset-3" >
                     <button class = "btn" type = "button" onclick = "jump('#classPanelDiv','disastercontrol/classShow.jsp')" >查看小班信息</button >
@@ -222,6 +223,11 @@
         $("#classPanelDiv").load("../classPanel.av", {"pageNow": num});
     });
     //查询模块事件
+
+
+
+
+
 
 </script >
 </body >

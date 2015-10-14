@@ -13,7 +13,9 @@ import java.util.ArrayList;
 public class ClassServiceImp implements ClassService {
     @Override
     public boolean addClass(ClassBean classBean) {
-        return false;
+        ClassDAO classDAO = new ClassDAOImp();
+
+        return classDAO.addClass(classBean);
     }
 
     @Override

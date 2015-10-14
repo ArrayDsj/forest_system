@@ -136,6 +136,8 @@
                         'forestType': forestType,
                         'treeType': treeType,
                         'landType': $("#hidden").val()
+                    },function(data){
+
                     });
             return false;
         }

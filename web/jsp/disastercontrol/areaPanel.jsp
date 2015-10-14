@@ -146,6 +146,14 @@
 </div >
 
 <script >
+    $(function(){
+
+        $("#search").click(function(){
+
+            var str = document.getElementById("selected").childNodes[0].nodeValue;
+            alert(str);
+        })
+    });
     <%--只能输入数字--%>
     $('#pageNow').keydown = function (eve) {
         if (event) {

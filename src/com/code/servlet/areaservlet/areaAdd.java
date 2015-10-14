@@ -31,8 +31,8 @@ public class areaAdd extends HttpServlet{
         AreaService areaService = new AreaServiceImp();
         if(areaService.addArea(areaAdd)){
             req.setAttribute("showPage","areaPanel");
-
             req.getRequestDispatcher("jsp/index.jsp").forward(req, resp);
+
         }
     }
 }

@@ -16,4 +16,8 @@ public interface AreaService {
     //得到初始分页数据
     public ArrayList<AreaBean> getInitData(int pageNow, int pageSize);
 
+    //得到下拉列表数据
+    public ArrayList<AreaBean> getAreas();
+
+
 }
