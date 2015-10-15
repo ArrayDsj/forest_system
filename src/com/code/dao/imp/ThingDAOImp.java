@@ -4,10 +4,7 @@ import com.code.bean.*;
 import com.code.dao.ThingDAO;
 import com.code.util.DBUtil;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 /**
@@ -220,5 +217,36 @@ public class ThingDAOImp implements ThingDAO{
             DBUtil.close(rs, st, connection);
         }
         return allThings;
+    }
+
+    @Override
+    public boolean addThing(ThingBean thingBean) {
+        Connection connection = DBUtil.getConnection();
+        String sql = "insert into t_thing(f_name,f_descript,f_foundday," +
+                "f_loss,f_proportion,f_scheme,f_photopath,fk_findway,fk_stage,fk_area,fk_disastertype) \n" +
+                "values(?,?,?,?,?,?,?,?,?,?,?) ";
+        PreparedStatement ps = null;
+        int result = -1;
+        try {
+            ps = connection.prepareStatement(sql);
+            ps.setString(1,thingBean.getName());
+            ps.setString(2,thingBean.getDescription());
+            ps.setDate(3,new java.sql.Date(thingBean.getFoundDay().getTime()));
+            ps.setString(4,thingBean.getLoss());
+            ps.setString(5,thingBean.getProportion());
+            ps.setString(6,thingBean.getScheme());
+            ps.setString(7,thingBean.getPhotoPath());
+            ps.setInt(8,thingBean.getFindWay().getId());
+            ps.setInt(9,thingBean.getStage().getId());
+            ps.setInt(10,thingBean.getAreaBean().getId());
+            ps.setInt(11,thingBean.getDisasterType().getId());
+            result = ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close(ps, connection);
+        }
+        return result == 1;
     }
 }

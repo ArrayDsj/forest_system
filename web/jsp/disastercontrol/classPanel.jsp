@@ -42,13 +42,13 @@
             </div >
         </div >
         <!--表格-->
-        <div class = "row-fluid" style = "border: solid" >
-            <table class = "table table-hover" >
-                <tr class = "active" >
-                    <th class = "col-lg-3" >小班名称</th >
-                    <th class = "col-lg-3" >负责人</th >
-                    <th class = "col-lg-3" >负责人电话</th >
-                    <th class = "col-lg-3" >负责区域</th >
+        <div class = "row-fluid table-responsive" style = "border: solid" >
+            <table class = "table table-hover active table-striped table-bordered" >
+                <tr  >
+                    <th class = "col-md-3" >小班名称</th >
+                    <th class = "col-md-3" >负责人</th >
+                    <th class = "col-md-3" >负责人电话</th >
+                    <th class = "col-md-3" >负责区域</th >
                 </tr >
             </table >
             <div id = "tableTD" class = "row-fluid" style = "overflow-y: auto;height: 208px;margin-top: -20px" >
@@ -75,10 +75,10 @@
                         %>
                             <tr onclick = "select(this)" >
                                 <input type = "hidden" value="<%=all.get(i).getId()%>"/>
-                                <td class = "col-lg-3" ><%=all.get(i).getName()%></td >
-                                <td class = "col-lg-3" ><%=all.get(i).getManager()%></td >
-                                <td class = "col-lg-3" ><%=all.get(i).getPhone()%></td >
-                                <td class = "col-lg-3" ><%=all.get(i).getArea()%></td >
+                                <td class = "col-md-3" ><%=all.get(i).getName()%></td >
+                                <td class = "col-md-3" ><%=all.get(i).getManager()%></td >
+                                <td class = "col-md-3" ><%=all.get(i).getPhone()%></td >
+                                <td class = "col-md-3" ><%=all.get(i).getArea()%></td >
                             </tr>
                         <%
                             }

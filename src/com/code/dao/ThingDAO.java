@@ -19,5 +19,6 @@ public interface ThingDAO {
     //有条件的分页记录集合
     public ArrayList<ThingBean> getThingsByCondtion(String query, String str, int pageNow, int pageSize);
 
-
+    //添加数据
+    public boolean  addThing(ThingBean thingBean);
 }

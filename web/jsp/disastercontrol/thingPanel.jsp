@@ -39,14 +39,14 @@
             </div >
         </div >
         <!--表格-->
-        <div class = "row-fluid" style = "border: solid" >
-            <table class = "table table-hover" >
-                <tr class = "active" >
-                    <th class = "col-lg-2" >事件名称</th >
-                    <th class = "col-lg-3" >日期</th >
-                    <th class = "col-lg-3" >发生位置</th >
-                    <th class = "col-lg-2" >防治方案</th >
-                    <th class = "col-lg-2" >灾情状态</th >
+        <div class = "row-fluid table-responsive" style = "border: solid" >
+            <table class = "table table-hover active table-striped table-bordered" >
+                <tr >
+                    <th class = "col-md-2" >事件名称</th >
+                    <th class = "col-md-2" >日期</th >
+                    <th class = "col-md-2" >发生位置</th >
+                    <th class = "col-md-3" >防治方案</th >
+                    <th class = "col-md-3" >灾情状态</th >
                 </tr >
             </table >
 
@@ -61,7 +61,7 @@
                             <td class = "col-md-2" >${thing.foundDay}</td >
                             <td class = "col-md-2" >${thing.areaBean.name}</td >
                             <td class = "col-md-3" >${thing.scheme}</td >
-                            <td class = "col-md-2" >${thing.stage.name}</td >
+                            <td class = "col-md-3" >${thing.stage.name}</td >
                         </tr >
                     </c:forEach >
                     </c:if >
@@ -192,30 +192,23 @@
 
 <script type = "text/javascript" >
 
+//    $(function(){
+////        一加载的时候就请求初始化表格数据
+//        var once = true;
+//        if(once){
+//            $("#thingPanelDiv").load("../thingPanel.av", {"pageNow": 1}, function (data) {
+//                //jump('#thingPanelDiv', 'disastercontrol/thingAdd.jsp');
+//                once = false;
+//            })
+//        }
+//    })
 
-//        $.ajax({
-//            type: "post",
-//            //同步加载
-//            async: false,
-//            //请求data.jsp
-//            url: "../thingAdd.av",
-//            //向data.jsp传递参数
-//            data: {"post":"aaa"},
-//            //返回的值时json对象
-//            dataType: "json",
-//            //成功之后要做的事 data是返回的数据
-//            success: function (data) {
-//                alert("aaaa");
-//            }
-//        });
-function addThing() {
-    $("#thingPanelDiv").load("../thingAdd.av", {"time": "time"}, function (data) {
-
-
-//        jump('#thingPanelDiv', 'disastercontrol/thingAdd.jsp');
-    })
-
-}
+    function addThing() {
+//        点击添加按钮的时候请求下拉列表数据
+            $("#thingPanelDiv").load("../thingAdd.av", {"time": "time"}, function (data) {
+                //jump('#thingPanelDiv', 'disastercontrol/thingAdd.jsp');
+            })
+    }
 
 
     function ask() {
@@ -229,28 +222,21 @@ function addThing() {
     //事件处理
     //上一页事件
     $("#previousPage").click(function () {
-        if (${requestScope.pageNow} >
-        1
-        )
-        {
+        if (${requestScope.pageNow} > 1 ){
             $("#thingPanelDiv").load("../thingPanel.av", {"pageNow": ${requestScope.pageNow} -1});
         }
-        else
-        {
+        else{
             alert("已是第一页！");
         }
     });
 
     //下一页事件
     $("#nextPage").click(function () {
-        if (${requestScope.pageNow} <
-        ${requestScope.pageNum})
-        {
+        if (${requestScope.pageNow} < ${requestScope.pageNum}){
             //这里是一个json数据格式
             $("#thingPanelDiv").load("../thingPanel.av", {"pageNow": ${requestScope.pageNow} +1});
         }
-        else
-        {
+        else{
             alert("已是最后一页！");
         }
     });
