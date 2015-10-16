@@ -16,4 +16,10 @@ public interface ThingService {
     public int getCountsByCondtion(String queryType, String queryStr);
     //得到条件数据
     public ArrayList<ThingBean> getLimitData(String queryType, String queryStr, int pageNow, int pageSize);
+
+    //查看信息
+    public ThingBean getThingById(int id);
+
+    //修改信息
+    public boolean updateThing(ThingBean thingBean);
 }

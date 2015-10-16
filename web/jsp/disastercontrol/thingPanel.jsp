@@ -55,20 +55,21 @@
 
                     <c:if test = "${requestScope.info == null}" >
                     <c:forEach items = "${requestScope.allThings}" var = "thing" >
-                        <tr onclick = "select(this)" >
+                        <tr onclick = "select(this,'#selectID','#stageID')"  >
                             <input type = "hidden" value = "${thing.id}" />
                             <td class = "col-md-2" >${thing.name}</td >
                             <td class = "col-md-2" >${thing.foundDay}</td >
                             <td class = "col-md-2" >${thing.areaBean.name}</td >
                             <td class = "col-md-3" >${thing.scheme}</td >
-                            <td class = "col-md-3" >${thing.stage.name}</td >
+                            <td class = "col-md-3" stageID = "${thing.stage.id}" >${thing.stage.name}</td >
                         </tr >
                     </c:forEach >
                     </c:if >
-
                 </table >
+                <%--保存被选中的事件id 和状态--%>
+                <input type = "hidden" value="-1" id="selectID" name="selectID" />
+                <input type = "hidden" value="-1" id="stageID" name="stageID"/>
             </div >
-            </table>
         </div >
         <br />
         <!--分页按钮-->
@@ -107,7 +108,7 @@
                     </button >
                 </div >
                 <div class = "col-lg-3 col-sm-2 col-sm-offset-3 col-lg-offset-2" >
-                    <button class = "btn" type = "button" onclick = "jump('#thingPanelDiv','disastercontrol/thingInfo.jsp')" >查看事件信息</button >
+                    <button class = "btn" type = "button" onclick = "showThing('#selectID')" >查看事件信息</button >
                 </div >
             </div >
             <div class = "row-fluid" >
@@ -189,19 +190,7 @@
         </div >
     </div >
 </div >
-
 <script type = "text/javascript" >
-
-//    $(function(){
-////        一加载的时候就请求初始化表格数据
-//        var once = true;
-//        if(once){
-//            $("#thingPanelDiv").load("../thingPanel.av", {"pageNow": 1}, function (data) {
-//                //jump('#thingPanelDiv', 'disastercontrol/thingAdd.jsp');
-//                once = false;
-//            })
-//        }
-//    })
 
     function addThing() {
 //        点击添加按钮的时候请求下拉列表数据
@@ -210,9 +199,32 @@
             })
     }
 
+    function showThing(id){
+        if($(id).val() != -1){
+            var idVal = $(id).val();
+            //请求初始化数据
+            $("#thingPanelDiv").load("../thingShow.av", { 'id': idVal}, function (data) {
+            })
+        }else alert("请选择要查看的列");
+
+    }
 
     function ask() {
-        alert("专家会审");
+        var thingID= $("#selectID").val();
+        var stageID = $("#stageID").val();
+        //只有当状态为无法解决的时候才能申请
+        if (thingID == -1) {
+            alert("请选择要查看的列");
+            return false;
+        }
+        if(stageID != 3){
+            alert("无需专家会审");
+            return false;
+        }
+        //改变事件的状态为1
+        $("#thingPanelDiv").load('../thingAdd.av',{'change':'change','thingID':thingID,'stageID':stageID},function(data){
+            alert("申请成功");
+        });
     }
     //数据有效性验证
     $("#pageNum").keydown(function () {

@@ -21,4 +21,10 @@ public interface ThingDAO {
 
     //添加数据
     public boolean  addThing(ThingBean thingBean);
+
+    //查看数据
+    public ThingBean getThingById(int id);
+
+    //修改信息
+    public int updateThing(ThingBean thingBean);
 }

@@ -71,7 +71,6 @@
                         <%
                             ArrayList<ClassBean> all = (ArrayList<ClassBean>)request.getAttribute("allClasses");
                             for(int i = 0 ; i < all.size() ; i++){
-
                         %>
                             <tr onclick = "select(this)" >
                                 <input type = "hidden" value="<%=all.get(i).getId()%>"/>

@@ -95,8 +95,15 @@ function selectTime(id) {
 /*********************************************************************/
 
 //表格点击事件
-function select(obj) {
-    alert(obj.firstElementChild.value);
+function select(obj,id,stageid) {
+    //设置隐藏域val
+    $(id).val(obj.firstElementChild.value);
+    $(stageid).val(obj.lastElementChild.getAttribute("stageID"));
+    //设置样式
+    obj.style.backgroundColor = "red";
+    $("tr").css("background-color","white");
+    obj.style.backgroundColor = "red";
+
 }
 
 /*********************************************************************/
@@ -164,3 +171,6 @@ function browse(img, inputImg) {
 function isNull(data) {
     return (data == "" || data == undefined || data == "null") ? "暂无" : data;
 }
+
+
+/*********************************************************************/

@@ -15,11 +15,21 @@ public class ThingBean implements Serializable{
     private String proportion;
     private String photoPath;
     private String scheme;
+    //会商结果
+    private String result;
 
-    private StageBean stage;
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    private StageBean    stage;
     private DisasterBean disasterType;
-    private FindwayBean findWay;
-    private AreaBean areaBean;
+    private FindwayBean  findWay;
+    private AreaBean     areaBean;
 
     public ThingBean() {
     }

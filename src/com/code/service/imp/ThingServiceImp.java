@@ -34,4 +34,16 @@ public class ThingServiceImp implements ThingService {
         ThingDAO thingDAO = new ThingDAOImp();
         return thingDAO.getThingsByCondtion(queryType, queryStr, pageNow, pageSize);
     }
+
+    @Override
+    public ThingBean getThingById(int id) {
+        ThingDAO thingDAO = new ThingDAOImp();
+        return thingDAO.getThingById(id);
+    }
+
+    @Override
+    public boolean updateThing(ThingBean thingBean) {
+        ThingDAO thingDAO = new ThingDAOImp();
+        return thingDAO.updateThing(thingBean) == 1;
+    }
 }

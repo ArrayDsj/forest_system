@@ -89,12 +89,19 @@
 
         </div >
     </div >
+
+
     <script type = "text/javascript" src = "../js/jquery-1.11.3.min.js" ></script >
     <script type = "text/javascript" src = "../bootstrap/js/bootstrap.min.js" ></script >
     <script type = "text/javascript" src = "../bootstrap/js/bootstrap-table.js" ></script >
     <script type = "text/javascript" src = "../bootstrap/js/bootstrap-datetimepicker.js" charset = "UTF-8" ></script >
     <script type = "text/javascript" src = "../bootstrap/js/locales/bootstrap-datetimepicker.zh-CN.js" charset = "UTF-8" ></script >
     <script type = "text/javascript" src = "../js/index.js" ></script >
+
+    <script type="text/javascript" src="../js/ajaxfileupload.js"></script>
+    <script type="text/javascript" src="../js/uploadPreview.min.js"></script >
+
+
 
 <script >
     $(function(){

@@ -143,7 +143,6 @@
                             </div >
                         </div >
                     </div >
-
                 </div >
 
                 <!--right-->
@@ -152,18 +151,25 @@
                     <div class = "row" style = "margin-top: 10px" >
                         <div class = "form-group" >
                             <div class = "col-lg-4 col-sm-4" style = "float: left;margin-left: 6px" >
-                                <label for = "img" class = " control-label " >灾区图片:</label >
+                                <label for = "file" class = " control-label " >灾区图片:</label >
                             </div >
                             <div class = "col-lg-4 col-sm-4" style = "float: left;margin-left: -50px" >
-                                <input type = "file" class = "form-control" id = "img" style = "display: none" >
+                                <input id = "file" name="file" type = "file" style="display: none" >
                                 <input id = "inputImg" type = "text" class = "form-control" style = "width: 150px" />
                             </div >
-                            <div class = "col-lg-4 col-sm-4" style = "float: left;margin-left: 10px" >
-                                <button class = "btn btn-default" onclick = "browse('#img','#inputImg')" >浏览</button >
+
+                            <div class = "col-lg-4 col-sm-4" style = "float: left;margin-left: 10px; " >
+                                <button class = "btn btn-default" onclick = "browse('#file','#inputImg')" >浏览</button >
                             </div >
+                            <%--图片预览--%>
+                            <div id = "imgdiv" style="float: left;margin-top: -59px;margin-left:330px"
+                                 <%--点击div添加图片--%>
+                                 onclick = "getElementById('file').click()">
+                                <img id = "imgShow" width = "100" height = "100" />
+                            </div >
+
                         </div >
                     </div >
-
 
                     <!--第二行-->
                     <div class = "row" style = "margin-top: 20px;margin-left: 11px" >
@@ -257,25 +263,33 @@
                     <div class = "row" >
                         <div class = "form-group" >
                             <div class = "col-sm-offset-5 col-sm-5" style = "margin-top:10px" >
-                                <button type = "button" class = "btn btn-default" onclick="thingAdd()">添加</button >
+                                <button type = "button" class = "button  green btn btn-default" onclick="thingAdd()">添加</button >
                             </div >
                         </div >
                     </div >
+                </div >
+
+                <%--加载动图--%>
+                <div id = "wait_loading" style = "padding: 50px 0 0 0;display:none;" >
+                    <div style = "width: 103px;margin: 0 auto;" >
+                        <img src = "../../image/loading.gif" />
+                    </div >
+                    <br />
+                    <div style = "width: 103px;margin: 0 auto;" ><span >请稍等...</span ></div >
                 </div >
             <%--</form >--%>
         </div >
     </div >
 </div >
 
-
 <script type = "text/javascript" >
+
+<%--图片预览--%>
+    $(function () {
+        $("#file").uploadPreview({Img: "imgShow", Width: 100, Height: 100});
+    });
+
     //判断输入信息
-
-
-
-
-
-
     function selectArea(liObj, btnId, hidden){
         //下拉列表被选中的选项
         var liText = liObj.text;
@@ -291,7 +305,6 @@
         liObj.text = btnText;
         liObj.setAttribute("value", btnValue);
         $(hidden).val($(btnId).val());
-
 
         //设置班级
         var strArray = $(hidden).val().split("&");
@@ -326,52 +339,58 @@
             alert(strMessage);
             return false;
         } else {
-            alert("传输json");
-            $("#thingAddDiv").load("../thingAdd.av",
-                    {
-                        "name": $("#name").val(),
-                        "foundDay": $("#foundDay").val(),
-                        "stageDataHidden": $("#stageDataHidden").val(),
-                        "descript": $("#descript").val(),
-                        "areaDataHidden": $("#areaDataHidden").val(),
-                        "loss": $("#loss").val(),
-                        "inputImg": $("#inputImg").val(),
-                        "findwayDataHidden": $("#findwayDataHidden").val(),
-                        "proportion": $("#proportion").val(),
-                        "disasterDataHidden": $("#disasterDataHidden").val(),
-                        "scheme": $("#scheme").val()
-                    }, function (data) {
-                        alert("添加成功");
-//                        添加成功时先请求初始化表格数据,然后跳转
-                        jump('#otherHtml','../thingPanel.av','1');
-                    });
-            return false;
+            ajaxFileUpload();
         }
 
-//        $.ajax({
-//            type:"post",
-//            async:false,
-//            url:"../thingAdd.av",//向数据库中添加数据
-//            data:{
-//                "name":$("#name").val(),
-//                "foundDay":$("#foundDay").val(),
-//                "stageDataHidden":$("#stageDataHidden").val(),
-//                "descript": $("#descript").val(),
-//                "areaDataHidden": $("#areaDataHidden").val(),
-//                "loss": $("#loss").val(),
-//                "inputImg": $("#inputImg").val(),
-//                "findwayDataHidden": $("#findwayDataHidden").val(),
-//                "proportion": $("#proportion").val(),
-//                "disasterDataHidden": $("#disasterDataHidden").val(),
-//                "scheme": $("#scheme").val()
-//            },
-//            dataType:"json",
-//            success: function (data) {
-//                alert("asfweg");
-//                jump('#otherHtml', 'disastercontrol/thingPanel.jsp');
-//            }
-//        })
+        function ajaxFileUpload(){
+            alert("传输json");
+           // 开始上传文件时显示一个图片
+            $("#wait_loading").ajaxStart(function () {
+                alert("显示");
+                $(this).show();
+                // 文件上传完成将图片隐藏起来
+            }).ajaxComplete(function () {
+                alert("隐藏");
+                $(this).hide();
+            });
+            $.ajaxFileUpload({
+                url: "../thingAdd.av",//向数据库中添加数据
+                type: "post",
+                secureuri: false, //一般设置为false
+                fileElementId: 'file', // 上传文件的id、name属性名
+                dataType: 'json', //返回值类型，一般设置为json、application/json
+                data: {
+                    "name": $("#name").val(),
+                    "foundDay": $("#foundDay").val(),
+                    "stageDataHidden": $("#stageDataHidden").val(),
+                    "descript": $("#descript").val(),
+                    "areaDataHidden": $("#areaDataHidden").val(),
+                    "loss": $("#loss").val(),
+                    "inputImg": $("#inputImg").val(),
+                    "findwayDataHidden": $("#findwayDataHidden").val(),
+                    "proportion": $("#proportion").val(),
+                    "disasterDataHidden": $("#disasterDataHidden").val(),
+                    "scheme": $("#scheme").val()
+                },
+                beforeSend: function (xhr) {
+                    alert('执行前');
+                },
+                success: function (data) {
+                    alert("添加成功");
+                    jump('#otherHtml', '../thingPanel.av', '1');//如果成功就请求servlet重新加载数据,然后跳转到thingPanel.jsp
+                },
+                complete: function (xhr) {
+                    alert('执行结束');
+                },
+                error: function (data, status, e) {
+                    alert("上传失败"+data);
+                }
+            });
+            return false;
+        }
     }
+
 </script >
+
 </body >
 </html >

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public interface ClassService {
     public boolean addClass(ClassBean classBean);
     public ClassBean showClass(ClassBean classBean);
+    //修改信息
     public boolean updateClass(ClassBean classBean);
 
 
