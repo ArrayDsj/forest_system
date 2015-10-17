@@ -36,11 +36,14 @@ public class ThingDAOImp implements ThingDAO{
 
     @Override
     public int getCountsByCondtion(String query, String str) {
+        Connection connection = DBUtil.getConnection();
+        ResultSet rs     = null;
+        int       result = -1;
+        Statement st     = null;
         if(query.equals("f_name")){
             query = "t";
         }
         query += ".f_name";
-        Connection connection = DBUtil.getConnection();
         String sql = "select * from \n" +
                 "t_thing t, t_findway f, \n" +
                 "t_stage s, t_disastertype d, t_area a\n" +
@@ -49,9 +52,6 @@ public class ThingDAOImp implements ThingDAO{
                 "and t.fk_area=a.pk_id\n" +
                 "and t.fk_disastertype=d.pk_id \n" +
                 "and " + query + " like " + str + "\n";
-        ResultSet rs = null;
-        int result = -1;
-        Statement st = null;
 
         try {
             st = connection.createStatement();
@@ -70,6 +70,16 @@ public class ThingDAOImp implements ThingDAO{
     @Override
     public ArrayList<ThingBean> getThings(int pageNow, int pageSize) {
         Connection connection = DBUtil.getConnection();
+        ResultSet rs = null;
+        Statement st = null;
+        ArrayList<ThingBean> allThings = new ArrayList<ThingBean>();
+        ThingBean   thingBean   = null;
+        FindwayBean findwayBean = null;
+        StageBean   stageBean   = null;
+        DisasterBean disasterBean = null;
+        AreaBean    areaBean    = null;
+        ClassBean   classBean   = null;
+
         String sql = "select * from \n" +
                     "t_thing t, t_findway f, \n" +
                     "t_stage s, t_disastertype d, t_area a\n" +
@@ -78,16 +88,6 @@ public class ThingDAOImp implements ThingDAO{
                     "and t.fk_area=a.pk_id\n" +
                     "and t.fk_disastertype=d.pk_id \n" +
                     "limit " + (pageNow - 1)*pageSize + "," + pageSize;
-        ResultSet rs = null;
-        Statement st = null;
-        ArrayList<ThingBean> allThings = new ArrayList<ThingBean>();
-
-        ThingBean thingBean = null;
-        FindwayBean findwayBean = null;
-        StageBean stageBean = null;
-        DisasterBean disasterBean = null;
-        AreaBean areaBean = null;
-        ClassBean classBean = null;
 
         try {
             st = connection.createStatement();
@@ -105,6 +105,7 @@ public class ThingDAOImp implements ThingDAO{
                 thingBean.setDescription(rs.getString("t.f_descript"));
                 thingBean.setProportion(rs.getString("t.f_proportion"));
                 thingBean.setPhotoPath(rs.getString("t.f_photopath"));
+                thingBean.setResult(rs.getString("t.f_result"));
 
                 //2. 构建发现方式数据
                 findwayBean = new FindwayBean();
@@ -143,11 +144,21 @@ public class ThingDAOImp implements ThingDAO{
 
     @Override
     public ArrayList<ThingBean> getThingsByCondtion(String query, String str, int pageNow, int pageSize) {
+        Connection connection = DBUtil.getConnection();
+        ResultSet            rs           = null;
+        Statement            st           = null;
+        ArrayList<ThingBean> allThings    = new ArrayList<ThingBean>();
+        ThingBean            thingBean    = null;
+        FindwayBean          findwayBean  = null;
+        StageBean            stageBean    = null;
+        DisasterBean         disasterBean = null;
+        AreaBean             areaBean     = null;
+        ClassBean            classBean    = null;
+
         if (query.equals("f_name")) {
             query = "t";
         }
         query += ".f_name";
-        Connection connection = DBUtil.getConnection();
         String sql = "select * from \n" +
                     "t_thing t, t_findway f, \n" +
                     "t_stage s, t_disastertype d, t_area a\n" +
@@ -156,17 +167,19 @@ public class ThingDAOImp implements ThingDAO{
                     "and t.fk_area=a.pk_id\n" +
                     "and t.fk_disastertype=d.pk_id \n" +
                      "and " + query + " like " + str + "\n" +
-                     "limit " + (pageNow - 1) * pageSize + "," + pageSize;;
-        ResultSet rs = null;
-        Statement st = null;
-        ArrayList<ThingBean> allThings = new ArrayList<ThingBean>();
-        ThingBean   thingBean   = null;
-        FindwayBean findwayBean = null;
-        StageBean   stageBean   = null;
-        DisasterBean disasterBean = null;
-        AreaBean    areaBean    = null;
-        ClassBean   classBean   = null;
+                     "limit " + (pageNow - 1) * pageSize + "," + pageSize;
 
+        if (query.equals("f_status.f_name")) {
+            String sql1 = "select * from \n" +
+                    "t_thing t, t_findway f,\n" +
+                    "t_stage s, t_disastertype d, t_area a\n" +
+                    "where t.fk_findway=f.pk_id\n" +
+                    "and t.fk_stage=s.pk_id\n" +
+                    "and t.fk_area=a.pk_id\n" +
+                    "and t.fk_disastertype=d.pk_id \n" +
+                    "and  t.f_status='1'";
+            sql = sql1;
+        }
         try {
             st = connection.createStatement();
             rs = st.executeQuery(sql);
@@ -183,7 +196,7 @@ public class ThingDAOImp implements ThingDAO{
                 thingBean.setDescription(rs.getString("t.f_descript"));
                 thingBean.setProportion(rs.getString("t.f_proportion"));
                 thingBean.setPhotoPath(rs.getString("t.f_photopath"));
-
+                thingBean.setResult(rs.getString("t.f_result"));
                 //2. 构建发现方式数据
                 findwayBean = new FindwayBean();
                 findwayBean.setId(rs.getInt("f.pk_id"));
@@ -288,7 +301,7 @@ public class ThingDAOImp implements ThingDAO{
                 thingBean.setProportion(rs.getString("t.f_proportion"));
                 thingBean.setPhotoPath(rs.getString("t.f_photopath"));
                 thingBean.setResult(rs.getString("t.f_result"));
-
+                thingBean.setResult(rs.getString("t.f_result"));
                 //2. 构建发现方式数据
                 findwayBean = new FindwayBean();
                 findwayBean.setId(rs.getInt("f.pk_id"));
@@ -336,7 +349,14 @@ public class ThingDAOImp implements ThingDAO{
                 ps = connection.prepareStatement(sql);
                 ps.setInt(1, thingBean.getId());
                 return ps.executeUpdate();
-            }else {
+            }
+            if(thingBean.getResult() != null){//修改专家建议
+                sql = "update t_thing set f_result = ? where pk_id = ?";
+                ps = connection.prepareStatement(sql);
+                ps.setString(1, thingBean.getResult());
+                ps.setInt(2, thingBean.getId());
+            }
+            else {
                 sql = "update t_thing set f_stage=?, f_scheme=? where pk_id = ? ";
                 ps = connection.prepareStatement(sql);
                 ps.setInt(1, thingBean.getStage().getId());

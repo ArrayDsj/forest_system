@@ -42,8 +42,29 @@ public class thingAdd extends HttpServlet{
         String time = req.getParameter("time");
         System.out.println(time);
 
+
+        /***********************************************/
+        // 在thingUpdate.jsp中点击确认添加按钮被调用
+        if(req.getParameter("thingID") != null && req.getParameter("stageDataHidden") != null && req.getParameter("scheme") != null){
+            int thingID = Integer.parseInt(req.getParameter("thingID"));
+            int stageID = Integer.parseInt(req.getParameter("stageDataHidden"));
+            String scheme = req.getParameter("scheme");
+
+            ThingBean thingBean = new ThingBean();
+            thingBean.setId(thingID);
+            StageBean stageBean = new StageBean();
+            stageBean.setId(stageID);
+            thingBean.setStage(stageBean);
+            thingBean.setScheme(scheme);
+            ThingService thingService = new ThingServiceImp();
+            thingService.updateThing(thingBean);
+
+        }
+
+
         /***********************************************/
         //在thingPanel.jsp中点击申请专家会审时调用
+        //就是调用updateThing()方法
         if(req.getParameter("change") != null){
             int thingID = Integer.parseInt(req.getParameter("thingID"));
             int stageID = Integer.parseInt(req.getParameter("stageID"));

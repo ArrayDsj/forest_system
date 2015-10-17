@@ -7,7 +7,8 @@
 --%>
 <%@ page contentType = "text/html;charset=UTF-8" pageEncoding = "UTF-8" language = "java" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
+
+
 <html lang = "en" >
 <head >
     <meta charset = "UTF-8" >
@@ -116,7 +117,7 @@
                     <button class = "btn" type = "button" onclick = "ask()" >申请专家会审</button >
                 </div >
                 <div class = "col-lg-3 col-sm-3 col-sm-offset-2" style = "margin-top: 20px" >
-                    <button class = "btn" type = "button" onclick = "jump('#thingPanelDiv','disastercontrol/thingUpdate.jsp')" >修改事件信息</button >
+                    <button class = "btn" type = "button" onclick = "updateThing()" >修改事件信息</button >
                 </div >
             </div >
         </div >
@@ -203,7 +204,7 @@
         if($(id).val() != -1){
             var idVal = $(id).val();
             //请求初始化数据
-            $("#thingPanelDiv").load("../thingShow.av", { 'id': idVal}, function (data) {
+            $("#thingPanelDiv").load("../thingShow.av", { 'thingID': idVal,'header':'showThing'}, function (data) {
             })
         }else alert("请选择要查看的列");
 
@@ -212,11 +213,12 @@
     function ask() {
         var thingID= $("#selectID").val();
         var stageID = $("#stageID").val();
-        //只有当状态为无法解决的时候才能申请
+        //未选择行报错
         if (thingID == -1) {
             alert("请选择要查看的列");
             return false;
         }
+        //只有当状态为无法解决的时候才能申请
         if(stageID != 3){
             alert("无需专家会审");
             return false;
@@ -226,6 +228,23 @@
             alert("申请成功");
         });
     }
+
+    //修改信息
+    function updateThing(){
+        var thingID = $("#selectID").val();
+        //未选择行报错
+        if (thingID == -1) {
+            alert("请选择要查看的列");
+            return false;
+        }
+        //请求初始化数据
+        $("#thingPanelDiv").load("../thingShow.av", {'thingID': thingID, 'header': 'updateThing'}, function (data) {
+        })
+    }
+
+
+
+
     //数据有效性验证
     $("#pageNum").keydown(function () {
         //只能输入数字

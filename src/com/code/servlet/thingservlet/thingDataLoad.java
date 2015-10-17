@@ -52,7 +52,6 @@ public class thingDataLoad extends HttpServlet {
             //按条件查询
             String str = req.getParameter("str");
             str = new String(str.getBytes(), "UTF-8");
-            //有条件查询
             counts = thingService.getCountsByCondtion(query, str);
             allThings = thingService.getLimitData(query, str, pageNow, pageSize);
         }

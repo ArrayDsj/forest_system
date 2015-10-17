@@ -32,9 +32,9 @@ $(function () {
  * @param url
  * @returns {boolean}
  */
-function jump(id, url, now) {
+function jump(id, url, now,option) {
     //跳转到指定jsp,然后这个jsp在加载的时候初始化自身数据
-    $(id).load(url,{'pageNow':now});
+    $(id).load(url,{'pageNow':now,'option': option});
     //去掉a标签的默认动作
     return false;
 }
@@ -174,3 +174,35 @@ function isNull(data) {
 
 
 /*********************************************************************/
+/**
+ * 表格上鼠标移动行变色
+ */
+$('#table1 tr').hover(function () {
+    $(this).children('td').addClass('hover')
+}, function () {
+    $(this).children('td').removeClass('hover')
+});
+
+/***********************************************************************/
+/**
+ * 偶数奇数行不同颜色
+ */
+
+$('#table1 tbody tr:odd').css('background-color', '#bbf');
+$('#table1 tbody tr:even').css('background-color', '#ffc');
+//操作class
+$("#table1 tbody tr:odd").addClass("odd");
+$("#table1 tbody tr:even").addClass("even");
+
+
+$(document).ready(function () {
+    //鼠标移动到行变色,单独建立css类hover
+    //tr:gt(0):表示获取大于 tr index 为0 的所有tr，即不包括表头
+    $(".table tr:gt(0)").hover(
+        function () {
+            $(this).addClass("hover")
+        },
+        function () {
+            $(this).removeClass("hover")
+        })
+});

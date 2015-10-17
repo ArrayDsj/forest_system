@@ -5,6 +5,8 @@
   Time: 16:57
   To change this template use File | Settings | File Templates.
 --%>
+
+
 <%@ page contentType = "text/html;charset=UTF-8" language = "java" pageEncoding = "UTF-8" %>
 <html lang = "en" >
 <head >
@@ -42,16 +44,16 @@
                         <div class = "link" ><i class = "glyphicon glyphicon-briefcase" ></i >灾情防治<i
                                 class = "glyphicon glyphicon-chevron-down" style = "margin-left: 160px" ></i ></div >
                         <ul class = "submenu" >
-                            <li ><a href = "#区域一览" onclick = "jump('#otherHtml','../areaPanel.av','1')">区域一览</a ></li >
-                            <li ><a href = "#小班管理" onclick = "jump('#otherHtml','../classPanel.av','1')" >小班管理</a ></li >
-                            <li ><a href = "#事件记录" onclick = "jump('#otherHtml','../thingPanel.av','1')" >事件记录</a ></li >
+                            <li ><a href = "#区域一览" id = "areaPanel">区域一览</a ></li >
+                            <li ><a href = "#小班管理" id = "classPanel">小班管理</a ></li >
+                            <li ><a href = "#事件记录" id = "thingPanel">事件记录</a ></li >
                         </ul >
                     </li >
                     <li >
                         <div class = "link" ><i class = "glyphicon glyphicon-user" ></i >专家会商<i class = "glyphicon glyphicon-chevron-down" style = "margin-left: 160px" ></i ></div >
                         <ul class = "submenu" >
                             <li ><a href = "#proficientPanel" onclick = "jump('#otherHtml','expertconsultation/proficientPanel.jsp')" >专家一览</a ></li >
-                            <li ><a href = "#conferPanel" onclick = "jump('#otherHtml','expertconsultation/conferPanel.jsp')" >会商灾情</a ></li >
+                            <li ><a href = "#会商灾情"  id="conferPanel">会商灾情</a ></li >
                         </ul >
                     </li >
                     <li >
@@ -112,7 +114,37 @@
         if (showPage == 'classPanel') {
             jump('#otherHtml', '../classPanel.av', '1');
         }
-    })
+    });
+
+
+
+
+    //初始化方法声明
+    function initData(div, url, json) {
+        $(div).load(url, json);
+    }
+
+    //区域一览初始化
+    $("#areaPanel").click(function () {
+        initData('#otherHtml', '../areaPanel.av', {'pageNow': 1, 'option': 'init'});
+    });
+
+    //小班管理初始化
+    $("#classPanel").click(function () {
+        initData('#otherHtml', '../classPanel.av', {'pageNow': 1, 'option': 'init'});
+    });
+
+    //事件记录初始化
+    $("#thingPanel").click(function(){
+        initData('#otherHtml', '../thingPanel.av', {'pageNow': 1, 'option': 'init'});
+    });
+
+    //会商灾情初始化
+    $("#conferPanel").click(function () {
+        initData('#otherHtml', '../conferPanel.av', {'pageNow': 1, 'option': 'inti'});
+    });
+
+
 </script >
 
 </body >
