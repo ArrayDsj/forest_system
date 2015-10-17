@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,8 +45,8 @@ public class thingAdd extends HttpServlet{
 
 
         /***********************************************/
-        // 在thingUpdate.jsp中点击确认添加按钮被调用
-        if(req.getParameter("thingID") != null && req.getParameter("stageDataHidden") != null && req.getParameter("scheme") != null){
+        // 在thingUpdate.jsp中点击确认修改按钮被调用
+        if(req.getParameter("header").equals("confirmUpdate")){
             int thingID = Integer.parseInt(req.getParameter("thingID"));
             int stageID = Integer.parseInt(req.getParameter("stageDataHidden"));
             String scheme = req.getParameter("scheme");
@@ -57,7 +58,13 @@ public class thingAdd extends HttpServlet{
             thingBean.setStage(stageBean);
             thingBean.setScheme(scheme);
             ThingService thingService = new ThingServiceImp();
-            thingService.updateThing(thingBean);
+
+            PrintWriter out = resp.getWriter();
+            if( thingService.updateThing(thingBean)){
+                out.print("{'msg':'success'}");
+            } else out.print("{'msg':'defeat'}");
+            out.flush();
+            out.close();
 
         }
 
@@ -65,7 +72,7 @@ public class thingAdd extends HttpServlet{
         /***********************************************/
         //在thingPanel.jsp中点击申请专家会审时调用
         //就是调用updateThing()方法
-        if(req.getParameter("change") != null){
+        else if(req.getParameter("header").equals("askConfer")){
             int thingID = Integer.parseInt(req.getParameter("thingID"));
             int stageID = Integer.parseInt(req.getParameter("stageID"));
             ThingBean thingBean = new ThingBean();
@@ -80,7 +87,7 @@ public class thingAdd extends HttpServlet{
 
         /***********************************************/
         //在thingPanel.jsp中点击添加事件的时候调用
-        if(time != null){
+        else if( req.getParameter("header").equals("askAddThing")){
             //初始化
             //得到下拉列表数据
             //1. 灾情阶段数据
@@ -116,7 +123,8 @@ public class thingAdd extends HttpServlet{
         }
 
         /***********************************************/
-        else{
+        //在thingAdd.jsp中点击确认添加按钮时调用
+        else if(req.getParameter("header").equals("confirmAdd")){
             SmartUpload su = new SmartUpload();
             //初始化上传(必须)
             su.initialize(this.getServletConfig(), req, resp);

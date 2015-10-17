@@ -45,11 +45,11 @@ public class thingShow extends HttpServlet{
             ArrayList<StageBean> stageData = null;
             StageService stageService = new StageServiceImp();
             stageData = stageService.getAllStages();
-            //System.out.println(stageData);
+
             req.setAttribute("stageData", stageData);
             req.getRequestDispatcher("jsp/disastercontrol/thingUpdate.jsp").forward(req, resp);
-        }
-        if(req.getParameter("header").equals("conferShow")){
+
+        } else if(req.getParameter("header").equals("conferShow")){
             //初始化会商表
             ArrayList<ConferBean> allConfers = null;
             ConferService conferService = new ConferServiceImpl();
@@ -61,6 +61,8 @@ public class thingShow extends HttpServlet{
             }else req.setAttribute("info", "null");
             req.getRequestDispatcher("jsp/expertconsultation/conferAdd.jsp").forward(req, resp);
         }
-        else req.getRequestDispatcher("jsp/disastercontrol/thingInfo.jsp").forward(req, resp);
+        else if(req.getParameter("header").equals("showThing")){
+            req.getRequestDispatcher("jsp/disastercontrol/thingInfo.jsp").forward(req, resp);
+        }
     }
 }

@@ -78,7 +78,7 @@
                             <label for = "staff" class = "col-lg-4 col-sm-4   control-label ">会商人员:</label>
                             <div class = "col-lg-8 col-sm-8">
                                 <input type = "text" class = "form-control" id = "staff" value=""
-                                       placeholder="<%=allConfers.get(0).getResult()%>">
+                                       placeholder="<%=thingBean.getResult()%>">
                             </div>
                         </div>
                     </div>
@@ -163,7 +163,7 @@
                             var tableHtml = $("#conferInfo tbody").html();
                             tableHtml = rowTemplate + tableHtml;
                             $("#conferInfo tbody").html(tableHtml);
-                        }
+                        }else alert("系统繁忙,请稍后再试");
                     }
                 });
             }

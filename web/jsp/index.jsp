@@ -141,7 +141,7 @@
 
     //会商灾情初始化
     $("#conferPanel").click(function () {
-        initData('#otherHtml', '../conferPanel.av', {'pageNow': 1, 'option': 'inti'});
+        initData('#otherHtml', '../conferPanel.av', {'pageNow': 1, 'option': 'init'});
     });
 
 

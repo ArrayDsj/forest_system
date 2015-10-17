@@ -195,7 +195,7 @@
 
     function addThing() {
 //        点击添加按钮的时候请求下拉列表数据
-            $("#thingPanelDiv").load("../thingAdd.av", {"time": "time"}, function (data) {
+            $("#thingPanelDiv").load("../thingAdd.av", {'header': 'askAddThing'}, function (data) {
                 //jump('#thingPanelDiv', 'disastercontrol/thingAdd.jsp');
             })
     }
@@ -210,6 +210,7 @@
 
     }
 
+    //申请专家会审
     function ask() {
         var thingID= $("#selectID").val();
         var stageID = $("#stageID").val();
@@ -224,8 +225,7 @@
             return false;
         }
         //改变事件的状态为1
-        $("#thingPanelDiv").load('../thingAdd.av',{'change':'change','thingID':thingID,'stageID':stageID},function(data){
-            alert("申请成功");
+        $("#thingPanelDiv").load('../thingAdd.av',{'header': 'askConfer','thingID':thingID,'stageID':stageID},function(data){
         });
     }
 
@@ -238,7 +238,7 @@
             return false;
         }
         //请求初始化数据
-        $("#thingPanelDiv").load("../thingShow.av", {'thingID': thingID, 'header': 'updateThing'}, function (data) {
+        $("#thingPanelDiv").load("../thingShow.av", {'header': 'updateThing','thingID': thingID}, function (data) {
         })
     }
 

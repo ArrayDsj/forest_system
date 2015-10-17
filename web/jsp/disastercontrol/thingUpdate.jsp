@@ -58,9 +58,9 @@
                         <div class = "form-group" style = "float: left" >
                             <label class = " control-label " >灾情阶段:</label >
                             <div class = "btn-group" style = "margin-left: 24px" >
-                                <button id = "stageDataSelect" value = "<%=stageData.get(0).getId()%>" type = "button"
+                                <button id = "stageDataSelect" value = "<%=thingBean.getStage().getId()%>" type = "button"
                                         class = "btn btn-default"
-                                        style = "width: 120px" ><%=stageData.get(0).getName()%></button >
+                                        style = "width: 120px" ><%=thingBean.getStage().getName()%></button >
                                 <button type = "button" class = "btn btn-default dropdown-toggle" data-toggle = "dropdown" style = "width:
                                 27px;height: 34px" >
                                     <span class = "caret" ></span >
@@ -76,7 +76,7 @@
                                     }
                                 %>
                                 </ul >
-                                <input id = "stageDataHidden" name = "hidden" type = "hidden" value = "<%=stageData.get(0).getId()%>" />
+                                <input id = "stageDataHidden" name = "hidden" type = "hidden" value = "<%=thingBean.getStage().getId()%>" />
 
                             </div >
                         </div >
@@ -121,7 +121,7 @@
                     </div >
                     <div class = "row" style = "margin-top: 10px" >
                         <span class = "col-lg-4 col-sm-4 control-label " >所在小班:</span >
-                        <span class = "col-lg-6   control-label " ><%=thingBean.getClass().getName()%></span >
+                        <span class = "col-lg-6   control-label " ><%=thingBean.getAreaBean().getClassBean().getName()%></span >
                     </div >
                     <div class = "row" style = "margin-top: 10px" >
                         <span class = "col-lg-4 col-sm-4 control-label " >影响面积:</span >
@@ -142,7 +142,7 @@
                     <div class = "row" >
                         <div class = "form-group" >
                             <div class = "col-sm-offset-5 col-sm-5" style = "margin-top:10px" >
-                                <button type = "button" class = "btn btn-default" onclick="thingUpdate()">修改</button >
+                                <button id="confirmUpdate"  type = "button" class = "btn btn-default" >修改</button >
                             </div >
                         </div >
                     </div >
@@ -155,18 +155,28 @@
 <script >
     //点击 修改 按钮事件
     //请求 thingAdd.av 然后成功就跳转到
-    function thingUpdate(){
-        $("#thingUpdateDiv").load('../thingAdd.av',
-                {   "thingID": <%=thingBean.getId()%>,
-                    "stageDataHidden": $("#stageDataHidden").val(),
-                    "scheme":$("#scheme").val()
-                },
-                function(data){
-            //如果成功
-            alert("成功");
-            jump('#thingUpdateDiv', '../thingPanel.av', '1');
-        });
-    }
+    $(function(){
+        $("#confirmUpdate").click(function(){
+            $("#thingUpdateDiv").load('../thingAdd.av',
+                    {
+                        "thingID": <%=thingBean.getId()%>,
+                        "stageDataHidden": $("#stageDataHidden").val(),
+                        "scheme": $("#scheme").val(),
+                        "header": "confirmUpdate"
+                    },
+                    function (data) {
+                        var jsonObj = eval("(" + data + ")");
+                        if (jsonObj.msg == 'success') {
+                            alert(jsonObj.msg);
+                            initData("#thingUpdateDiv", '../thingPanel.av', {'pageNow': 1, 'option': 'init'});
+                        }else if(jsonObj.msg == 'defeat'){
+                            alert("系统繁忙,请稍后再试");
+                        }else alert("系统内部错误");
+                    }
+            );
+        })
+    });
+
 </script >
 
 

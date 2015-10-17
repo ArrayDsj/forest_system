@@ -263,7 +263,7 @@
                     <div class = "row" >
                         <div class = "form-group" >
                             <div class = "col-sm-offset-5 col-sm-5" style = "margin-top:10px" >
-                                <button type = "button" class = "button  green btn btn-default" onclick="thingAdd()">添加</button >
+                                <button type = "button" class = "button  green btn btn-default" onclick="confirmAdd()">添加</button >
                             </div >
                         </div >
                     </div >
@@ -314,7 +314,7 @@
         return false;
     }
 
-    function thingAdd(){
+    function confirmAdd(){
         //本地验证
         var strMessage = "";
         if ($("#name").val() == null || $("#name").val().trim() == "") {
@@ -355,11 +355,12 @@
             });
             $.ajaxFileUpload({
                 url: "../thingAdd.av",//向数据库中添加数据
-                type: "post",
+                type: "POST",
                 secureuri: false, //一般设置为false
                 fileElementId: 'file', // 上传文件的id、name属性名
                 dataType: 'json', //返回值类型，一般设置为json、application/json
                 data: {
+                    'header':'confirmAdd',
                     "name": $("#name").val(),
                     "foundDay": $("#foundDay").val(),
                     "stageDataHidden": $("#stageDataHidden").val(),

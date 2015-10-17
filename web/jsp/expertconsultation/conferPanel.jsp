@@ -84,6 +84,7 @@
             var thingID = $(id).val();
             //请求初始化数据
             $("#conferPanelDiv").load("../thingShow.av", {'thingID': thingID, 'header': 'conferShow'}, function (data) {
+
             })
         } else alert("请选择要查看的列");
 
