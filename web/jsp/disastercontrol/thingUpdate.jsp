@@ -167,7 +167,6 @@
                     function (data) {
                         var jsonObj = eval("(" + data + ")");
                         if (jsonObj.msg == 'success') {
-                            alert(jsonObj.msg);
                             initData("#thingUpdateDiv", '../thingPanel.av', {'pageNow': 1, 'option': 'init'});
                         }else if(jsonObj.msg == 'defeat'){
                             alert("系统繁忙,请稍后再试");

@@ -74,14 +74,15 @@ public class thingAdd extends HttpServlet{
         //就是调用updateThing()方法
         else if(req.getParameter("header").equals("askConfer")){
             int thingID = Integer.parseInt(req.getParameter("thingID"));
-            int stageID = Integer.parseInt(req.getParameter("stageID"));
             ThingBean thingBean = new ThingBean();
             thingBean.setId(thingID);
-            StageBean stageBean = new StageBean();
-            stageBean.setId(stageID);
-            thingBean.setStage(stageBean);
             ThingService thingService = new ThingServiceImp();
-            thingService.updateThing(thingBean);
+            PrintWriter out = resp.getWriter();
+            if (thingService.updateThing(thingBean)) {
+                out.print("{'msg':'success'}");
+            } else out.print("{'msg':'defeat'}");
+            out.flush();
+            out.close();
         }
 
 

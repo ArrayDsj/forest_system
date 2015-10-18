@@ -17,16 +17,19 @@ public class ThingBean implements Serializable{
     private String scheme;
     //会商结果
     private String result;
+    //专家会商状态
+    private int status;
 
-    public String getResult() {
-        return result;
+    public int getStatus() {
+        return status;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
-    private StageBean    stage;
+    private StageBean stage;
+
     private DisasterBean disasterType;
     private FindwayBean  findWay;
     private AreaBean     areaBean;
@@ -36,6 +39,14 @@ public class ThingBean implements Serializable{
 
     public ThingBean(int id) {
         this.id = id;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 
     public int getId() {

@@ -56,8 +56,8 @@
 
                     <c:if test = "${requestScope.info == null}" >
                     <c:forEach items = "${requestScope.allThings}" var = "thing" >
-                        <tr onclick = "select(this,'#selectID','#stageID')"  >
-                            <input type = "hidden" value = "${thing.id}" />
+                        <tr onclick = "select(this,'#selectID','#stageID','#status')"  >
+                            <input type = "hidden" value = "${thing.id}" status = "${thing.status}"/>
                             <td class = "col-md-2" >${thing.name}</td >
                             <td class = "col-md-2" >${thing.foundDay}</td >
                             <td class = "col-md-2" >${thing.areaBean.name}</td >
@@ -70,6 +70,7 @@
                 <%--保存被选中的事件id 和状态--%>
                 <input type = "hidden" value="-1" id="selectID" name="selectID" />
                 <input type = "hidden" value="-1" id="stageID" name="stageID"/>
+                <input type = "hidden" value="-1" id="status" name="status"/>
             </div >
         </div >
         <br />
@@ -214,6 +215,7 @@
     function ask() {
         var thingID= $("#selectID").val();
         var stageID = $("#stageID").val();
+        var status = $("#status").val();
         //未选择行报错
         if (thingID == -1) {
             alert("请选择要查看的列");
@@ -224,9 +226,24 @@
             alert("无需专家会审");
             return false;
         }
+        if(status == 1){
+            alert("不能再次申请");
+            return false;
+        }
         //改变事件的状态为1
-        $("#thingPanelDiv").load('../thingAdd.av',{'header': 'askConfer','thingID':thingID,'stageID':stageID},function(data){
-        });
+        $.ajax({
+            type:'POST',
+            url: '../thingAdd.av',
+            data: {'header': 'askConfer', 'thingID': thingID, 'stageID': stageID},
+            dataType:'json',
+            success: function (data) {
+                var jsonObj = eval("(" + data + ")");
+                if (jsonObj.msg == 'success') {
+                    alert(jsonObj.msg);
+                } else alert("系统繁忙,请稍后重试");
+            }
+        })
+
     }
 
     //修改信息

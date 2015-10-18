@@ -106,6 +106,7 @@ public class ThingDAOImp implements ThingDAO{
                 thingBean.setProportion(rs.getString("t.f_proportion"));
                 thingBean.setPhotoPath(rs.getString("t.f_photopath"));
                 thingBean.setResult(rs.getString("t.f_result"));
+                thingBean.setStatus(rs.getInt("t.f_status"));
 
                 //2. 构建发现方式数据
                 findwayBean = new FindwayBean();
@@ -197,6 +198,7 @@ public class ThingDAOImp implements ThingDAO{
                 thingBean.setProportion(rs.getString("t.f_proportion"));
                 thingBean.setPhotoPath(rs.getString("t.f_photopath"));
                 thingBean.setResult(rs.getString("t.f_result"));
+                thingBean.setStatus(rs.getInt("t.f_status"));
                 //2. 构建发现方式数据
                 findwayBean = new FindwayBean();
                 findwayBean.setId(rs.getInt("f.pk_id"));
@@ -301,7 +303,7 @@ public class ThingDAOImp implements ThingDAO{
                 thingBean.setProportion(rs.getString("t.f_proportion"));
                 thingBean.setPhotoPath(rs.getString("t.f_photopath"));
                 thingBean.setResult(rs.getString("t.f_result"));
-                thingBean.setResult(rs.getString("t.f_result"));
+                thingBean.setStatus(rs.getInt("t.f_status"));
                 //2. 构建发现方式数据
                 findwayBean = new FindwayBean();
                 findwayBean.setId(rs.getInt("f.pk_id"));
@@ -343,24 +345,26 @@ public class ThingDAOImp implements ThingDAO{
         // 更改状态值就可以了
         Connection        connection = DBUtil.getConnection();
         PreparedStatement ps         = null;
+
         try {
+            //申请专家会审时调用
             if(thingBean.getScheme() == null || thingBean.getScheme().equals("")){
                 sql = "update t_thing set f_status = 1 where pk_id = ?";
                 ps = connection.prepareStatement(sql);
                 ps.setInt(1, thingBean.getId());
                 return ps.executeUpdate();
             }
-            if(thingBean.getResult() != null){//修改专家建议
-                sql = "update t_thing set f_result = ? where pk_id = ?";
-                ps = connection.prepareStatement(sql);
-                ps.setString(1, thingBean.getResult());
-                ps.setInt(2, thingBean.getId());
-            }
-            else {
-                sql = "update t_thing set f_stage=?, f_scheme=? where pk_id = ? ";
+            else{
+                //在thingUpdate.jsp中点击确认修改按钮时调用
+                if(thingBean.getStage().getId() != 3){//当阶段不是3的时候,要将状态改变为0
+                    sql = "update t_thing set f_status = 0, fk_stage=?, f_scheme=? where pk_id = ? ";
+                }else
+                    sql = "update t_thing set fk_stage=?, f_scheme=? where pk_id = ? ";
                 ps = connection.prepareStatement(sql);
                 ps.setInt(1, thingBean.getStage().getId());
-                ps.setInt(2, thingBean.getId());
+                ps.setString(2,thingBean.getScheme());
+                ps.setInt(3, thingBean.getId());
+                return ps.executeUpdate();
             }
         } catch (SQLException e) {
             e.printStackTrace();

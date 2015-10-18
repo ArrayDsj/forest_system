@@ -95,10 +95,11 @@ function selectTime(id) {
 /*********************************************************************/
 
 //表格点击事件
-function select(obj,id,stageid) {
+function select(obj,id,stageid,status) {
     //设置隐藏域val
     $(id).val(obj.firstElementChild.value);
     $(stageid).val(obj.lastElementChild.getAttribute("stageID"));
+    $(status).val(obj.firstElementChild.getAttribute("status"));
     //设置样式
     obj.style.backgroundColor = "red";
     $("tr").css("background-color","white");
