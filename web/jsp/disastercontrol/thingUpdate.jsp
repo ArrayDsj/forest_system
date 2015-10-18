@@ -68,11 +68,13 @@
                                 </button >
                                 <ul class = "dropdown-menu" role = "menu" >
                                 <%
-                                    for (int i = 1; i < stageData.size(); i++) {
+                                    for (int i = 0; i < stageData.size(); i++) {
+                                        if(thingBean.getStage().getId() != stageData.get(i).getId()){
                                 %>
                                     <li ><a href = "#" value = "<%=stageData.get(i).getId()%>"
                                             onclick = "return selectOption(this,'#stageDataSelect','#stageDataHidden')" ><%=stageData.get(i).getName()%></a ></li >
                                 <%
+                                        }
                                     }
                                 %>
                                 </ul >
@@ -159,10 +161,10 @@
         $("#confirmUpdate").click(function(){
             $("#thingUpdateDiv").load('../thingAdd.av',
                     {
+                        "header": "confirmUpdate",
                         "thingID": <%=thingBean.getId()%>,
                         "stageDataHidden": $("#stageDataHidden").val(),
-                        "scheme": $("#scheme").val(),
-                        "header": "confirmUpdate"
+                        "scheme": $("#scheme").val()
                     },
                     function (data) {
                         var jsonObj = eval("(" + data + ")");

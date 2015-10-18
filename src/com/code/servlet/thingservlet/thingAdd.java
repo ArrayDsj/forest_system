@@ -77,6 +77,7 @@ public class thingAdd extends HttpServlet{
             ThingBean thingBean = new ThingBean();
             thingBean.setId(thingID);
             ThingService thingService = new ThingServiceImp();
+            //resp.setContentType("text/javascript");
             PrintWriter out = resp.getWriter();
             if (thingService.updateThing(thingBean)) {
                 out.print("{'msg':'success'}");

@@ -222,28 +222,33 @@
             return false;
         }
         //只有当状态为无法解决的时候才能申请
-        if(stageID != 3){
+        else if(stageID != 3){
             alert("无需专家会审");
             return false;
         }
-        if(status == 1){
+        else if(status == 1){
             alert("不能再次申请");
             return false;
+        }else{
+            //改变事件的状态为1
+            $.ajax({
+                type: 'POST',
+                url: '../thingAdd.av',
+                data: {'header': 'askConfer', 'thingID': thingID},
+                cache: false,
+                dataType: 'json',
+//                contentType: false,
+//                processData: false,
+                success: function (data) {
+                    var jsonObj = eval("(" + data + ")");
+                    alert(data);
+                    if (data.msg == 'success') {
+                        alert(data.msg);
+                    } else alert("系统繁忙,请稍后重试");
+                }
+            });
+            alert("申请成功");
         }
-        //改变事件的状态为1
-        $.ajax({
-            type:'POST',
-            url: '../thingAdd.av',
-            data: {'header': 'askConfer', 'thingID': thingID, 'stageID': stageID},
-            dataType:'json',
-            success: function (data) {
-                var jsonObj = eval("(" + data + ")");
-                if (jsonObj.msg == 'success') {
-                    alert(jsonObj.msg);
-                } else alert("系统繁忙,请稍后重试");
-            }
-        })
-
     }
 
     //修改信息
