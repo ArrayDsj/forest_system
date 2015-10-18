@@ -159,12 +159,15 @@
     //请求 thingAdd.av 然后成功就跳转到
     $(function(){
         $("#confirmUpdate").click(function(){
+            var thingID = ${requestScope.thingBean.id};
+            var stageID = $("#stageDataHidden").val();
+            var scheme = $("#scheme").val();
             $("#thingUpdateDiv").load('../thingAdd.av',
                     {
                         "header": "confirmUpdate",
-                        "thingID": <%=thingBean.getId()%>,
-                        "stageDataHidden": $("#stageDataHidden").val(),
-                        "scheme": $("#scheme").val()
+                        "thingID": thingID,
+                        "stageDataHidden": stageID,
+                        "scheme": scheme
                     },
                     function (data) {
                         var jsonObj = eval("(" + data + ")");
@@ -177,7 +180,6 @@
             );
         })
     });
-
 </script >
 
 

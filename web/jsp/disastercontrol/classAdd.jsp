@@ -27,7 +27,7 @@
         <!--内容-->
         <div style = "margin-left:50px;margin-top: 10px" >
             <!--表单-->
-            <form class = "form-horizontal" role = "form" action = "#" method = "POST" onsubmit = "return check()" >
+            <%--<form class = "form-horizontal" role = "form" action = "#" method = "POST" onsubmit = "return check()" >--%>
                 <!--左边-->
                 <div id = "left" style = "width: 370px;height: 390px;float: left" >
                     <!--第一行-->
@@ -112,55 +112,65 @@
                         <div class = "form-group" >
                             <div class = "col-sm-offset-5 col-sm-5" style = "margin-top:10px" >
                                 <input type = "hidden" id="once" name="once" value="initSelect"/>
-                                <button type = "submit" class = "btn btn-default" >添加</button >
+                                <button type = "button" class = "btn btn-default" id="subBtn">添加</button >
                             </div >
                         </div >
                     </div >
                 </div >
-            </form >
+            <%--</form >--%>
         </div >
     </div >
 </div >
 
 <script >
     //判断输入信息
-    function check() {
-        var name = $("#name").val();
-        var phone = $("#phone").val();
-        var manager = $("#manager").val();
-        var number = $("#number").val();
-        //本地验证
-        var strMessage = "";
-        if (name == null || name.trim() == "") {
-            strMessage += "名称不能为空\n";
-        }
-        if (phone == null || phone.trim() == "") {
-            strMessage += "电话不能为空\n";
-        }
-        if (manager == null || manager.trim() == "") {
-            strMessage += "负责人不能为空\n";
-        }if (number == null || number.trim() == "") {
-            strMessage += "人数不能为空\n";
-        }
-        if (strMessage.length != 0) {
-            alert($("#hidden").val());
-            alert(strMessage);
-            return false;
-        } else {
-            $("#once").val("add");
-            $("#classAddDiv").load("../classAdd.av",
-                    {
-                        //添加操作
-                        'option': $("#once").val(),
-                        'name': name,
-                        'phone': phone,
-                        'manager': manager,
-                        'number': number,
-                        'area': $("#hidden").val()
-                    });
-            return false;
-        }
-    }
+    $(function(){
+        $("#subBtn").click(function(){
+            var name = $("#name").val();
+            var phone = $("#phone").val();
+            var manager = $("#manager").val();
+            var number = $("#number").val();
+            var area = $("#hidden").val();
+            //本地验证
+            var strMessage = "";
+            if (name == null || name.trim() == "") {
+                strMessage += "名称不能为空\n";
+            }
+            if (phone == null || phone.trim() == "") {
+                strMessage += "电话不能为空\n";
+            }
+            if (manager == null || manager.trim() == "") {
+                strMessage += "负责人不能为空\n";
+            }
+            if (number == null || number.trim() == "") {
+                strMessage += "人数不能为空\n";
+            }
+            if (strMessage.length != 0) {
+                alert($("#hidden").val());
+                alert(strMessage);
+                return false;
+            } else {
+                $("#classAddDiv").load("../classAdd.av",
+                        {
+                            //添加操作
+                            'option': 'confirmAdd',
+                            'name': name,
+                            'phone': phone,
+                            'manager': manager,
+                            'number': number,
+                            'area': area
+                        }, function (data) {
+                            var jsonObj = eval("(" + data + ")");
+                            if (jsonObj.msg == 'success') {
+                                initData('#classAddDiv', '../classPanel.av', {'pageNow': 1, 'option': 'init'});
+                            } else if (jsonObj.msg == 'defeat') alert("添加失败");
+                            else    alert('系统内部错误');
+                        });
+                return false;
+            }
+        })
+    });
+
 
 
     function getID(obj, id, id1) {
@@ -178,8 +188,6 @@
 
         obj.text = str;
         obj.setAttribute("value", oldValue);
-
-
 
         $(id1).val(obj.getAttribute("value"));
         return false;

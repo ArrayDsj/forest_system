@@ -200,8 +200,6 @@
         $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": num});
     });
 
-
-
 </script >
 </body >
 </html >

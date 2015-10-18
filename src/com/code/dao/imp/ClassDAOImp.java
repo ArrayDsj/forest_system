@@ -62,13 +62,51 @@ public class ClassDAOImp implements ClassDAO {
 
     @Override
     public ClassBean showClass(ClassBean classBean) {
-
-        return null;
+        int classID = classBean.getId();
+        Connection connection = DBUtil.getConnection();
+        String    sql = "select * from t_class "+
+                    "where pk_id = " + classID;
+        Statement st  = null;
+        ResultSet rs = null;
+        try {
+            st = connection.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                classBean.setId(rs.getInt("pk_id"));
+                classBean.setName(rs.getString("f_name"));
+                classBean.setManager(rs.getString("f_manager"));
+                classBean.setPhone(rs.getString("f_phone"));
+                classBean.setNumber(rs.getInt("f_number"));
+                classBean.setFoundDay(rs.getDate("f_foundday"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return classBean;
     }
 
     @Override
     public boolean updateClass(ClassBean classBean) {
-        return false;
+        int    classID = classBean.getId();
+        String manager = classBean.getManager();
+        String phone   = classBean.getPhone();
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement ps = null;
+        int result = -1;
+        String sql = "update t_class set f_manager = ?,f_phone = ? where pk_id = ?";
+
+        try {
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, manager);
+            ps.setString(2, phone);
+            ps.setInt(3, classID);
+            result = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBUtil.close(ps,connection);
+        }
+        return result == 1;
     }
 
     @Override

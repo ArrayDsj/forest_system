@@ -105,7 +105,11 @@ public class AreaDAOImp implements AreaDAO{
             rs = st.executeQuery(sql);
 
             if (rs.next()) {
+                areaBean.setId(rs.getInt("pk_id"));
                 areaBean.setName(rs.getString("f_name"));
+                areaBean.setForestType(rs.getString("f_foresttype"));
+                areaBean.setLandType(rs.getString("f_landtype"));
+                areaBean.setTreeType(rs.getString("f_treetype"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

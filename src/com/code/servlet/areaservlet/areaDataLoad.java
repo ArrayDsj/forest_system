@@ -47,17 +47,18 @@ public class areaDataLoad extends HttpServlet{
         //1. 判断有无条件(无条件,初始化;有条件,按条件分页查询)
         if(query == null){
             //按无条件查询数据
+            counts = areaService.getCounts();
             allAreas = areaService.getInitData(pageNow,pageSize);
         }else{
             //按条件查询
             String str = req.getParameter("str");
             str = new String(str.getBytes(),"UTF-8");
+            counts = areaService.getCountsByCondition(query, str);
             //有条件查询
             allAreas = areaService.getLimitData(query, str, pageNow,pageSize);
         }
 
         if (allAreas != null) {
-            counts = allAreas.get(allAreas.size() - 1).getId();
             //计算总页数
             pageNum = (int) Math.ceil(counts / (pageSize * 1.0));
             req.setAttribute("pageNum", pageNum);

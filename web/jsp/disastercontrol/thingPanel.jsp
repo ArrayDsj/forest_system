@@ -202,10 +202,10 @@
     }
 
     function showThing(id){
-        if($(id).val() != -1){
-            var idVal = $(id).val();
+        var thingID = $(id).val();
+        if(thingID != -1){
             //请求初始化数据
-            $("#thingPanelDiv").load("../thingShow.av", { 'thingID': idVal,'header':'showThing'}, function (data) {
+            $("#thingPanelDiv").load("../thingShow.av", { 'thingID': thingID,'header':'showThing'}, function (data) {
             })
         }else alert("请选择要查看的列");
 

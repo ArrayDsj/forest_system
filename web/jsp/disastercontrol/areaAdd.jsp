@@ -31,8 +31,8 @@
         </div >
         <!--内容-->
         <div style = "margin-left:310px;margin-top: 10px" >
-            <!--表单-->
-            <form class = "form-horizontal" role = "form" action = "#" method="POST" onsubmit="return check()">
+            <%--<!--表单-->--%>
+            <%--<form class = "form-horizontal" role = "form" action = "#" method="POST" onsubmit="return check()">--%>
                 <div id = "body" >
                     <!--第一行-->
                     <div class = "row" style = "margin-top: 20px" >
@@ -94,12 +94,12 @@
                     <div class = "row" >
                         <div class = "form-group" >
                             <div class = "col-sm-offset-3 col-sm-5" style = "margin-top:-40px" >
-                                <button type = "submit" class = "btn btn-default" id="subBtn">添加</button >
+                                <button type = "button" class = "btn btn-default" id="subBtn">添加</button >
                             </div >
                         </div >
                     </div >
                 </div >
-            </form >
+            <%--</form >--%>
         </div >
     </div >
 </div >
@@ -107,14 +107,12 @@
 
 <script >
 
-
-
-    //判断输入信息
-    function check() {
+$(function(){
+    $("#subBtn").click(function(){
         var name = $("#name").val();
         var forestType = $("#forestType").val();
         var treeType = $("#treeType").val();
-
+        var landType = $("#hidden").val();
         //本地验证
         var strMessage = "";
         if (name == null || name.trim() == "") {
@@ -129,19 +127,25 @@
         if (strMessage.length != 0) {
             alert(strMessage);
             return false;
-        }else{
+        } else {
             $("#areaAddDiv").load("../areaAdd.av",
                     {
                         'name': name,
                         'forestType': forestType,
                         'treeType': treeType,
-                        'landType': $("#hidden").val()
-                    },function(data){
-                        alert("aaaa");
+                        'landType': landType
+                    }, function (data) {
+                        var jsonObj = eval("(" + data + ")");
+                        if(jsonObj.msg == 'success'){
+                            initData('#areaAddDiv', '../areaPanel.av', {'pageNow': 1, 'option': 'init'});
+                        }else if(jsonObj.msg == 'defeat') alert("添加失败");
+                        else    alert('系统内部错误');
                     });
             return false;
         }
-    }
+    })
+});
+
 </script >
 </body >
 </html >

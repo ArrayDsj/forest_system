@@ -21,36 +21,26 @@ public class AreaServiceImp implements AreaService{
     @Override
     public ArrayList<AreaBean> getLimitData(String queryType, String queryStr, int pageNow, int pageSize) {
         AreaDAO areaDao = new AreaDAOImp();
-        //得到满足条件的总个数
-        int counts = areaDao.getCountsByCondition(queryType, queryStr);
-        if(counts != -1){
-            //得到满足条件的集合
-            ArrayList<AreaBean> all = areaDao.getAreasByCondition(queryType, queryStr, pageNow,pageSize);
-            AreaBean areaBean = new AreaBean();
-            areaBean.setId(counts);
-            all.add(areaBean);
-            //这个集合的最后一个对象的中id就是总个数
-            return all;
-        }
-        return null;
+        return areaDao.getAreasByCondition(queryType, queryStr, pageNow, pageSize);
     }
 
     //得到初始分页数据
     @Override
     public ArrayList<AreaBean> getInitData(int pageNow, int pageSize){
         AreaDAO areaDao = new AreaDAOImp();
-        //1. 得到总记录数
-        int counts = areaDao.getCounts();
-        if(counts != 0){
-            //2. 得到分页数据
-            ArrayList<AreaBean> all = areaDao.getAreas(pageNow, pageSize);
-            //最后一个是总记录条数
-            AreaBean areaBean = new AreaBean();
-            areaBean.setId(counts);
-            all.add(areaBean);
-            return all;
-        }
-        return null;
+        return areaDao.getAreas(pageNow, pageSize);
+    }
+
+    @Override
+    public int getCounts() {
+        AreaDAO areaDao = new AreaDAOImp();
+        return areaDao.getCounts();
+    }
+
+    @Override
+    public int getCountsByCondition(String queryType, String queryStr) {
+        AreaDAO areaDao = new AreaDAOImp();
+        return areaDao.getCountsByCondition(queryType, queryStr);
     }
 
     @Override
@@ -64,4 +54,11 @@ public class AreaServiceImp implements AreaService{
         AreaDAO areaDao = new AreaDAOImp();
         return areaDao.getAllAreas();
     }
+
+    @Override
+    public AreaBean getAreaById(int fk_class) {
+        AreaDAO areaDao = new AreaDAOImp();
+        return areaDao.getAreaById(fk_class);
+    }
+
 }

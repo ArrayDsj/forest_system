@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Created by CodeA on 2015/10/13.
@@ -29,10 +30,12 @@ public class areaAdd extends HttpServlet{
         AreaBean areaAdd = new AreaBean(name, forestType, landType, treeType);
 
         AreaService areaService = new AreaServiceImp();
-        if(areaService.addArea(areaAdd)){
-            req.setAttribute("showPage","areaPanel");
-            req.getRequestDispatcher("jsp/index.jsp").forward(req, resp);
 
-        }
+        PrintWriter out = resp.getWriter();
+        if (areaService.addArea(areaAdd)) {
+            out.print("{'msg':'success'}");
+        } else out.print("{'msg':'defeat'}");
+        out.flush();
+        out.close();
     }
 }

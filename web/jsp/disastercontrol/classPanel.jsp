@@ -66,13 +66,11 @@
 
                         <%--</c:forEach>--%>
                         <%--</c:if>--%>
-
-
                         <%
                             ArrayList<ClassBean> all = (ArrayList<ClassBean>)request.getAttribute("allClasses");
                             for(int i = 0 ; i < all.size() ; i++){
                         %>
-                            <tr onclick = "select(this)" >
+                            <tr onclick = "select(this,'#selectID')" >
                                 <input type = "hidden" value="<%=all.get(i).getId()%>"/>
                                 <td class = "col-md-3" ><%=all.get(i).getName()%></td >
                                 <td class = "col-md-3" ><%=all.get(i).getManager()%></td >
@@ -82,14 +80,10 @@
                         <%
                             }
                         %>
-
-
-
-
-
                 </table >
+                <%--保存被选中的事件id --%>
+                <input type = "hidden" value = "-1" id = "selectID" name = "selectID" />
             </div >
-            </table>
         </div >
         <br />
         <!--分页按钮-->
@@ -123,16 +117,15 @@
         <div id = "leftBtns" style = "float: left" >
             <div class = "row-fluid" >
                 <div class = "col-lg-3 col-sm-2 col-sm-offset-2" >
-                    <button class = "btn" type = "button" onclick = "jump('#classPanelDiv','../classAdd.av')" >添加小班
-                    </button >
+                    <button class = "btn" type = "button" id = "addClass" >添加小班</button >
                 </div >
                 <div class = "col-lg-3 col-sm-2 col-sm-offset-3" >
-                    <button class = "btn" type = "button" onclick = "jump('#classPanelDiv','disastercontrol/classShow.jsp')" >查看小班信息</button >
+                    <button class = "btn" type = "button" id="showClass" >查看小班信息</button >
                 </div >
             </div >
             <div class = "row-fluid" >
                 <div class = "col-lg-3 col-sm-3 col-sm-offset-2" style = "margin-top: 20px" >
-                    <button class = "btn" type = "button" onclick = "jump('#classPanelDiv','disastercontrol/classUpdate.jsp')" >修改小班信息</button >
+                    <button class = "btn" type = "button" id="updateClass">修改小班信息</button >
                 </div >
             </div >
         </div >
@@ -173,6 +166,34 @@
 </div >
 
 <script >
+
+    //点击添加按钮时将初始化下拉列表数据传给classAdd.jsp
+    $(function(){
+        $("#addClass").click(function(){
+            //初始化下拉地区下拉列表
+            $("#classPanelDiv").load("../classAdd.av", {'header': 'askAddClass'}, function (data) {
+                //jump('#thingPanelDiv', 'disastercontrol/thingAdd.jsp');
+            })
+        });
+
+        $("#showClass").click(function(){
+            var classID = $("#selectID").val();
+            if (classID != -1) {
+                //请求初始化数据
+                $("#classPanelDiv").load("../classShow.av", {'classID': classID, 'header': 'showClass'}, function (data) {
+                })
+            } else alert("请选择要查看的列");
+        });
+        $("#updateClass").click(function(){
+            var classID = $("#selectID").val();
+            if (classID != -1) {
+                //请求初始化数据
+                $("#classPanelDiv").load("../classShow.av", {'classID': classID, 'header': 'updateClass'}, function (data) {
+                })
+            } else alert("请选择要查看的列");
+        })
+    });
+
     <%--只能输入数字--%>
     $('#pageNow').keydown = function (eve) {
         if (event) {

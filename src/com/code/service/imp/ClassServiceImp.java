@@ -20,12 +20,14 @@ public class ClassServiceImp implements ClassService {
 
     @Override
     public ClassBean showClass(ClassBean classBean) {
-        return null;
+        ClassDAO classDAO = new ClassDAOImp();
+        return classDAO.showClass(classBean);
     }
 
     @Override
     public boolean updateClass(ClassBean classBean) {
-        return false;
+        ClassDAO classDAO = new ClassDAOImp();
+        return classDAO.updateClass(classBean);
     }
 
     //得到条件分页数据

@@ -96,6 +96,11 @@
         <servlet-name>classAdd</servlet-name>
         <servlet-class>com.code.servlet.classservlet.classAdd</servlet-class>
     </servlet>
+    <!-- 查看小班信息-->
+    <servlet>
+        <servlet-name>classShow</servlet-name>
+        <servlet-class>com.code.servlet.classservlet.ClassShow</servlet-class>
+    </servlet>
     <!-- 事件一览-->
     <servlet>
         <servlet-name>thingPanel</servlet-name>
@@ -160,6 +165,10 @@
     <servlet-mapping>
         <servlet-name>conferAdd</servlet-name>
         <url-pattern>/conferAdd.av</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>classShow</servlet-name>
+        <url-pattern>/classShow.av</url-pattern>
     </servlet-mapping>
 
 
