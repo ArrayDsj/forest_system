@@ -13,7 +13,11 @@ public interface ClassService {
     //修改信息
     public boolean updateClass(ClassBean classBean);
 
+    //得到没有条件下的所有记录的总数
+    public int getCounts();
 
+    //返回当前条件下满足条件的总个数
+    public int getCountsByCondition(String queryType, String queryStr);
 
     //得到条件分页数据
     public ArrayList<ClassBean> getLimitData(String queryType, String queryStr, int pageNow, int pageSize);

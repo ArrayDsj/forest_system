@@ -35,9 +35,9 @@
                         <div class = "link" ><i class = "glyphicon glyphicon-book" ></i >资料管理<i class = "glyphicon glyphicon-chevron-down" style = "margin-left: 160px" ></i >
                         </div >
                         <ul class = "submenu" >
-                            <li ><a href = "#wormPanel" onclick = "jump('#otherHtml','datamanagement/wormPanel.jsp')" >虫害一览</a ></li >
-                            <li ><a href = "#diseasePanel" onclick = "jump('#otherHtml','datamanagement/diseasePanel.jsp')" >病害一览</a ></li >
-                            <li ><a href = "#mousePanel" onclick = "jump('#otherHtml','datamanagement/mousePanel.jsp')" >鼠害一览</a ></li >
+                            <li ><a href = "#虫害一览" id="wormPanel">虫害一览</a ></li >
+                            <li ><a href = "#病害一览" id="diseasePanel">病害一览</a ></li >
+                            <li ><a href = "#鼠害一览" id="mousePanel">鼠害一览</a ></li >
                         </ul >
                     </li >
                     <li >
@@ -106,23 +106,24 @@
 
 
 <script >
-    $(function(){
-        var showPage = '${requestScope.showPage}';
-        if(showPage == 'areaPanel'){
-           jump('#otherHtml', '../areaPanel.av', '1');
-        }
-        if (showPage == 'classPanel') {
-            jump('#otherHtml', '../classPanel.av', '1');
-        }
-    });
-
-
-
 
     //初始化方法声明
     function initData(div, url, json) {
         $(div).load(url, json);
     }
+
+    //虫害一览
+    $("#wormPanel").click(function () {
+        initData('#otherHtml', '../wormPanel.av', {'pageNow': 1, 'option': 'init'});
+    });
+    //病害一览
+    $("#diseasePanel").click(function () {
+        initData('#otherHtml', '../diseasePanel.av', {'pageNow': 1, 'option': 'init'});
+    });
+    //鼠害一览
+    $("#mousePanel").click(function(){
+        initData('#otherHtml', '../mousePanel.av', {'pageNow': 1, 'option': 'init'});
+    });
 
     //区域一览初始化
     $("#areaPanel").click(function () {
@@ -143,6 +144,11 @@
     $("#conferPanel").click(function () {
         initData('#otherHtml', '../conferPanel.av', {'pageNow': 1, 'option': 'init'});
     });
+
+
+
+
+
 
 
 </script >

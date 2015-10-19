@@ -72,29 +72,29 @@ a {
 	text-decoration: none;
 }
 
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    margin-right: auto;
-    margin-left: auto;
-    width: 800px;
-}
+/*table {*/
+    /*border-collapse: collapse;*/
+    /*border-spacing: 0;*/
+    /*margin-right: auto;*/
+    /*margin-left: auto;*/
+    /*width: 800px;*/
+/*}*/
 
-th, td {
-    border: 1px solid #b5d6e6;
-    font-weight: normal;
-    text-align: center;
-    vertical-align: middle;
-    height: 20px;
-}
+/*th, td {*/
+    /*border: 1px solid #b5d6e6;*/
+    /*font-weight: normal;*/
+    /*text-align: center;*/
+    /*vertical-align: middle;*/
+    /*height: 20px;*/
+/*}*/
 
-th {
-    background-color: Gray;
-}
+/*th {*/
+    /*background-color: Gray;*/
+/*}*/
 
-.hover {
-    background-color: #cccc00;
-}
+/*.hover {*/
+    /*background-color: #cccc00;*/
+/*}*/
 
 
 /** =======================

@@ -1,16 +1,18 @@
-<%@ page import = "com.code.bean.AreaBean" %>
-<%@ page import = "com.code.bean.ClassBean" %>
-<%@ page import = "java.util.ArrayList" %>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ page import = "java.util.ArrayList" %><%@ page import = "com.code.bean.AreaBean" %>
 <%--
   Created by IntelliJ IDEA.
   User: Code.Ai
   Date: 2015/10/10
-  Time: 15:34
+  Time: 15:41
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType = "text/html;charset=UTF-8" pageEncoding = "UTF-8" language = "java" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
+<%--<%--%>
+    <%--ArrayList<AreaBean> areasNoClass = (ArrayList<AreaBean>)request.getAttribute("areasNoClass");--%>
+    <%--int counts = areasNoClass.size();--%>
+<%--%>--%>
 <!DOCTYPE html>
 <html lang = "en" >
 <head >
@@ -41,10 +43,9 @@
                 </h3 >
             </div >
         </div >
-        <!--表格-->
         <div class = "row-fluid table-responsive" style = "border: solid" >
             <table class = "table table-hover active table-striped table-bordered" >
-                <tr  >
+                <tr >
                     <th class = "col-md-3" >小班名称</th >
                     <th class = "col-md-3" >负责人</th >
                     <th class = "col-md-3" >负责人电话</th >
@@ -53,33 +54,17 @@
             </table >
             <div id = "tableTD" class = "row-fluid" style = "overflow-y: auto;height: 208px;margin-top: -20px" >
                     <table class = "table table-striped table-bordered table-hover table-condensed" >
-
-                    <%--<c:if test="${requestScope.info==null}">--%>
-                        <%--<c:forEach items="${requestScope.allClasses}" var="class">--%>
-                             <%--<tr onclick = "select(this)" >--%>
-                                <%--<input type = "hidden"  value="${class.id}"/>--%>
-                                <%--<td class = "col-lg-3" >雅林一班</td >--%>
-                                <%--<td class = "col-lg-3" >何元庆</td >--%>
-                                <%--<td class = "col-lg-3" >13754821641</td >--%>
-                                <%--<td class = "col-lg-3" >雅林一号地区</td >--%>
-                            <%--</tr>--%>
-
-                        <%--</c:forEach>--%>
-                        <%--</c:if>--%>
-                        <%
-                            ArrayList<ClassBean> all = (ArrayList<ClassBean>)request.getAttribute("allClasses");
-                            for(int i = 0 ; i < all.size() ; i++){
-                        %>
+                    <c:if test="${requestScope.info != 'null'}">
+                        <c:forEach items="${requestScope.allClasses}" var="cla">
                             <tr onclick = "select(this,'#selectID')" >
-                                <input type = "hidden" value="<%=all.get(i).getId()%>"/>
-                                <td class = "col-md-3" ><%=all.get(i).getName()%></td >
-                                <td class = "col-md-3" ><%=all.get(i).getManager()%></td >
-                                <td class = "col-md-3" ><%=all.get(i).getPhone()%></td >
-                                <td class = "col-md-3" ><%=all.get(i).getArea()%></td >
-                            </tr>
-                        <%
-                            }
-                        %>
+                                <input type = "hidden" value = "${cla.id}" />
+                                <td class = "col-md-3" >${cla.name}</td >
+                                <td class = "col-md-3" >${cla.manager}</td >
+                                <td class = "col-md-3" >${cla.phone}</td >
+                                <td class = "col-md-3" >${cla.area}</td >
+                            </tr >
+                        </c:forEach>
+                    </c:if>
                 </table >
                 <%--保存被选中的事件id --%>
                 <input type = "hidden" value = "-1" id = "selectID" name = "selectID" />
@@ -90,16 +75,14 @@
         <div class = "row-fluid" >
             <div class = "span12" >
                 <div >
-                    <div style = "float:left" >
-                        <button id = "previousPage" class = "btn btn-sm" type = "button" style = "line-height:0px" >
-                            <span class = "glyphicon glyphicon-chevron-left" ></span >
-                        </button >
-                    </div >
-                    <input id = "pageNow" type = "text" class = "form-control" style =
-                            "width: 40px;height: 25px;margin-left: 2px;margin-top: 0px;float:left"
+                    <button id = "previousPage" class = "btn btn-sm" type = "button" style = "line-height:0px" >
+                        <span class = "glyphicon glyphicon-chevron-left" ></span >
+                    </button >
+                    <input id = "pageNow" type = "text"
+                           style = "width: 40px;height: 25px;margin-left: 2px;margin-top: 0px; ime-mode:Disabled;" onkeydown = "onlyNum()"
                             <%--当前页数--%>
-                            value="${requestScope.pageNow}"/>
-                    <label id = "num" style = "margin-left: 2px" >
+                           value = "${requestScope.pageNow}" />
+                    <label >
                         <%--总的分页数--%>
                         /${requestScope.pageNum}
                     </label >
@@ -120,39 +103,39 @@
                     <button class = "btn" type = "button" id = "addClass" >添加小班</button >
                 </div >
                 <div class = "col-lg-3 col-sm-2 col-sm-offset-3" >
-                    <button class = "btn" type = "button" id="showClass" >查看小班信息</button >
+                    <button class = "btn" type = "button" id = "showClass" >查看小班信息</button >
                 </div >
             </div >
             <div class = "row-fluid" >
                 <div class = "col-lg-3 col-sm-3 col-sm-offset-2" style = "margin-top: 20px" >
-                    <button class = "btn" type = "button" id="updateClass">修改小班信息</button >
+                    <button class = "btn" type = "button" id = "updateClass">修改小班信息</button >
                 </div >
             </div >
         </div >
 
         <div class = "row-fluid" id = "rightBtns" style = "float: left; " >
             <!--xs自动 lg>=1200px sm<=768px offset列移动-->
-            <div class = "col-xs-3 col-lg-6 col-sm-6  col-sm-offset-4" style = "margin-top: -140px;margin-left: 400px" >
+            <div class = "col-xs-3 col-lg-6 col-sm-6  col-sm-offset-4" style = "margin-top: -85px;margin-left: 400px" >
                 <fieldset >
                     <legend >查询小班信息</legend >
                     <div class = "row" >
-                        <div class = " col-sm-6 col-lg-6" >
+                        <div class = "col-xs-10 col-sm-6 col-lg-6" >
                             <div class = "input-group" >
                                 <div class = "input-group-btn" >
                                     <button name = "f_name" id = "selected" type = "button" class = "btn btn-default dropdown-toggle"
                                             data-toggle = "dropdown" >小班名称<span >&nbsp;</span ><span class = "caret" ></span >
                                     </button >
-                                        <ul id = "ul" class = "dropdown-menu" >
-                                            <li ><a id = 'li1' name = "f_area" href = "#"
-                                                    onclick = "return querySelect(this,'selected')" >负责区域</a ></li >
-                                        </ul >
+                                    <ul id = "ul" class = "dropdown-menu" >
+                                        <li ><a id = 'li1' name = "f_area" href = "#"
+                                                onclick = "return querySelect(this,'selected')" >负责区域</a ></li >
+                                    </ul >
                                 </div >
-                                <%--条件输入框--%>
-                                <input id = "inputText" type = "text" class = "form-control" style = "width: 130px" value = "" >
+                                <!-- /btn-group -->
+                                <input id = "inputText" type = "text" class = "form-control" style = "width: 130px" >
                             </div >
                             <!-- /input-group -->
                         </div >
-                        <div class = "col-lg-4 col-sm-4" style = "margin-left: 40px">
+                        <div class = "col-lg-4 col-sm-4" style = "margin-left: 40px" >
                             <button id = "search" type = "button" class = "btn" onclick =
                                     "submitQuery('#inputText','#classPanelDiv','../classPanel.av','1')" >查找
                             </button >
@@ -167,72 +150,51 @@
 
 <script >
 
-    //点击添加按钮时将初始化下拉列表数据传给classAdd.jsp
-    $(function(){
-        $("#addClass").click(function(){
-            //初始化下拉地区下拉列表
+$(function () {
+    $("#addClass").click(function () {
+        if(parseInt(${requestScope.countsNoClass}) != 0){
             $("#classPanelDiv").load("../classAdd.av", {'header': 'askAddClass'}, function (data) {
-                //jump('#thingPanelDiv', 'disastercontrol/thingAdd.jsp');
             })
-        });
+        }else alert("请先添加地区");
 
-        $("#showClass").click(function(){
-            var classID = $("#selectID").val();
-            if (classID != -1) {
-                //请求初始化数据
-                $("#classPanelDiv").load("../classShow.av", {'classID': classID, 'header': 'showClass'}, function (data) {
-                })
-            } else alert("请选择要查看的列");
-        });
-        $("#updateClass").click(function(){
-            var classID = $("#selectID").val();
-            if (classID != -1) {
-                //请求初始化数据
-                $("#classPanelDiv").load("../classShow.av", {'classID': classID, 'header': 'updateClass'}, function (data) {
-                })
-            } else alert("请选择要查看的列");
-        })
     });
 
-    <%--只能输入数字--%>
-    $('#pageNow').keydown = function (eve) {
-        if (event) {
-            if ((event.keyCode >= 48 && event.keyCode <= 57) ||
-                    (event.keyCode >= 96 && event.keyCode <= 105) ||
-                    event.keyCode == 8) {
-                return true;
-            }
-            //取消默认事件
-            return false;
-        } else {
-            if ((eve.charCode >= 48 && eve.charCode <= 57) ||
-                    (eve.charCode >= 96 && eve.charCode <= 105) ||
-                    eve.charCode == 8) {
-                return true;
-            }
-            //取消默认事件
-            return false;
-        }
-    };
+    $("#showClass").click(function () {
+        var classID = $("#selectID").val();
+        if (classID != -1) {
+            //请求初始化数据
+            $("#classPanelDiv").load("../classShow.av", {'classID': classID, 'header': 'showClass'}, function (data) {
+            })
+        } else alert("请选择要查看的列");
+    });
+    $("#updateClass").click(function () {
+        var classID = $("#selectID").val();
+        if (classID != -1) {
+            //请求初始化数据
+            $("#classPanelDiv").load("../classShow.av", {'classID': classID, 'header': 'updateClass'}, function (data) {
+            })
+        } else alert("请选择要查看的列");
+    });
 
-    //上一页事件
+
+//上一页事件
     $("#previousPage").click(function () {
-        if (${requestScope.pageNow} >1){
+        if (parseInt(${requestScope.pageNow}) > 1) {
             $("#classPanelDiv").load("../classPanel.av", {"pageNow": ${requestScope.pageNow} -1});
-        }
-        else{
+        } else {
             alert("已是第一页！");
         }
     });
 
     //下一页事件
     $("#nextPage").click(function () {
-        if (${requestScope.pageNow} <
-        ${requestScope.pageNum}){
+        if (${requestScope.pageNow} < ${requestScope.pageNum})
+        {
             //这里是一个json数据格式
             $("#classPanelDiv").load("../classPanel.av", {"pageNow": ${requestScope.pageNow} +1});
         }
-        else{
+        else
+        {
             alert("已是最后一页！");
         }
     });
@@ -242,12 +204,8 @@
         var num = $("#pageNow").val();
         $("#classPanelDiv").load("../classPanel.av", {"pageNow": num});
     });
-    //查询模块事件
 
-
-
-
-
+})
 
 </script >
 </body >

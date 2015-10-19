@@ -1,62 +1,29 @@
 package com.code.util;
 
-import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
+import java.sql.*;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
-public class DBUtil implements ServletContextListener {
-    private static BasicDataSource ds;
+public class DBUtil  {
+    private static Connection con;
+	static{
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
-    public void contextInitialized(ServletContextEvent servletContextEvent) {
-        String driverClass = servletContextEvent.getServletContext().getInitParameter("driver");
-        String userName = servletContextEvent.getServletContext().getInitParameter("username");
-        String passWord = servletContextEvent.getServletContext().getInitParameter("password");
-        String url      = servletContextEvent.getServletContext().getInitParameter("url");
-
-        int initialSize = Integer.parseInt(servletContextEvent.getServletContext().getInitParameter("initialSize"));
-
-        int maxIdle = Integer.parseInt(servletContextEvent.getServletContext().getInitParameter("maxIdle"));
-
-        int minIdle = Integer.parseInt(servletContextEvent.getServletContext().getInitParameter("minIdle"));
-
-        ds = new BasicDataSource();
-        ds.setDriverClassName(driverClass);
-        ds.setUrl(url);
-        ds.setUsername(userName);
-        ds.setPassword(passWord);
-        ds.setInitialSize(initialSize);
-        ds.setMaxIdle(maxIdle);
-        ds.setMinIdle(minIdle);
-
-        servletContextEvent.getServletContext().setAttribute("dataSource", ds);
-    }
-
-    public void contextDestroyed(ServletContextEvent servletContextEvent) {
-        if (ds == null) return;
+	public static Connection getConnection(){
         try {
-            ds.close();
-        } catch (SQLException e) {
-            System.out.println("¡¨Ω”≥ÿπÿ±’ ß∞‹");
-            e.printStackTrace();
-        }
-    }
-
-    public static Connection getConnection() {
-        Connection con = null;
-        try {
-            con = ds.getConnection();
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/worm", "root", "dusj5282010");
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return con;
-    }
+	}
 
-    //≤È—Ø≤Ÿ◊˜”√µΩµƒπÿ±’¡¨Ω”∑Ω∑®
+    //Êü•ËØ¢Êìç‰ΩúÁî®Âà∞ÁöÑÂÖ≥Èó≠ËøûÊé•ÊñπÊ≥ï
     public static void close(ResultSet resultSet, Statement statement,  Connection connection) {
         if(resultSet != null){
             try {
@@ -81,7 +48,7 @@ public class DBUtil implements ServletContextListener {
         }
     }
 
-    //∏¸–¬≤Ÿ◊˜”√µΩµƒπÿ±’¡¨Ω”∑Ω∑®
+    //Êõ¥Êñ∞Êìç‰ΩúÁî®Âà∞ÁöÑÂÖ≥Èó≠ËøûÊé•ÊñπÊ≥ï
     public static void close(Statement statement, Connection connection) {
         if (statement != null) {
             try {

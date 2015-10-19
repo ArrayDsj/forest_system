@@ -54,7 +54,7 @@
             <div id = "tableTD" class = "row-fluid" style = "overflow-y: auto;height: 208px;margin-top: -20px" >
                     <table class = "table table-striped table-bordered table-hover table-condensed" >
 
-                    <c:if test = "${requestScope.info == null}" >
+                    <c:if test = "${requestScope.info != 'null'}" >
                     <c:forEach items = "${requestScope.allThings}" var = "thing" >
                         <tr onclick = "select(this,'#selectID','#stageID','#status')"  >
                             <input type = "hidden" value = "${thing.id}" status = "${thing.status}"/>
@@ -83,9 +83,9 @@
                             <span class = "glyphicon glyphicon-chevron-left" ></span >
                         </button >
                     </div >
-                    <input id = "pageNum" type = "text" class = "form-control" style =
-                            "width: 45px;height: 25px;margin-left: 2px;margin-top: 2px;float:left"
-                    <%--当前页数--%>
+                     <input id = "pageNow" type = "text"
+                            style = "width: 40px;height: 25px;margin-left: 2px;margin-top: 0px; ime-mode:Disabled;" onkeydown = "onlyNum()"
+                        <%--当前页数--%>
                            value = "${requestScope.pageNow}"
                             />
                     <label id = "num" name = "num" style = "margin-left: 2px" >
@@ -275,7 +275,7 @@
     //事件处理
     //上一页事件
     $("#previousPage").click(function () {
-        if (${requestScope.pageNow} > 1 ){
+        if (parseInt(${requestScope.pageNow}) > 1 ){
             $("#thingPanelDiv").load("../thingPanel.av", {"pageNow": ${requestScope.pageNow} -1});
         }
         else{

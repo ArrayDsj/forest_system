@@ -66,16 +66,17 @@
 
 
 
-
-
-
-
-
     <!-- 登录配置-->
     <servlet>
         <servlet-name>login</servlet-name>
         <servlet-class>com.code.servlet.LoginServlet</servlet-class>
     </servlet>
+
+    <servlet>
+        <servlet-name>mousePanel</servlet-name>
+        <servlet-class>com.code.servlet.mouseServlet.mouseDataLoad</servlet-class>
+    </servlet>
+
     <!-- 地区一览-->
     <servlet>
         <servlet-name>areaPanel</servlet-name>
@@ -170,7 +171,10 @@
         <servlet-name>classShow</servlet-name>
         <url-pattern>/classShow.av</url-pattern>
     </servlet-mapping>
-
+    <servlet-mapping>
+        <servlet-name>mousePanel</servlet-name>
+        <url-pattern>/mousePanel.av</url-pattern>
+    </servlet-mapping>
 
 
 

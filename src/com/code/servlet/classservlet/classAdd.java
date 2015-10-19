@@ -51,8 +51,10 @@ public class classAdd extends HttpServlet{
         else if("askAddClass".equals(req.getParameter("header"))) {//初始化下拉列表
             AreaService areaService = new AreaServiceImp();
             ArrayList<AreaBean> allSelects =  areaService.getAreas();
-            req.setAttribute("allSelects", allSelects);
-            req.getRequestDispatcher("jsp/disastercontrol/classAdd.jsp").forward(req, resp);
+            if(allSelects != null){
+                req.setAttribute("allSelects", allSelects);
+                req.getRequestDispatcher("jsp/disastercontrol/classAdd.jsp").forward(req, resp);
+            }else req.getRequestDispatcher("jsp/disastercontrol/classPanel.jsp").forward(req, resp);
         }
         else if("confirmUpdate".equals(req.getParameter("header"))){
             int classID = Integer.parseInt(req.getParameter("classID"));

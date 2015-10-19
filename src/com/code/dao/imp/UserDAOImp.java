@@ -16,15 +16,15 @@ import java.util.ArrayList;
 public class UserDAOImp implements UserDAO{
     @Override
     public UserBean query(UserBean userBean) {
-        //»ñµÃÁ¬½Ó
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         Connection connection = DBUtil.getConnection();
-        //´´½¨sqlÓï¾ä
+        //ï¿½ï¿½ï¿½ï¿½sqlï¿½ï¿½ï¿½
         String sql = "select * from t_userinfo where f_name = ? and f_password = ?";
 
-        //½«Á¬½Ó¶ÔÏóºÍËùÓÐ¹ÜµÀ¶ÔÏó·ÅÔÚtryÓï¾äÍâÃæ,·½±ã¹Ø±Õ
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Ó¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¹Üµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½tryï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Ø±ï¿½
         PreparedStatement ps = null;
         ResultSet rs = null;
-        //µÇÂ¼Ê¹ÓÃÔ¤±àÒëµÄ·½·¨
+        //ï¿½ï¿½Â¼Ê¹ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½
         try {
             ps = connection.prepareStatement(sql);
             ps.setString(1,userBean.getName());
@@ -32,7 +32,7 @@ public class UserDAOImp implements UserDAO{
             rs = ps.executeQuery();
 
             if(rs.next()){
-                //Èç¹ûÊÇºÏ·¨ÓÃ»§,·â×°Êý¾Ý,ÒÔºóÒªÓÃ
+                //ï¿½ï¿½ï¿½ï¿½ÇºÏ·ï¿½ï¿½Ã»ï¿½,ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½,ï¿½Ôºï¿½Òªï¿½ï¿½
                 userBean.setId(rs.getInt("pk_id"));
                 userBean.setRealName(rs.getString("f_realname"));
                 userBean.setRight(rs.getInt("f_right"));
@@ -41,10 +41,10 @@ public class UserDAOImp implements UserDAO{
         } catch (SQLException e) {
             e.printStackTrace();
         }finally{
-            //¹Ø±ÕÈ«²¿Á¬½Ó
+            //ï¿½Ø±ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             DBUtil.close(rs,ps,connection);
         }
-        //Èç¹ûÃ»ÓÐ,·µ»Ønull
+        //ï¿½ï¿½ï¿½Ã»ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½null
         return null;
     }
 

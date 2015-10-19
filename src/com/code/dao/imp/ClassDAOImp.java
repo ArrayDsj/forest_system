@@ -121,7 +121,7 @@ public class ClassDAOImp implements ClassDAO {
         String    sql    = "select count(*) from t_class";
         Statement st     = null;
         ResultSet rs     = null;
-        int       reslut = 0;
+        int       reslut = -1;
         try {
             st = connection.createStatement();
             rs = st.executeQuery(sql);

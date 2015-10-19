@@ -85,10 +85,10 @@
                             <span class = "glyphicon glyphicon-chevron-left" ></span >
                         </button >
                     </div >
-                    <input id = "pageNow" type = "text" class = "form-control" style =
-                            "width: 40px;height: 25px;margin-left: 2px;margin-top: 0px;float:left"
-                           <%--当前页数--%>
-                            value="${requestScope.pageNow}"/>
+                    <input id = "pageNow" type = "text" class = "form-control" style = "width: 40px;height: 25px;margin-left: 2px;margin-top: 0px;float:left ; ime-mode:Disabled;"
+                           onkeydown = "onlyNum()"
+                    <%--当前页数--%>
+                            value="${requestScope.pageNow}"  />
                     <label id = "num"  style = "margin-left: 2px" >
                         <%--总的分页数--%>
                         /${requestScope.pageNum}
@@ -123,19 +123,19 @@
                                     </button >
                                     <ul id = "ul" class = "dropdown-menu" >
                                         <li ><a id = 'li1' name = "f_foresttype" href = "#"
-                                                onclick = "return querySelect(this,'selected')" >林种</a ></li >
+                                                onclick = "return querySelect(this,'selected','query')" >林种</a ></li >
                                         <li ><a id = 'li2' name = "f_treetype" href = "#"
-                                                onclick = "return querySelect(this,'selected')" >优势树种</a ></li >
+                                                onclick = "return querySelect(this,'selected','query')" >优势树种</a ></li >
                                     </ul >
                                 </div >
+                                <input type = "hidden" id="query" value="f_name"/>
                                 <%--条件输入框--%>
                                 <input id = "inputText" type = "text" class = "form-control" style="width: 130px" value="">
                             </div >
 
                         </div >
                         <div class = "col-lg-5 col-sm-5" style="margin-left: 10px">
-                            <button id = "search" type = "button" class = "btn" onclick =
-                                    "submitQuery('#inputText','#areaPanelDiv','../areaPanel.av','1')" >查找
+                            <button id = "search" type = "button" class = "btn" >查找
                             </button >
                         </div >
                     </div >
@@ -146,59 +146,67 @@
 </div >
 
 <script >
+    /**
+    * 下拉控件+查询按钮
+    **/
+
+
     $(function(){
+        //在重新加载网页时取消条件查询
+        var haveQuery = false;
+        <!--查询按钮-->
+        var str = "";
 
         $("#search").click(function(){
+            //只要点击了查询按钮, 以后就一直是带条件查询
+            haveQuery = true;
+            //得到条件
+            str = $("#inputText").val();
+            //得到模糊查询值
+            str = "'%" + str + "%'";
+            alert('query=' + query + '&str=' + str);
+            $("#areaPanelDiv").load('../areaPanel.av', {'pageNow': 1, 'query': query, 'str': str});
+        });
 
-            var str = document.getElementById("selected").childNodes[0].nodeValue;
-            alert(str);
-        })
-    });
-    <%--只能输入数字--%>
-    $('#pageNow').keydown = function (eve) {
-        if (event) {
-            if ((event.keyCode >= 48 && event.keyCode <= 57) ||
-                    (event.keyCode >= 96 && event.keyCode <= 105) ||
-                    event.keyCode == 8) {
-                return true;
+        //上一页事件
+        $("#previousPage").click(function () {
+            if(!haveQuery){
+                if (parseInt(${requestScope.pageNow}) > 1)
+                    $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": ${requestScope.pageNow} -1});
+                 else alert("已是第一页！");
+
+            }else{
+                if (parseInt(${requestScope.pageNow}) > 1) $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": ${requestScope.pageNow} -1, 'query': query, 'str': str });
+                 else alert("已是第一页！");
             }
-            //取消默认事件
-            return false;
-        } else {
-            if ((eve.charCode >= 48 && eve.charCode <= 57) ||
-                    (eve.charCode >= 96 && eve.charCode <= 105) ||
-                    eve.charCode == 8) {
-                return true;
+        });
+        //下一页事件
+        $("#nextPage").click(function () {
+            if (!haveQuery) {
+                if (${requestScope.pageNow} <${requestScope.pageNum}){
+                    //这里是一个json数据格式
+                    $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": ${requestScope.pageNow} +1});
+                }else{
+                    alert("已是最后一页！");
+                }
             }
-            //取消默认事件
-            return false;
-        }
-    };
+            if (${requestScope.pageNow} <${requestScope.pageNum}){
+                //这里是一个json数据格式
+                $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": ${requestScope.pageNow} +1, 'query': query, 'str': str});
+            }else{
+                alert("已是最后一页！");
+            }
+        });
 
-    //上一页事件
-    $("#previousPage").click(function () {
-        if(${requestScope.pageNow} > 1 ){
-            $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": ${requestScope.pageNow} - 1});
-        }else{
-            alert("已是第一页！");
-        }
+        //跳转到指定页点击事件
+        $("#go").click(function () {
+            var num = $("#pageNow").val();
+            $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": num});
+        });
     });
 
-    //下一页事件
-    $("#nextPage").click(function () {
-        if (${requestScope.pageNow} < ${requestScope.pageNum}){
-            //这里是一个json数据格式
-            $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": ${requestScope.pageNow} + 1});
-        }else{
-            alert("已是最后一页！");
-        }
-    });
 
-    //跳转到指定页点击事件
-    $("#go").click(function () {
-        var num = $("#pageNow").val();
-        $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": num});
-    });
+
 
 </script >
 </body >

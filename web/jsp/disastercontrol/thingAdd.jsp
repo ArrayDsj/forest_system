@@ -205,6 +205,7 @@
                         <div class = "form-group" style = "float: left" >
                             <label class = " control-label " >发现途径:</label >
                             <div class = "btn-group" style = "margin-left: 24px" >
+
                                 <button id = "findwayDataSelected" value= "<%=findwayData.get(0).getId()%>" type = "button" class = "btn btn-default" style = "width: 120px" ><%=findwayData.get(0).getName()%></button >
                                 <button type = "button" class = "btn btn-default dropdown-toggle" data-toggle = "dropdown" style = "width:
                                 27px;height: 34px">

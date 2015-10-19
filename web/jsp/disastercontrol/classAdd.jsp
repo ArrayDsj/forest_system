@@ -1,4 +1,4 @@
-<%@ page import = "com.code.bean.AreaBean" %><%@ page import = "java.util.ArrayList" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: Code.Ai
@@ -7,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType = "text/html;charset=UTF-8" pageEncoding = "UTF-8" language = "java" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang = "en" >
 <head >
@@ -57,31 +58,23 @@
                             <div class = "btn-group" style = "margin-left: 24px" >
 
 
-                                <%
-                                    ArrayList<AreaBean> allSelects = (ArrayList<AreaBean>)request.getAttribute("allSelects");
-                                %>
-                                    <button name = "area" id = "selected" type = "button" class = "btn btn-default  dropdown-toggle"
-                                            data-toggle = "dropdown" style = "width: 165px" value="<%=allSelects.get(0).getId()%>">
-                                            <%=allSelects.get(0).getName()%>
+
+                                <button name = "area" id = "selected" type = "button" class = "btn btn-default  dropdown-toggle"
+                                        data-toggle = "dropdown" style = "width: 165px" value = "${requestScope.allSelects[0].id}" >
+                                            ${requestScope.allSelects[0].name}
                                             <span >&nbsp;</span ><span class = "caret" ></span >
-                                    </button >
+                                </button >
                                 <ul id = "ul" class = "dropdown-menu" >
-                                <%
-                                    for(int i = 1; i < allSelects.size(); i++){
-                                %>
-                                    <li ><a href = "#" value = "<%=allSelects.get(i).getId()%>"
-                                            onclick = "return getID(this,'selected','#hidden')" ><%=allSelects.get(i).getName()%></a
+                                <c:forEach items="${requestScope.allSelects}" var="area">
+                                    <li ><a href = "#" value = "${area.id}"
+                                            onclick = "return getID(this,'selected','#hidden')" >${area.name}</a
                                             ></li >
-                                <%
-                                    }
-                                %>
+                                </c:forEach>
                                 </ul >
-                                <input id = "hidden" name = "hidden" type = "hidden" value = "<%=allSelects.get(0).getId()%>" />
+                                <input id = "hidden" name = "hidden" type = "hidden" value = "${requestScope.allSelects[0].id}" />
                             </div >
                         </div >
                     </div >
-
-
                 </div >
                 <!--右边-->
                 <div id = "right" style = "width: 370px;height: 390px;float: left;margin-left: 10px" >
@@ -101,7 +94,7 @@
                             <label for = "number" class = "col-lg-4 col-sm-4   control-label " >人员数量:</label >
 
                             <div class = "col-lg-8 col-sm-8" >
-                                <input type = "text" class = "form-control" id = "number" >
+                                <input type = "text" class = "form-control" id = "number" onkeydown="onlyNum()" style = "ime-mode:Disabled">
                             </div >
                         </div >
                     </div >
@@ -146,7 +139,6 @@
                 strMessage += "人数不能为空\n";
             }
             if (strMessage.length != 0) {
-                alert($("#hidden").val());
                 alert(strMessage);
                 return false;
             } else {

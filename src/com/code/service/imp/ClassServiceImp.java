@@ -30,6 +30,19 @@ public class ClassServiceImp implements ClassService {
         return classDAO.updateClass(classBean);
     }
 
+    @Override
+    public int getCounts() {
+        ClassDAO classDAO = new ClassDAOImp();
+
+        return classDAO.getCounts();
+    }
+
+    @Override
+    public int getCountsByCondition(String queryType, String queryStr) {
+        ClassDAO classDAO = new ClassDAOImp();
+        return classDAO.getCountsByCondition(queryType, queryStr);
+    }
+
     //得到条件分页数据
     @Override
     public ArrayList<ClassBean> getLimitData(String queryType, String queryStr, int pageNow, int pageSize) {

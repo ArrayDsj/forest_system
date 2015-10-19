@@ -57,15 +57,13 @@ public class areaDataLoad extends HttpServlet{
             //有条件查询
             allAreas = areaService.getLimitData(query, str, pageNow,pageSize);
         }
-
         if (allAreas != null) {
             //计算总页数
             pageNum = (int) Math.ceil(counts / (pageSize * 1.0));
-            req.setAttribute("pageNum", pageNum);
-            req.setAttribute("pageNow", pageNow);
             req.setAttribute("allAreas", allAreas);
         } else req.setAttribute("info", "无数据");
-        //2. 跳转到areaPanel.jsp
+        req.setAttribute("pageNum", pageNum);
+        req.setAttribute("pageNow", pageNow);
         req.getRequestDispatcher("jsp/disastercontrol/areaPanel.jsp").forward(req, resp);
     }
 }

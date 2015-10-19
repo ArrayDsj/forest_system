@@ -35,12 +35,12 @@ public class AreaDAOImp implements AreaDAO{
         return result == 1;
     }
 
-    //初始化下拉列表是使用
+    //初始化下拉列表时使用
     @Override
     public ArrayList<AreaBean> getAreasByClass() {
         Connection          connection = DBUtil.getConnection();
         ArrayList<AreaBean> all        = new ArrayList<AreaBean>();
-        String sql = "select * from t_area where fk_class is null;";
+        String sql = "select * from t_area where fk_class is null order by pk_id desc";
         Statement st       = null;
         ResultSet rs       = null;
         AreaBean  areaBean = null;
@@ -67,7 +67,7 @@ public class AreaDAOImp implements AreaDAO{
         Connection connection = DBUtil.getConnection();
         String    sql      = "select * from t_area as area  left join  t_class as class\n" +
                 "on area.fk_class = class.pk_id\n" +
-                "where area.pk_id = " + pk_id;
+                "where area.pk_id = " + pk_id ;
         AreaBean  areaBean = new AreaBean();
         Statement st       = null;
         ResultSet rs       = null;
@@ -125,7 +125,7 @@ public class AreaDAOImp implements AreaDAO{
         Connection          connection = DBUtil.getConnection();
         ArrayList<AreaBean> all        = new ArrayList<AreaBean>();
         String    sql      = "select * from t_area as area  left join  t_class as class\n" +
-                                "on area.fk_class = class.pk_id\n";
+                                "on area.fk_class = class.pk_id\n order by area.pk_id desc";
         Statement st       = null;
         ResultSet rs       = null;
         AreaBean  areaBean = null;
@@ -186,7 +186,7 @@ public class AreaDAOImp implements AreaDAO{
         Connection          connection = DBUtil.getConnection();
         ArrayList<AreaBean> all        = new ArrayList<AreaBean>();
         String sql = "select * from t_area as area  left join  t_class as class\n" +
-                "on area.fk_class = class.pk_id limit " + (pageNow - 1) * pageSize + "," + pageSize;
+                "on area.fk_class = class.pk_id order by area.pk_id desc limit " + (pageNow - 1) * pageSize + "," + pageSize;
         Statement st       = null;
         ResultSet rs       = null;
         AreaBean  areaBean = null;
@@ -255,7 +255,7 @@ public class AreaDAOImp implements AreaDAO{
         String sql = "select * from t_area as area  left join  t_class as class\n" +
                 "on area.fk_class = class.pk_id  \n"+
                 "where area." + queryType + " like " + queryStr + "\n" +
-                "limit " + (pageNow - 1) * pageSize + "," + pageSize;
+                "order by pk_id desc limit " + (pageNow - 1) * pageSize + "," + pageSize;
         Statement st       = null;
         ResultSet rs       = null;
         AreaBean  areaBean = null;

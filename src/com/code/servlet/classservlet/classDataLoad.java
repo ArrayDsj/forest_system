@@ -1,8 +1,7 @@
 package com.code.servlet.classservlet;
 
 import com.code.bean.ClassBean;
-import com.code.dao.ClassDAO;
-import com.code.dao.imp.ClassDAOImp;
+import com.code.dao.imp.AreaDAOImp;
 import com.code.service.ClassService;
 import com.code.service.imp.ClassServiceImp;
 
@@ -46,29 +45,31 @@ public class classDataLoad extends HttpServlet{
         //1. 判断有无条件(无条件,初始化;有条件,按条件分页查询)
         if (query == null) {
             //按无条件查询数据
+            counts = classService.getCounts();
             allClasses = classService.getInitData(pageNow, pageSize);
-
         } else {
-
             //有条件查询
             String str = req.getParameter("str");
             str = new String(str.getBytes(), "UTF-8");
+            counts = classService.getCountsByCondition(query, str);
             allClasses = classService.getLimitData(query, str, pageNow, pageSize);
         }
 
         if (allClasses != null) {
-            //counts = allClasses.get(allClasses.size() - 1).getId();
-
-            ClassDAO classDAO = new ClassDAOImp();
-            //1. 得到总记录数
-            counts = classDAO.getCounts();
             //计算总页数
             pageNum = (int) Math.ceil(counts / (pageSize * 1.0));
-            req.setAttribute("pageNum", pageNum);
-            req.setAttribute("pageNow", pageNow);
             req.setAttribute("allClasses", allClasses);
-        } else req.setAttribute("info", "无数据");
-        //2. 跳转到classPanel.jsp
+        } else req.setAttribute("info", "null");
+
+        req.setAttribute("pageNum", pageNum);
+        req.setAttribute("pageNow", pageNow);
+
+        /**
+         * 得到没有班级管理的地区的数量
+         */
+        int countsNoClass = new AreaDAOImp().getAreasByClass().size();
+        req.setAttribute("countsNoClass", countsNoClass);
+
         req.getRequestDispatcher("jsp/disastercontrol/classPanel.jsp").forward(req, resp);
     }
 }

@@ -62,15 +62,7 @@ function querySelect(obj, id) {
     return false;
 }
 
-<!--查询按钮-->
-function submitQuery(id1,id2,url,now) {
-    //得到条件
-    var str = $(id1).val();
-    //得到模糊查询值
-    str = "'%" + str + "%'";
-    alert('?query=' + query + '&str=' + str);
-    $(id2).load(url, {'pageNow': now,'query':query,'str':str});
-}
+
 /*********************************************************************/
 
 
@@ -172,6 +164,17 @@ function browse(img, inputImg) {
 function isNull(data) {
     return (data == "" || data == undefined || data == "null") ? "暂无" : data;
 }
+
+/*********************************************************************/
+/**
+ * 只能输入数字
+ */
+function onlyNum() {
+    if (!(event.keyCode == 46) && !(event.keyCode == 8) && !(event.keyCode == 37) && !(event.keyCode == 39))
+        if (!((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105)))
+            event.returnValue = false;
+}
+
 
 
 /*********************************************************************/
