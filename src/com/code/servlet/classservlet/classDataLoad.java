@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Created by CodeA on 2015/10/13.
  */
-public class classDataLoad extends HttpServlet{
+public class classDataLoad extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);

@@ -3,6 +3,7 @@ package com.code.service;
 import com.code.bean.ThingBean;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by CodeA on 2015/10/14.
@@ -22,4 +23,10 @@ public interface ThingService {
 
     //修改信息
     public boolean updateThing(ThingBean thingBean);
+
+    //按时间查询
+    public ArrayList<ThingBean> getAreasByTime(Date start,Date end, int pageNow, int pageSize);
+
+    //按时间查询的总数
+    public int getCountsByTime(Date start, Date end);
 }

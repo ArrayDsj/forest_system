@@ -1,16 +1,17 @@
 package com.code.dao.imp;
 
+import com.code.bean.ProficientBean;
+import com.code.dao.ProficientDao;
+import com.code.util.DBUtil;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-import javax.crypto.spec.PSource;
-
-import com.code.bean.ProficientBean;
-import com.code.dao.ProficientDao;
-import com.code.util.DBUtil;
+import java.util.Date;
 
 public class ProficientDaoImp implements ProficientDao {
 
@@ -463,6 +464,41 @@ public class ProficientDaoImp implements ProficientDao {
 		
 		return false;
 	}
-	
 
+    @Override
+    public boolean addProficient(ProficientBean proficientBean) {
+        Connection con = DBUtil.getConnection();
+        String sql = "insert into t_proficient(f_name,f_gender,f_birthday,f_photo,f_speciality,f_degree,f_phoneNumber,f_workUnit,f_address,f_email) valuse(?,?,?,?,?,?,?,?,?,?)";
+
+        PreparedStatement ps = null;
+        int result = -1;
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, proficientBean.getName());
+            ps.setString(2, proficientBean.getGender());
+            String data = proficientBean.getBirthday();
+            //字符串转Date
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//小写的mm表示的是分钟
+            Date date = new Date();
+            try {
+                date = sdf.parse(data);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            ps.setDate(3, new java.sql.Date(date.getTime()) );
+            ps.setString(4, proficientBean.getPhoto());
+            ps.setString(5, proficientBean.getSpeciality());
+            ps.setString(6, proficientBean.getDegree());
+            ps.setString(7, proficientBean.getPhoneNumber());
+            ps.setString(8, proficientBean.getWorkUnit());
+            ps.setString(9, proficientBean.getAddress());
+            ps.setString(10, proficientBean.getEmail());
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

@@ -154,7 +154,7 @@
                                 <label for = "file" class = " control-label " >灾区图片:</label >
                             </div >
                             <div class = "col-lg-4 col-sm-4" style = "float: left;margin-left: -50px" >
-                                <input id = "file" name="file" type = "file" style="display: none" >
+                                <input id = "file" name="file" type = "file" />
                                 <input id = "inputImg" type = "text" class = "form-control" style = "width: 150px" />
                             </div >
 
@@ -317,23 +317,36 @@
 
     function confirmAdd(){
         //本地验证
+        var name = $("#name").val();
+        var foundDay = $("#foundDay").val();
+        var descript = $("#descript").val();
+        var loss = $("#loss").val();
+        var proportion = $("#proportion").val();
+        var scheme = $("#scheme").val();
+        var stageDataHidden = $("#stageDataHidden").val();
         var strMessage = "";
-        if ($("#name").val() == null || $("#name").val().trim() == "") {
+        var disasterDataHidden = $("#disasterDataHidden").val();
+        var findwayDataHidden = $("#findwayDataHidden").val();
+        var inputImg = $("#inputImg").val();
+        var areaDataHidden = $("#areaDataHidden").val().split("&")[0];
+        alert(name+ foundDay + descript + loss + proportion + scheme + stageDataHidden + disasterDataHidden + findwayDataHidden+ inputImg
+                + areaDataHidden);
+        if (name == null || name.trim() == "") {
             strMessage += "名称不能为空\n";
         }
-        if ($("#foundDay").val() == null || $("#foundDay").val().trim() == "") {
-            strMessage += "时间不能为空\n";
-        }
-        if ($("#descript").val() == null || $("#descript").val().trim() == "") {
+//        if (foundDay.val() == null || foundDay.trim() == "") {
+//            strMessage += "时间不能为空\n";
+//        }
+        if (descript == null || descript.trim() == "") {
             strMessage += "描述不能为空\n";
         }
-        if ($("#loss").val() == null || $("#loss").val().trim() == "") {
+        if (loss== null || loss.trim() == "") {
             strMessage += "损失不能为空\n";
         }
-        if ($("#proportion").val() == null || $("#proportion").val().trim() == "") {
+        if (proportion == null || proportion.trim() == "") {
             strMessage += "影响面积不能为空\n";
         }
-        if ($("#scheme").val() == null || $("#scheme").val().trim() == "") {
+        if (scheme == null || scheme.trim() == "") {
             strMessage += "防治方案不能为空\n";
         }
         if (strMessage.length != 0) {
@@ -355,34 +368,35 @@
                 $(this).hide();
             });
             $.ajaxFileUpload({
-                url: "../thingAdd.av",//向数据库中添加数据
+                url: "../thingUpload.av",//向数据库中添加数据
                 type: "POST",
                 secureuri: false, //一般设置为false
                 fileElementId: 'file', // 上传文件的id、name属性名
-                dataType: 'json', //返回值类型，一般设置为json、application/json
+                dataType: 'JSON', //返回值类型，一般设置为json、application/json
                 data: {
                     'header':'confirmAdd',
-                    "name": $("#name").val(),
-                    "foundDay": $("#foundDay").val(),
-                    "stageDataHidden": $("#stageDataHidden").val(),
-                    "descript": $("#descript").val(),
-                    "areaDataHidden": $("#areaDataHidden").val(),
-                    "loss": $("#loss").val(),
-                    "inputImg": $("#inputImg").val(),
-                    "findwayDataHidden": $("#findwayDataHidden").val(),
-                    "proportion": $("#proportion").val(),
-                    "disasterDataHidden": $("#disasterDataHidden").val(),
-                    "scheme": $("#scheme").val()
+                    "name": name,
+                    "foundDay": foundDay,
+                    "stageDataHidden": stageDataHidden,
+                    "descript": descript,
+                    "areaDataHidden": areaDataHidden,
+                    "loss": loss,
+                    "inputImg": inputImg,
+                    "findwayDataHidden": findwayDataHidden,
+                    "proportion": proportion,
+                    "disasterDataHidden": disasterDataHidden,
+                    "scheme": scheme
                 },
                 beforeSend: function (xhr) {
-                    alert('执行前');
+
                 },
                 success: function (data) {
-                    alert("添加成功");
+                    alert(data);
+
                     jump('#otherHtml', '../thingPanel.av', '1');//如果成功就请求servlet重新加载数据,然后跳转到thingPanel.jsp
                 },
                 complete: function (xhr) {
-                    alert('执行结束');
+
                 },
                 error: function (data, status, e) {
                     alert("上传失败"+data);

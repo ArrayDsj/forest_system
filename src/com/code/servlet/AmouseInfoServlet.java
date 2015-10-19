@@ -1,17 +1,14 @@
 package com.code.servlet;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import com.code.bean.AmouseBean;
+import com.code.service.imp.AmouseServiceImp;
+import com.code.service.imp.DiseaseServiceimp;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.code.bean.AmouseBean;
-import com.code.bean.DiseaseBean;
-import com.code.service.imp.AmouseServiceImp;
-import com.code.service.imp.DiseaseServiceimp;
+import java.io.IOException;
 
 public class AmouseInfoServlet extends HttpServlet {
 

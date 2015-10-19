@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType = "text/html;charset=UTF-8" pageEncoding = "UTF-8" language = "java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang = "en" >
 <head >
     <meta charset = "UTF-8" >
@@ -36,56 +37,28 @@
             </div >
         </div >
         <!--表格-->
-        <div class = "row-fluid" style = "border: solid" >
-            <!--表头-->
-            <table class = "table table-hover active" >
+        <div class = "row-fluid table-responsive" style = "border: solid" >
+            <table class = "table table-hover active table-striped table-bordered" >
                 <tr >
-                    <th class = "col-lg-3" >名称</th >
-                    <th class = "col-lg-3" >主要危害</th >
-                    <th class = "col-lg-6" >发病规律</th >
+                    <th class = "col-md-2" >名称</th >
+                    <th class = "col-md-5" >主要危害</th >
+                    <th class = "col-md-5" >发病规律</th >
                 </tr >
             </table >
-            <div id = "tableTD" class = "row-fluid" style = "overflow-y: auto;height: 208px;margin-top: -20px" >
-                <table class = "table table-striped table-bordered table-hover table-condensed" >
-                    <tr >
-                        <%--到时候直接循环输入信息--%>
-                        <td id="name" class = "col-lg-3" >大叶黄杨白粉病</td >
-                        <td id="harm" class = "col-lg-3" >危害黄杨叶片,影响光合,影响生长</td >
-                        <td id="rule" class = "col-lg-6" >春秋两季发生严重</td >
-                    </tr >
-                    <%--删除开始--%>
-                    <tr >
-                        <td >紫薇白粉病</td >
-                        <td >植株矮小,嫩叶扭曲,变小,枝条畸形</td >
-                        <td >4月份开始发生,6月份趋于严重</td >
-                    </tr >
-                    <tr >
-                        <td >杨树细菌性溃疡</td >
-                        <td >木材都变色,中心腐烂</td >
-                        <td >春天潮湿多雨时发病</td >
-                    </tr >
-                    <tr >
-                        <td >青枯病</td >
-                        <td >植株迅速枯焉</td >
-                        <td >气温达到20度时开始发病</td >
-                    </tr >
-                    <tr >
-                        <td >青枯病</td >
-                        <td >植株迅速枯焉</td >
-                        <td >气温达到20度时开始发病</td >
-                    </tr >
-                    <tr >
-                        <td >青枯病</td >
-                        <td >植株迅速枯焉</td >
-                        <td >气温达到20度时开始发病</td >
-                    </tr >
-                    <tr >
-                        <td >青枯病</td >
-                        <td >植株迅速枯焉</td >
-                        <td >气温达到20度时开始发病</td >
-                    </tr >
-                    <%--删除结束--%>
+            <div id = "tableTD" class = "row-fluid table-responsive" style = "overflow-y: auto;height: 208px;margin-top: -20px" >
+                <table id = "table" class = "table table-striped table-bordered table-hover table-condensed " >
+                    <c:forEach items="${requestScope.empList}" var = "emp">
+	                    <tr onclick="check(this,${emp.id})">
+	                        <%--到时候直接循环输入信息--%>
+	                        <td id = "id" class = "col-md-3" style="display: none;">${emp.id}</td >
+	                        <td id="name" class = "col-md-2" >${emp.name}</td >
+	                        <td id="harm" class = "col-md-5" >${emp.mainharm }</td >
+	                        <td id="rule" class = "col-md-5" >${emp.ROD}</td >
+	                    </tr >
+                    </c:forEach>
+                    
                 </table >
+                <input type="hidden" id="hid" value="-1"/>
             </div >
             </table>
         </div >
@@ -94,14 +67,11 @@
         <div class = "row-fluid" >
             <div class = "span12" >
                 <div >
-                    <div style = "float:left" >
-                        <button id = "previousPage" class = "btn btn-sm" type = "button" style = "line-height:0px" >
-                            <span class = "glyphicon glyphicon-chevron-left" ></span >
-                        </button >
-                    </div >
-                    <input id = "pageNum" type = "text" class = "form-control" style =
-                            "width: 45px;height: 20px;margin-left: 2px;margin-top: 2px;float:left" />
-                    <label id = "num" name = "num" style = "margin-left: 2px" >/10</label >
+                    <button id = "previousPage" class = "btn btn-sm" type = "button" style = "line-height:0px" >
+                        <span class = "glyphicon glyphicon-chevron-left" ></span >
+                    </button >
+                    <input id = "pageNum" type = "text" style = "width: 40px;height: 20px" value="${requestScope.currentPage}"/>
+                    <label >/${requestScope.allPage}</label >
                     <button id = "go" class = "btn btn-sm" type = "button" style = "line-height:0px" >
                         <span class = "glyphicon glyphicon-step-forward" ></span >
                     </button >
@@ -115,10 +85,10 @@
         <!--按钮-->
         <div class = "row-fluid" >
             <div class = "col-sm-2 col-lg-2" >
-                <button class = "btn" type = "button" onclick = "jump('#diseasePanelDiv','datamanagement/diseaseAdd.jsp')" >添加新病害</button >
+                <button class = "btn" type = "button" onclick="jump('#diseasePanelDiv','jsp/datamanagement/diseaseAdd.jsp')" >添加新病害</button >
             </div >
             <div class = "col-sm-2 col-lg-2" >
-                <button class = "btn" type = "button" onclick = "jump('#diseasePanelDiv','datamanagement/diseaseInfo.jsp')" >查看详细信息</button >
+                <button id="butid2" class = "btn" type = "button">查看详细信息</button >
             </div >
             <!--xs自动 lg>=1200px sm<=768px offset列移动-->
             <div class = "col-xs-3 col-lg-6 col-sm-6 col-lg-offset-1 col-sm-offset-1" >
@@ -128,16 +98,13 @@
                         <div class = "col-xs-10 col-sm-6" >
                             <div class = "input-group" >
                                 <div class = "input-group-btn" >
-                                    <<button name = "name" id = "selected" type = "button" class = "btn btn-default dropdown-toggle"
-                                             data-toggle =
-                                                     "dropdown" >病害名<span >&nbsp;</span ><span class = "caret" ></span >
-                                        </button >
-                                        <ul id = "ul" class = "dropdown-menu" >
-                                            <li ><a id = 'li1' name = "happenstate" href = "#"
-                                                    onclick = "return querySelect(this,'selected')" >发病状态</a ></li >
-                                            <li ><a id = 'li2' name = "xxxxx" href = "#"
-                                                    onclick = "return querySelect(this,'selected')" >不知道</a ></li >
-                                        </ul >
+                                    <button id = "selected" type = "button" class = "btn btn-default dropdown-toggle" data-toggle =
+                                            "dropdown" >病害名<span class = "caret" ></span ><!--这个span的作用是提供一个下拉图标-->
+                                    </button >
+                                    <ul id = "ul" class = "dropdown-menu" >
+                                        <li ><a href = "javascript:void(0)" >危害</a ></li >
+                                        <li ><a href = "javascript:void(0)" >发病症状</a ></li >
+                                    </ul >
                                 </div >
                                 <!-- /btn-group -->
                                 <input id = "inputText" type = "text" class = "form-control" >
@@ -145,7 +112,7 @@
                             <!-- /input-group -->
                         </div >
                         <div class = "col-xs-6 col-sm-6" >
-                            <button id = "search" type = "button" class = "btn" onclick = "submitQuery('inputText')" >查找</button >
+                            <button id = "search" type = "submit" class = "btn" >查找</button >
                         </div >
                     </div >
                 </fieldset >
@@ -153,26 +120,62 @@
         </div >
     </div >
 </div >
+<script type="text/javascript">
+ function check(obj,id){
+   document.getElementById("hid").value=id;
+     obj.style.backgroundColor = "red";
+     $("tr").css("background-color", "white");
+     obj.style.backgroundColor = "red";
+}
+
+ $(function(){
+     $("#butid2").click(function(){
+         if(document.getElementById("hid").value != -1 ){
+             $("#diseasePanelDiv").load("../DiseaseInfoServlet.av", {"id": $("#hid").val()});
+         }else alert("请选择行");
+     })
+ })
+
+
+
+
+
+</script>
 
 <script >
-    //数据有效性验证
-    $("#pageNum").keydown(function () {
-        //只能输入数字
-    });
+
+
+
 
     //事件处理
     $("#previousPage").click(function () {
         //上一页点击事件
-        alert("上一页");
+      if(parseInt(${requestScope.currentPage}) > 1){
+			$("#diseasePanelDiv").load("../DiseaseMageServlet.av",{"pageNow1":${requestScope.currentPage} - 1});
+	  }else{
+		    alert("已是第一页！");
+	  }
+	  	return false;
     });
     $("#nextPage").click(function () {
         //下一页点击事件
-        alert("下一页");
+        if(${requestScope.currentPage} < ${requestScope.allPage}){
+			$("#diseasePanelDiv").load("../DiseaseMageServlet.av",{"pageNow1":${requestScope.currentPage} + 1});
+		}else{
+			alert("已是最后一页！");
+		}
+		
+		return false;
     });
     $("#go").click(function () {
         //跳转到指定页点击事件
         var num = $("#pageNum").val();
-        alert(num);
+	    if(num <= ${requestScope.currentPage} && num > 0){
+	           $("#diseasePanelDiv").load("../DiseaseMageServlet.av",{"pageNow1":num});
+	    }else{
+	           alert("没有该页面，不能跳转");
+	    }
+	      return false;
     });
 
     //查询模块事件

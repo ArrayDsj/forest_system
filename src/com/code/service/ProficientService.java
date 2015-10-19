@@ -1,8 +1,8 @@
 package com.code.service;
 
-import java.util.ArrayList;
-
 import com.code.bean.ProficientBean;
+
+import java.util.ArrayList;
 
 public interface ProficientService {
 	
@@ -20,7 +20,7 @@ public interface ProficientService {
 	public ProficientBean queryProficientInfo(int id);
 	//修改被选中的专家的信息
 	public boolean updateProficient(ProficientBean pro);
-	
-	
+
+    public boolean addProficient(ProficientBean proficientBean);
 
 }

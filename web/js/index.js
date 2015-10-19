@@ -32,9 +32,17 @@ $(function () {
  * @param url
  * @returns {boolean}
  */
-function jump(id, url, now,option) {
+//function jump(id, url, now,option) {
+//    //跳转到指定jsp,然后这个jsp在加载的时候初始化自身数据
+//    $(id).load(url,{'pageNow':now,'option': option});
+//    //去掉a标签的默认动作
+//    return false;
+//}
+
+
+function jump(id, url, now) {
     //跳转到指定jsp,然后这个jsp在加载的时候初始化自身数据
-    $(id).load(url,{'pageNow':now,'option': option});
+    $(id).load(url, {'pageNow': now});
     //去掉a标签的默认动作
     return false;
 }
@@ -98,7 +106,6 @@ function select(obj,id,stageid,status) {
     obj.style.backgroundColor = "red";
     $("tr").css("background-color","white");
     obj.style.backgroundColor = "red";
-
 }
 
 /*********************************************************************/

@@ -12,6 +12,7 @@
     <meta charset = "UTF-8">
     <title>添加新病害</title>
 </head>
+<script type="text/javascript" src="js/uploadpreview.js"></script>
 <body>
 <div id = "diseaseAddDiv">
     <div class = "container-fluid">
@@ -25,15 +26,14 @@
         </div>
         <!--内容-->
         <div style = "margin-left:50px;margin-top: 10px">
-            <form class = "form-horizontal" role = "form" action = "javascript:jump(
-            '#diseaseAddDiv','html/diseasePanel.html')" onsubmit = "return add()">
+            <form class = "form-horizontal" role = "form" action = "../DiseaseServlet.av" onsubmit = "return add()" method="post" enctype="multipart/form-data">
                 <div id = "left" style = "width: 370px;height: 390px;float: left">
                     <!--第一行-->
                     <div class = "row" style = "margin-top: 20px">
                         <div class = "form-group" style = "float: left">
                             <label for = "name" class = "col-lg-4 col-sm-4   control-label ">名称:</label>
                             <div class = "col-lg-8 col-sm-8">
-                                <input type = "text" class = "form-control" id = "name" >
+                                <input type = "text" class = "form-control" id = "name" name="name" >
                             </div>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                         <div class = "form-group" style = "float: left">
                             <label for = "status" class = "col-lg-4 col-sm-4  control-label ">发病状态:</label>
                             <div class = "col-lg-8 col-sm-6">
-                                <textarea rows = "5" cols = "30" class = "form-control" id = "status" ></textarea>
+                                <textarea rows = "5" cols = "30" class = "form-control" id = "status" name="status" ></textarea>
                             </div>
                         </div>
                     </div>
@@ -50,15 +50,13 @@
                     <div class = "row" style = "margin-top: 20px">
                         <div class = "form-group">
                             <div class = "col-lg-4 col-sm-4" style = "float: left;margin-left: 6px">
-                                <label for = "img" class = " control-label ">图片:</label>
+                                <label  class = " control-label ">图片:</label>
                             </div>
                             <div class = "col-lg-4 col-sm-4" style = "float: left;margin-left: -50px">
-                                <input type = "file" class = "form-control" id = "img" style = "display: none">
-                                <input id = "inputImg" type = "text" class = "form-control" style = "width: 150px" />
+                               <img id="img1" src="" style="width:0px;height:0px">
+							   <input id="showFile1" name="showFile1" type="file" onchange="preview('img1','showFile1')"/>
                             </div>
-                            <div class = "col-lg-4 col-sm-4" style = "float: left;margin-left: 10px">
-                                <button class = "btn btn-default" onclick = "browseSon();return false;">浏览</button>
-                            </div>
+                        
                         </div>
                     </div>
 
@@ -68,7 +66,7 @@
                             <label for = "harm" class = "col-lg-4 col-sm-4 control-label ">主要危害:</label>
 
                             <div class = "col-lg-8 col-sm-8">
-                                <input type = "text" class = "form-control" id = "harm">
+                                <input type = "text" class = "form-control" id = "harm" name="harm">
                             </div>
                         </div>
                     </div>
@@ -80,7 +78,7 @@
                         <div class = "form-group" style = "float: left">
                             <label for = "pathogen" class = "col-lg-4 col-sm-4   control-label ">病原:</label>
                             <div class = "col-lg-8 col-sm-8">
-                                <input type = "text" class = "form-control" id = "pathogen" >
+                                <input type = "text" class = "form-control" id = "pathogen" name="pathogen" >
                             </div>
                         </div>
                     </div>
@@ -90,7 +88,7 @@
                             <label for = "rules" class = "col-lg-4 col-sm-4  control-label ">发病规律:</label>
 
                             <div class = "col-lg-8 col-sm-6">
-                                <textarea rows = "5" cols = "30" class = "form-control" id = "rules" ></textarea>
+                                <textarea rows = "5" cols = "30" class = "form-control" id = "rules" name="rules" ></textarea>
                             </div>
                         </div>
                     </div>
@@ -100,7 +98,7 @@
                             <label for = "action" class = "col-lg-4 col-sm-4  control-label ">防治措施:</label>
 
                             <div class = "col-lg-8 col-sm-6">
-                                <textarea rows = "5" cols = "30" class = "form-control" id = "action" ></textarea>
+                                <textarea rows = "5" cols = "30" class = "form-control" id = "action" name="action" ></textarea>
                             </div>
                         </div>
                     </div>
@@ -121,15 +119,9 @@
 </div>
 
 <script type="text/javascript">
-        //数据验证
-        function add() {
-            alert("验证数据正确性");
-            jump('#diseaseAddDiv', 'datamanagement/diseasePanel.jsp')
-            return true;
-        }
 
 
-        function browseSon() {
+        function browseSon(){
             //调用文件选择组件的默认点击事件
             $("#img").click();
             $("#img").change(function () {
@@ -137,9 +129,6 @@
                 $("#inputImg").val($("#img").val());
             });
         }
-    
-
-
     </script >
 </body>
 </html>

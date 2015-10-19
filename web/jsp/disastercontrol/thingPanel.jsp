@@ -156,7 +156,7 @@
 
             <div class = "col-xs-3 col-lg-6 col-sm-6  col-sm-offset-4" style = "margin-top: -100px;margin-left: 440px" >
                 <%--时间控件--%>
-                <form action = "" class = "form-horizontal" role = "form" >
+                <%--<form action = "" class = "form-horizontal" role = "form" >--%>
                 <fieldset >
                     <legend >日期查询</legend >
                     <div class = "form-group " style="margin-top: -15px">
@@ -164,7 +164,7 @@
                         <div id = "datetimepickerStar" class = "input-group date form_date col-md-6" data-date = "" data-date-format =
                                 "yyyy-mm-dd"
                              data-link-format = "yyyy-mm-dd" >
-                            <input class = "form-control" size = "10" type = "text" value = "" readonly = "readonly" onclick =
+                            <input id="start" class = "form-control" size = "10" type = "text" value = "" readonly = "readonly" onclick =
                                     "selectTime()" >
                             <span class = "input-group-addon" ><span class = "glyphicon glyphicon-remove" ></span ></span >
                             <span class = "input-group-addon" ><span class = "glyphicon glyphicon-calendar"
@@ -176,29 +176,28 @@
                         <div id = "datetimepickerEnd" class = "input-group date form_date col-md-6" data-date = ""
                              data-date-format = "yyyy-mm-dd"
                              data-link-format = "yyyy-mm-dd" >
-                            <input class = "form-control" size = "10" type = "text" value = "" readonly = "readonly"
+                            <input id = "end" class = "form-control" size = "10" type = "text" value = "" readonly = "readonly"
                                    onclick = "selectTime()" >
                             <span class = "input-group-addon" ><span class = "glyphicon glyphicon-remove" ></span ></span >
                             <span class = "input-group-addon" ><span class = "glyphicon glyphicon-calendar"
                                                                      onclick = "selectTime('datetimepickerEnd')" ></span ></span >
                         </div >
-                        <button type = "button" class = "btn" onclick = "submitQuery('inputText')" style="margin-top: -34px;margin-left: 350px;">查找
+                        <button type = "button" class = "btn" id="queryByDate" style="margin-top: -34px;margin-left: 350px;">查找
                         </button >
                     </div >
 
                 </fieldset >
-                </form >
+                <%--</form >--%>
             </div >
         </div >
     </div >
 </div >
 <script type = "text/javascript" >
 
+
+
     function addThing() {
-//        点击添加按钮的时候请求下拉列表数据
-            $("#thingPanelDiv").load("../thingAdd.av", {'header': 'askAddThing'}, function (data) {
-                //jump('#thingPanelDiv', 'disastercontrol/thingAdd.jsp');
-            })
+        $("#thingPanelDiv").load("../thingAdd.av", {'option': 'askAddThing'});
     }
 
     function showThing(id){
@@ -208,7 +207,6 @@
             $("#thingPanelDiv").load("../thingShow.av", { 'thingID': thingID,'header':'showThing'}, function (data) {
             })
         }else alert("请选择要查看的列");
-
     }
 
     //申请专家会审
@@ -301,14 +299,17 @@
     });
 
 
+    $("#queryByDate").click(function () {
 
-    function startDate() {
-        $("#start").click();
-    }
+        var start = $("#start").val();
+        var end = $("#end").val();
 
-    function endDate() {
-
-    }
+        if (start > end) {
+            alert("您选择的时间有误，请重新选择！");
+        } else {
+            $("#thingPanelDiv").load("../thingTime.av", {"pageNow": 1, "start": $("#start").val(), "end": $("#end").val()})
+        }
+    });
 </script >
 </body >
 </html >

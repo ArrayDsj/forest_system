@@ -17,7 +17,7 @@ public class PestDaoImp implements PestDao {
 	public int PL() {
 		// TODO Auto-generated method stub
 		int count = 0;
-		Connection con = DBUtil.getCon();
+		Connection con = DBUtil.getConnection();
 		String sql = "select count(*) as allC from t_pestlist";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -51,7 +51,7 @@ public class PestDaoImp implements PestDao {
 		System.out.println(pest.getLarvapicture());
 		System.out.println(pest.getName());
 		System.out.println(pest.getAdultpicture());
-		Connection cont = DBUtil.getCon();
+		Connection cont = DBUtil.getConnection();
 		String sql = "insert into t_pestlist(f_name,f_host,f_breed,f_sentinel,f_larvapicture,f_adultpicture,f_control,f_mainharm)" +
 				"values(?,?,?,?,?,?,?,?)";
 		String sql1="select max(pk_id) as maxid from t_pestlist";
@@ -98,7 +98,7 @@ public class PestDaoImp implements PestDao {
 	public ArrayList allPest(int pageNow, int pageSize) {
 		// TODO Auto-generated method stub
 		ArrayList<PestBean> al = new ArrayList<PestBean>();
-		Connection con = DBUtil.getCon();
+		Connection con = DBUtil.getConnection();
 		String sql1 = "select * from t_pestlist order by pk_id desc limit ?,?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -140,7 +140,7 @@ public class PestDaoImp implements PestDao {
 	//根据ID查询所有信息
 	public PestBean getPestById(int id) {
 		// TODO Auto-generated method stub
-		Connection cont2 = DBUtil.getCon();
+		Connection cont2 = DBUtil.getConnection();
 		PestBean pes = new PestBean();
 		String sql = "select * from t_pestlist where pk_id=?";
 		
@@ -175,7 +175,7 @@ public class PestDaoImp implements PestDao {
 			int pageNow, int pageSize) {
 		// TODO Auto-generated method stub
 		ArrayList<PestBean> list = new ArrayList<PestBean>();
-		Connection con5 = DBUtil.getCon();
+		Connection con5 = DBUtil.getConnection();
 		PreparedStatement ps = null;
 		String sql = "select * from t_pestlist where"+con+"like'%"+value+"%' limit ?,?" ;
 		ResultSet rs = null;
@@ -213,7 +213,7 @@ public class PestDaoImp implements PestDao {
 	public int ptst(String con, String value) {
 		// TODO Auto-generated method stub
 		int row = 0;
-		Connection con6 = DBUtil.getCon();
+		Connection con6 = DBUtil.getConnection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		String sql = "select count(*) as count1 from t_pestlist where "+con+" like '%"+value+"%'";
@@ -239,7 +239,7 @@ public class PestDaoImp implements PestDao {
 	public boolean updateById(int id, String image1, String image2) {
 		// TODO Auto-generated method stub
 		boolean flag = false;
-		Connection cont3 = DBUtil.getCon();
+		Connection cont3 = DBUtil.getConnection();
 		String sql3 = "update t_pestlist set f_larvapicture=?,f_adultpicture=? where pk_id=?";
 		PreparedStatement ps = null;
 		

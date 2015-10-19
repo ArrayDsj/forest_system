@@ -10,8 +10,8 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
 <%--<%--%>
-    <%--ArrayList<AreaBean> areasNoClass = (ArrayList<AreaBean>)request.getAttribute("areasNoClass");--%>
-    <%--int counts = areasNoClass.size();--%>
+<%--ArrayList<AreaBean> areasNoClass = (ArrayList<AreaBean>)request.getAttribute("areasNoClass");--%>
+<%--int counts = areasNoClass.size();--%>
 <%--%>--%>
 <!DOCTYPE html>
 <html lang = "en" >
@@ -54,8 +54,8 @@
             </table >
             <div id = "tableTD" class = "row-fluid" style = "overflow-y: auto;height: 208px;margin-top: -20px" >
                     <table class = "table table-striped table-bordered table-hover table-condensed" >
-                    <c:if test="${requestScope.info != 'null'}">
-                        <c:forEach items="${requestScope.allClasses}" var="cla">
+                    <c:if test = "${requestScope.info != 'null'}" >
+                        <c:forEach items = "${requestScope.allClasses}" var = "cla" >
                             <tr onclick = "select(this,'#selectID')" >
                                 <input type = "hidden" value = "${cla.id}" />
                                 <td class = "col-md-3" >${cla.name}</td >
@@ -63,8 +63,8 @@
                                 <td class = "col-md-3" >${cla.phone}</td >
                                 <td class = "col-md-3" >${cla.area}</td >
                             </tr >
-                        </c:forEach>
-                    </c:if>
+                        </c:forEach >
+                    </c:if >
                 </table >
                 <%--保存被选中的事件id --%>
                 <input type = "hidden" value = "-1" id = "selectID" name = "selectID" />
@@ -80,7 +80,7 @@
                     </button >
                     <input id = "pageNow" type = "text"
                            style = "width: 40px;height: 25px;margin-left: 2px;margin-top: 0px; ime-mode:Disabled;" onkeydown = "onlyNum()"
-                            <%--当前页数--%>
+                    <%--当前页数--%>
                            value = "${requestScope.pageNow}" />
                     <label >
                         <%--总的分页数--%>
@@ -108,7 +108,7 @@
             </div >
             <div class = "row-fluid" >
                 <div class = "col-lg-3 col-sm-3 col-sm-offset-2" style = "margin-top: 20px" >
-                    <button class = "btn" type = "button" id = "updateClass">修改小班信息</button >
+                    <button class = "btn" type = "button" id = "updateClass" >修改小班信息</button >
                 </div >
             </div >
         </div >
@@ -152,10 +152,10 @@
 
 $(function () {
     $("#addClass").click(function () {
-        if(parseInt(${requestScope.countsNoClass}) != 0){
+        if (parseInt(${requestScope.countsNoClass}) != 0) {
             $("#classPanelDiv").load("../classAdd.av", {'header': 'askAddClass'}, function (data) {
             })
-        }else alert("请先添加地区");
+        } else alert("请先添加地区");
 
     });
 
@@ -188,7 +188,8 @@ $(function () {
 
     //下一页事件
     $("#nextPage").click(function () {
-        if (${requestScope.pageNow} < ${requestScope.pageNum})
+        if (${requestScope.pageNow} <
+        ${requestScope.pageNum})
         {
             //这里是一个json数据格式
             $("#classPanelDiv").load("../classPanel.av", {"pageNow": ${requestScope.pageNow} +1});

@@ -1,8 +1,8 @@
 package com.code.dao;
 
-import java.util.ArrayList;
-
 import com.code.bean.ProficientBean;
+
+import java.util.ArrayList;
 
 public interface ProficientDao {
 	
@@ -21,4 +21,5 @@ public interface ProficientDao {
 	//修改被选中的专家的信息
 	public boolean updateProficient(ProficientBean pro);
 
+    public boolean addProficient(ProficientBean proficientBean);
 }

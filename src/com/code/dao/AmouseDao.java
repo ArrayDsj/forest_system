@@ -1,6 +1,6 @@
 package com.code.dao;
 
-import com.code.bean.Amouse;
+import com.code.bean.AmouseBean;
 
 import java.util.ArrayList;
 
@@ -8,15 +8,15 @@ public interface AmouseDao {
 	//得到无条件下的总记录条数
 	public int AD();
 	//得到无条件下的分页数据
-	public ArrayList<Amouse> allAmouse(int pageNow, int pageSize);
+	public ArrayList allAmouse(int pageNow, int pageSize);
 	//得到有条件下的总记录条数
 	public int Amouse(String value);
 	//根据条件查询信息；
-	public ArrayList<Amouse> getAmouseInfo(String value, int pageNow, int pageSize);
+	public ArrayList getAmouseInfo(String value, int pageNow, int pageSize);
 	//根据ID查询所有信息
-	public Amouse getAmouseListById(int id);
+	public AmouseBean getAmouseById(int id);
 	//增加信息
-	public int addAmouse(Amouse amouse);
+	public int addAmouse(AmouseBean amouse);
 	//图片
 	public boolean updateById(int id, String image1);
 }

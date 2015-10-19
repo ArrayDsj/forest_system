@@ -1,6 +1,5 @@
 package com.code.dao.imp;
 
-import com.code.bean.AreaBean;
 import com.code.bean.ClassBean;
 import com.code.dao.ClassDAO;
 import com.code.util.DBUtil;
@@ -53,6 +52,11 @@ public class ClassDAOImp implements ClassDAO {
             //6. 提交事物
             connection.commit();
         } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         } finally {
             DBUtil.close(ps, connection);
@@ -64,20 +68,21 @@ public class ClassDAOImp implements ClassDAO {
     public ClassBean showClass(ClassBean classBean) {
         int classID = classBean.getId();
         Connection connection = DBUtil.getConnection();
-        String    sql = "select * from t_class "+
-                    "where pk_id = " + classID;
+        String    sql = "select * from t_class as c join t_area as a on c.pk_id = a.fk_class \n" +
+                    "where c.pk_id = " + classID;
         Statement st  = null;
         ResultSet rs = null;
         try {
             st = connection.createStatement();
             rs = st.executeQuery(sql);
             while (rs.next()) {
-                classBean.setId(rs.getInt("pk_id"));
-                classBean.setName(rs.getString("f_name"));
-                classBean.setManager(rs.getString("f_manager"));
-                classBean.setPhone(rs.getString("f_phone"));
-                classBean.setNumber(rs.getInt("f_number"));
-                classBean.setFoundDay(rs.getDate("f_foundday"));
+                classBean.setId(rs.getInt("c.pk_id"));
+                classBean.setName(rs.getString("c.f_name"));
+                classBean.setManager(rs.getString("c.f_manager"));
+                classBean.setPhone(rs.getString("c.f_phone"));
+                classBean.setNumber(rs.getInt("c.f_number"));
+                classBean.setFoundDay(rs.getDate("c.f_foundday"));
+                classBean.setArea(rs.getString("a.f_name"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -118,7 +123,7 @@ public class ClassDAOImp implements ClassDAO {
     @Override
     public int getCounts() {
         Connection connection = DBUtil.getConnection();
-        String    sql    = "select count(*) from t_class";
+        String    sql    = "select count(*) from t_class  as c join t_area as a on c.pk_id = a.fk_class \n" ;
         Statement st     = null;
         ResultSet rs     = null;
         int       reslut = -1;
@@ -142,7 +147,7 @@ public class ClassDAOImp implements ClassDAO {
     public ArrayList<ClassBean> getClasses(int pageNow, int pageSize) {
         Connection          connection = DBUtil.getConnection();
         ArrayList<ClassBean> all        = new ArrayList<ClassBean>();
-        String sql = "select * from t_class \n" +
+        String sql = "select * from t_class  as c join t_area as a on c.pk_id = a.fk_class \n" +
                 "limit " + (pageNow - 1) * pageSize + "," + pageSize;
         Statement st       = null;
         ResultSet rs       = null;
@@ -153,14 +158,13 @@ public class ClassDAOImp implements ClassDAO {
 
             while (rs.next()) {
                 classBean = new ClassBean();
-                classBean.setId(rs.getInt("pk_id"));
-                classBean.setName(rs.getString("f_name"));
-                classBean.setManager(rs.getString("f_manager"));
-                classBean.setPhone(rs.getString("f_phone"));
-                classBean.setNumber(rs.getInt("f_number"));
-                classBean.setFoundDay(rs.getDate("f_foundday"));
-                AreaBean areaBean = new AreaDAOImp().getAreaById(classBean.getId());
-                classBean.setArea(areaBean.getName());
+                classBean.setId(rs.getInt("c.pk_id"));
+                classBean.setName(rs.getString("c.f_name"));
+                classBean.setManager(rs.getString("c.f_manager"));
+                classBean.setPhone(rs.getString("c.f_phone"));
+                classBean.setNumber(rs.getInt("c.f_number"));
+                classBean.setFoundDay(rs.getDate("c.f_foundday"));
+                classBean.setArea(rs.getString("a.f_name"));
                 all.add(classBean);
             }
         } catch (SQLException e) {
@@ -175,9 +179,12 @@ public class ClassDAOImp implements ClassDAO {
     @Override
     public int getCountsByCondition(String queryType, String queryStr) {
         Connection connection = DBUtil.getConnection();
-
-        String sql = "select count(*) from t_class where " +
-                queryType + " like " + queryStr;
+        if(queryType.equals("f_area")){
+            queryType = "a.f_name";
+        }else
+            queryType = "c.f_name";
+        String sql = "select count(*) from t_class  as c join t_area as a on c.pk_id = a.fk_class \n" +
+                "where "+queryType + " like '%" + queryStr+"%'";
 
         Statement st     = null;
         ResultSet rs     = null;
@@ -202,8 +209,12 @@ public class ClassDAOImp implements ClassDAO {
     public ArrayList<ClassBean> getClassesByCondition(String queryType, String queryStr, int pageNow, int pageSize) {
         Connection          connection = DBUtil.getConnection();
         ArrayList<ClassBean> all        = new ArrayList<ClassBean>();
-        String sql = "select * from t_class \n" +
-                "where " + queryType + " like " + queryStr + "\n" +
+        if (queryType.equals("f_area")) {
+            queryType = "a.f_name";
+        } else queryType = "c.f_name";
+
+        String sql = "select * from t_class  as c join t_area as a on c.pk_id = a.fk_class \n"+
+                "where " + queryType + " like '%" + queryStr + "%'\n" +
                 "limit " + (pageNow - 1) * pageSize + "," + pageSize;
         Statement st       = null;
         ResultSet rs       = null;
@@ -214,12 +225,13 @@ public class ClassDAOImp implements ClassDAO {
 
             while (rs.next()) {
                 classBean = new ClassBean();
-                classBean.setId(rs.getInt("pk_id"));
-                classBean.setName(rs.getString("f_name"));
-                classBean.setManager(rs.getString("f_manager"));
-                classBean.setPhone(rs.getString("f_phone"));
-                classBean.setNumber(rs.getInt("f_number"));
-                classBean.setFoundDay(rs.getDate("f_foundday"));
+                classBean.setId(rs.getInt("c.pk_id"));
+                classBean.setName(rs.getString("c.f_name"));
+                classBean.setManager(rs.getString("c.f_manager"));
+                classBean.setPhone(rs.getString("c.f_phone"));
+                classBean.setNumber(rs.getInt("c.f_number"));
+                classBean.setFoundDay(rs.getDate("c.f_foundday"));
+                classBean.setArea(rs.getString("a.f_name"));
                 all.add(classBean);
             }
         } catch (SQLException e) {

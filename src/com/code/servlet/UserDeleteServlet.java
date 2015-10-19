@@ -26,7 +26,7 @@ public class UserDeleteServlet extends HttpServlet {
 		
 		us.deleteUser(id);
 		
-		req.getRequestDispatcher("userPanel.av?pageNow=1").forward(req, resp);
+		req.getRequestDispatcher("userPanel.av?pageNow=-1").forward(req, resp);
 		
 		
 		

@@ -1,8 +1,8 @@
 package com.code.dao;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.code.bean.PestBean;
+
+import java.util.ArrayList;
 
 public interface PestDao {
 

@@ -1,10 +1,10 @@
 package com.code.service.imp;
 
-import com.code.bean.Amouse;
+import java.util.ArrayList;
+
+import com.code.bean.AmouseBean;
 import com.code.dao.imp.AmouseDaoimp;
 import com.code.service.AmouseService;
-
-import java.util.ArrayList;
 
 public class AmouseServiceImp implements AmouseService {
 
@@ -18,7 +18,7 @@ public class AmouseServiceImp implements AmouseService {
 		return new AmouseDaoimp().Amouse(value);
 	}
 
-	public int addAmouse(Amouse amouse) {
+	public int addAmouse(AmouseBean amouse) {
 		// TODO Auto-generated method stub
 		return new AmouseDaoimp().addAmouse(amouse);
 	}
@@ -33,9 +33,9 @@ public class AmouseServiceImp implements AmouseService {
 		return new AmouseDaoimp().getAmouseInfo(value, pageNow, pageSize);
 	}
 
-	public Amouse getAmouseListById(int id) {
+	public AmouseBean getAmouseById(int id) {
 		// TODO Auto-generated method stub
-		return new AmouseDaoimp().getAmouseListById(id);
+		return new AmouseDaoimp().getAmouseById(id);
 	}
 
 	public boolean updateById(int id, String image1) {

@@ -12,6 +12,7 @@
     <meta charset = "UTF-8">
     <title>添加新鼠害</title>
 </head>
+<script type="text/javascript" src="js/uploadpreview.js"></script>
 <body>
 <div id = "mouseAddDiv">
     <div class = "container-fluid">
@@ -26,8 +27,7 @@
         <!--内容-->
         <div style = "margin-left:50px;margin-top: 10px">
             <!--表单-->
-            <form class = "form-horizontal" role = "form" action = "javascript:jump(
-            '#mouseAddDiv','html/mousePanel.html')" onsubmit = "return add()">
+            <form class = "form-horizontal" role = "form" action = "../AmouseServlet.av" onsubmit = "return add()" method="post" enctype="multipart/form-data">
                 <!--左边-->
                 <div id = "left" style = "width: 370px;height: 390px;float: left">
                     <!--第一行-->
@@ -36,17 +36,17 @@
                             <label for = "name" class = "col-lg-4 col-sm-4   control-label ">名称:</label>
 
                             <div class = "col-lg-8 col-sm-8">
-                                <input type = "text" class = "form-control" id = "name">
+                                <input type = "text" class = "form-control" id = "name" name="name">
                             </div>
                         </div>
                     </div>
                     <!--第二行-->
                     <div class = "row" style = "margin-top: 20px">
                         <div class = "form-group" style = "float: left">
-                            <label for = "breed" class = "col-lg-4 col-sm-4   control-label ">繁殖:</label>
+                            <label for = "breed" class = "col-lg-4 col-sm-4   control-label ">繁殖：</label>
 
                             <div class = "col-lg-8 col-sm-8">
-                                <input type = "text" class = "form-control" id = "breed">
+                                <input type = "text" class = "form-control" id = "breed" name="breed">
                             </div>
                         </div>
                     </div>
@@ -57,11 +57,8 @@
                                 <label for = "img" class = " control-label ">图片:</label>
                             </div>
                             <div class = "col-lg-4 col-sm-4" style = "float: left;margin-left: -50px">
-                                <input type = "file" class = "form-control" id = "img" style = "display: none">
-                                <input id = "inputImg" type = "text" class = "form-control" style = "width: 150px" />
-                            </div>
-                            <div class = "col-lg-4 col-sm-4" style = "float: left;margin-left: 10px">
-                                <button class = "btn btn-default" onclick = "browseImg();return false">浏览</button>
+                                <img id="img1" src="" style="width:0px;height:0px">
+							    <input id="showFile1" name="showFile1" type="file" onchange="preview('img1','showFile1')"/>
                             </div>
                         </div>
                     </div>
@@ -71,7 +68,7 @@
                             <label for = "action" class = "col-lg-4 col-sm-4  control-label ">防治措施:</label>
 
                             <div class = "col-lg-8 col-sm-6">
-                                <textarea rows = "5" cols = "30" class = "form-control" id = "action"></textarea>
+                                <textarea rows = "5" cols = "30" class = "form-control" id = "action" name="action"></textarea>
                             </div>
                         </div>
                     </div>
@@ -81,10 +78,10 @@
                     <!--第一行-->
                     <div class = "row" style = "margin-top: 20px">
                         <div class = "form-group" style = "float: left">
-                            <label for = "host" class = "col-lg-4 col-sm-4   control-label ">寄主:</label>
+                            <label for = "host" class = "col-lg-4 col-sm-4   control-label ">食物:</label>
 
                             <div class = "col-lg-8 col-sm-8">
-                                <input type = "text" class = "form-control" id = "host">
+                                <input type = "text" class = "form-control" id = "food" name="food">
                             </div>
                         </div>
                     </div>
@@ -94,7 +91,7 @@
                             <label for = "enemy" class = "col-lg-4 col-sm-4   control-label ">天敌:</label>
 
                             <div class = "col-lg-8 col-sm-8">
-                                <input type = "text" class = "form-control" id = "enemy">
+                                <input type = "text" class = "form-control" id = "enemy" name="enemy">
                             </div>
                         </div>
                     </div>
@@ -105,7 +102,7 @@
                             <label for = "harm" class = "col-lg-4 col-sm-4  control-label ">主要危害:</label>
 
                             <div class = "col-lg-8 col-sm-6">
-                                <textarea rows = "5" cols = "30" class = "form-control" id = "harm"></textarea>
+                                <textarea rows = "5" cols = "30" class = "form-control" id = "harm" name="harm"></textarea>
                             </div>
                         </div>
                     </div>

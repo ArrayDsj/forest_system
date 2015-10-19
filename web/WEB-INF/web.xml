@@ -4,6 +4,92 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+
+    <!-- 专家一览无条件查询（预加载）-->
+    <servlet>
+        <servlet-name>ProficientQueryServlet</servlet-name>
+        <servlet-class>com.code.servlet.ProficientQueryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProficientQueryServlet</servlet-name>
+        <url-pattern>/ProficientQueryServlet.av</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- 专家一览有条件查询-->
+    <servlet>
+        <servlet-name>ProficientQueryByConditionServlet</servlet-name>
+        <servlet-class>com.code.servlet.ProficientQueryByConditionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProficientQueryByConditionServlet</servlet-name>
+        <url-pattern>/ProficientQueryByConditionServlet.av</url-pattern>
+    </servlet-mapping>
+
+    <!-- 专家删除-->
+    <servlet>
+        <servlet-name>ProficientDeleteServlet</servlet-name>
+        <servlet-class>com.code.servlet.ProficientDeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProficientDeleteServlet</servlet-name>
+        <url-pattern>/ProficientDeleteServlet.av</url-pattern>
+    </servlet-mapping>
+
+    <!-- 显示被选中的专家信息-->
+    <servlet>
+        <servlet-name>ProficientShowServlet</servlet-name>
+        <servlet-class>com.code.servlet.ProficientShowServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProficientShowServlet</servlet-name>
+        <url-pattern>/ProficientShowServlet.av</url-pattern>
+    </servlet-mapping>
+
+    <!-- 添加专家信息-->
+    <servlet>
+        <servlet-name>ProficientAddServlet</servlet-name>
+        <servlet-class>com.code.servlet.ProficientAddServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProficientAddServlet</servlet-name>
+        <url-pattern>/ProficientAddServlet.av</url-pattern>
+    </servlet-mapping>
+
+    <!-- 显示被选中的用户信息（为了修改专家信息）-->
+    <servlet>
+        <servlet-name>ProficientShowForUpdateServlet</servlet-name>
+        <servlet-class>com.code.servlet.ProficientShowForUpdateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProficientShowForUpdateServlet</servlet-name>
+        <url-pattern>/ProficientShowForUpdateServlet.av</url-pattern>
+    </servlet-mapping>
+
+    <!-- 修改专家信息-->
+    <servlet>
+        <servlet-name>ProficientUpdateServlet</servlet-name>
+        <servlet-class>com.code.servlet.ProficientUpdateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProficientUpdateServlet</servlet-name>
+        <url-pattern>/ProficientUpdateServlet.av</url-pattern>
+    </servlet-mapping>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <!-- 方式1连接数据库-->
     <!-- 通过getServletContext().getInitParameter("XX")读取 -->
     <!-- 驱动-->
@@ -72,6 +158,116 @@
         <servlet-class>com.code.servlet.LoginServlet</servlet-class>
     </servlet>
 
+    <!-- 李阳-->
+    <!-- 虫害一览配置 -->
+    <servlet>
+        <servlet-name>pest</servlet-name>
+        <servlet-class>com.code.servlet.PestServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>pest</servlet-name>
+        <url-pattern>/pest.av</url-pattern>
+    </servlet-mapping>
+
+    <!-- 查询得到页面 -->
+    <servlet>
+        <servlet-name>PestMageServlet</servlet-name>
+        <servlet-class>com.code.servlet.PestMageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PestMageServlet</servlet-name>
+        <url-pattern>/pestmage.av</url-pattern>
+    </servlet-mapping>
+    <!-- 查看所有信息 -->
+    <servlet>
+        <servlet-name>PestInfoServlet</servlet-name>
+        <servlet-class>com.code.servlet.PestDemandServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PestInfoServlet</servlet-name>
+        <url-pattern>/PestInfoServlet.av</url-pattern>
+    </servlet-mapping>
+    <!-- 虫害一览查询配置 -->
+    <servlet>
+        <servlet-name>PestDemandServlet</servlet-name>
+        <servlet-class>com.code.servlet.PestDemandServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PestDemandServlet</servlet-name>
+        <url-pattern>/PestDemandServlet.av</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PestNumServlet</servlet-name>
+        <servlet-class>com.code.servlet.PestNumServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PestNumServlet</servlet-name>
+        <url-pattern>/PestNumServlet.av</url-pattern>
+    </servlet-mapping>
+    <!-- 病害一览添加信息 -->
+    <servlet>
+        <servlet-name>DiseaseServlet</servlet-name>
+        <servlet-class>com.code.servlet.DiseaseServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DiseaseServlet</servlet-name>
+        <url-pattern>/DiseaseServlet.av</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>DiseaseMageServlet</servlet-name>
+        <servlet-class>com.code.servlet.DiseaseMageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DiseaseMageServlet</servlet-name>
+        <url-pattern>/DiseaseMageServlet.av</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>DiseaseInfoServlet</servlet-name>
+        <servlet-class>com.code.servlet.DiseaseInfoServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DiseaseInfoServlet</servlet-name>
+        <url-pattern>/DiseaseInfoServlet.av</url-pattern>
+    </servlet-mapping>
+    <!-- 鼠害配置 -->
+    <servlet>
+        <servlet-name>AmouseServlet</servlet-name>
+        <servlet-class>com.code.servlet.AmouseServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AmouseServlet</servlet-name>
+        <url-pattern>/AmouseServlet.av</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AmouseInfoServlet</servlet-name>
+        <servlet-class>com.code.servlet.AmouseInfoServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AmouseInfoServlet</servlet-name>
+        <url-pattern>/AmouseInfoServlet.av</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AmouseMageServlet</servlet-name>
+        <servlet-class>com.code.servlet.AmouseMageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AmouseMageServlet</servlet-name>
+        <url-pattern>/AmouseMageServlet.av</url-pattern>
+    </servlet-mapping>
+    <!-- 表格显示文件配置行 -->
+    <context-param>
+        <param-name>ShowRowNum</param-name>
+        <param-value>4</param-value>
+    </context-param>
+    <!-- 李阳-->
+
     <servlet>
         <servlet-name>mousePanel</servlet-name>
         <servlet-class>com.code.servlet.mouseServlet.mouseDataLoad</servlet-class>
@@ -112,10 +308,20 @@
         <servlet-name>thingAdd</servlet-name>
         <servlet-class>com.code.servlet.thingservlet.thingAdd</servlet-class>
     </servlet>
+    <!-- 文件上传-->
+    <servlet>
+        <servlet-name>thingUpload</servlet-name>
+        <servlet-class>com.code.servlet.thingservlet.thingUpload</servlet-class>
+    </servlet>
     <!--查看事件-->
     <servlet>
         <servlet-name>thingShow</servlet-name>
         <servlet-class>com.code.servlet.thingservlet.thingShow</servlet-class>
+    </servlet>
+    <!-- 时间按时间查询-->
+    <servlet>
+        <servlet-name>thingTime</servlet-name>
+        <servlet-class>com.code.servlet.thingservlet.thingQueryServlet</servlet-class>
     </servlet>
     <!-- 会商灾情-->
     <servlet>
@@ -174,6 +380,14 @@
     <servlet-mapping>
         <servlet-name>mousePanel</servlet-name>
         <url-pattern>/mousePanel.av</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>thingUpload</servlet-name>
+        <url-pattern>/thingUpload.av</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>thingTime</servlet-name>
+        <url-pattern>/thingTime.av</url-pattern>
     </servlet-mapping>
 
     <!-- 刘松-->
@@ -265,10 +479,6 @@
         <param-name>pageSize</param-name>
         <param-value>4</param-value>
     </context-param>
-
-
-
-
     <!-- 刘松-->
 
 

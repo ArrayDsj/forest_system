@@ -1,11 +1,11 @@
 package com.code.service.imp;
 
-import java.util.ArrayList;
-
 import com.code.bean.ProficientBean;
 import com.code.dao.ProficientDao;
 import com.code.dao.imp.ProficientDaoImp;
 import com.code.service.ProficientService;
+
+import java.util.ArrayList;
 
 
 
@@ -51,6 +51,12 @@ public class ProficientServicImp implements ProficientService {
 		// TODO Auto-generated method stub
 		return pdao.updateProficient(pro);
 	}
-	
+
+    @Override
+    public boolean addProficient(ProficientBean proficientBean) {
+
+        return pdao.addProficient(proficientBean);
+    }
+
 
 }

@@ -1,11 +1,15 @@
 package com.code.dao.imp;
 
-import com.code.bean.Amouse;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import com.code.bean.AmouseBean;
+import com.code.bean.DiseaseBean;
 import com.code.dao.AmouseDao;
 import com.code.util.DBUtil;
-
-import java.sql.*;
-import java.util.ArrayList;
 
 public class AmouseDaoimp implements AmouseDao {
 	//得到无条件下的总记录条数
@@ -42,13 +46,13 @@ public class AmouseDaoimp implements AmouseDao {
 	public int Amouse(String value) {
 		// TODO Auto-generated method stub
 		int row = 0;
-        Connection con = DBUtil.getConnection();
+		Connection con6 = DBUtil.getConnection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		String sql = "select count(*) as count1 from t_amouse where like '%"+value+"%'";
 		
 		try {
-			ps = con.prepareStatement(sql);
+			ps = con6.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while(rs.next()){
 				row = rs.getInt("count1");	
@@ -58,24 +62,24 @@ public class AmouseDaoimp implements AmouseDao {
 			e.printStackTrace();
 		}finally{
 			
-			DBUtil.close(rs, ps, con);
+			DBUtil.close(rs, ps, con6);
 		}
 		
 		return row;
 	}
 	//增加信息
-	public int addAmouse(Amouse amouse) {
+	public int addAmouse(AmouseBean amouse) {
 		// TODO Auto-generated method stub
-        Connection con = DBUtil.getConnection();
+		Connection cont = DBUtil.getConnection();
 		String sql = "insert into t_amouse(f_name,f_food,f_multiply,f_naturalenemies,f_picture,f_controlmeasures,f_mainharm)" +
 				"values(?,?,?,?,?,?,?)";
 		String sql1="select max(pk_id) as maxid from t_amouse";
 		PreparedStatement ps = null;
 		int result = -1;
 		try {
-            con.setAutoCommit(false);
+			cont.setAutoCommit(false);
 			
-			ps = con.prepareStatement(sql);
+			ps = cont.prepareStatement(sql);
 
 			ps.setString(1, amouse.getName());
 			ps.setString(2, amouse.getFood());
@@ -91,19 +95,19 @@ public class AmouseDaoimp implements AmouseDao {
 			while(rs.next()){
 				result=rs.getInt("maxid");
 			}
-
-            con.commit();
+			
+			cont.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			try {
-                con.rollback();
+				cont.rollback();
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
 		}finally{
-			DBUtil.close(ps, con);
+			DBUtil.close(ps, cont);
 		}
 		
 		return result;
@@ -111,16 +115,18 @@ public class AmouseDaoimp implements AmouseDao {
 	//得到无条件下的分页数据
 	public ArrayList allAmouse(int pageNow, int pageSize) {
 		// TODO Auto-generated method stub
-		ArrayList<Amouse> amouse3 = new ArrayList<Amouse>();
-        Connection con = DBUtil.getConnection();
-		String sql1 = "select * from t_amouse order by pk_id desc limit "+ (pageNow - 1) * pageSize +","+ pageSize;
-		Statement st = null;
+		ArrayList<AmouseBean> amouse3 = new ArrayList<AmouseBean>();
+		Connection con = DBUtil.getConnection();
+		String sql1 = "select * from t_amouse order by pk_id desc limit ?,?";
+		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-            st = con.createStatement();
-			rs = st.executeQuery(sql1);
+			ps = con.prepareStatement(sql1);
+			ps.setInt(1, (pageNow - 1) * 4);
+			ps.setInt(2, pageSize);
+			rs = ps.executeQuery();
 			while (rs.next()) {
-				Amouse dl = new Amouse();
+				AmouseBean dl = new AmouseBean();
 				dl.setId(rs.getInt("pk_id"));
 				dl.setName(rs.getString("f_name"));
 				dl.setFood(rs.getString("f_food"));
@@ -136,58 +142,66 @@ public class AmouseDaoimp implements AmouseDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-            DBUtil.close(rs,st,con);
-        }
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			DBUtil.close(rs, ps,con);
+		}
 		return amouse3;
 	}
 	//根据条件查询信息；
 	public ArrayList getAmouseInfo(String value, int pageNow, int pageSize) {
 		// TODO Auto-generated method stub
-		ArrayList<Amouse> amouse = new ArrayList<Amouse>();
-        Connection con = DBUtil.getConnection();
+		ArrayList<AmouseBean> amouse = new ArrayList<AmouseBean>();
+		Connection con5 = DBUtil.getConnection();
 		PreparedStatement ps = null;
 		String sql = "select * from t_diseaselist where like'%"+value+"%' limit ?,?" ;
 		ResultSet rs = null;
 		try {
-			ps = con.prepareStatement(sql);
+			ps = con5.prepareStatement(sql);
 			ps.setInt(1, (pageSize-1)*pageNow);
 			ps.setInt(2, pageNow);
 			rs = ps.executeQuery();
 			
 			while(rs.next()){
-				Amouse dl = new Amouse();
+				AmouseBean dl = new AmouseBean();
 				dl.setId(rs.getInt("pk_id"));
-                dl.setName(rs.getString("f_name"));
-                dl.setFood(rs.getString("f_food"));
-                dl.setMultiply(rs.getString("f_multiply"));
-                dl.setSentinel(rs.getString("f_naturalenemies"));
-                dl.setPicture(rs.getString("f_picture"));
-                dl.setCtma(rs.getString("f_controlmeasures"));
-                dl.setMH(rs.getString("f_mainharm"));
-                amouse.add(dl);
+				dl.setName(rs.getString("f_name"));
+				dl.setFood(rs.getString("f_food"));
+				dl.setMultiply(rs.getString("f_multiply"));
+				dl.setSentinel(rs.getString("f_naturalenemies"));
+				dl.setPicture(rs.getString("f_picture"));
+				dl.setCtma(rs.getString("f_controlmeasures"));
+				dl.setMH(rs.getString("f_mainharm"));
+				amouse.add(dl);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
 			
-			DBUtil.close(rs, ps, con);
+			DBUtil.close(rs, ps, con5);
 		}
 		
 		return amouse;
 	}
 	//根据ID查询所有信息
-	public Amouse getAmouseListById(int id) {
+	public AmouseBean getAmouseById(int id) {
 		// TODO Auto-generated method stub
-        Connection con = DBUtil.getConnection();
-		Amouse amouse = new Amouse();
+		Connection cont2 = DBUtil.getConnection();
+		AmouseBean amouse = new AmouseBean();
 		String sql = "select * from t_amouse where pk_id=?";
 		
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
+			ps = cont2.prepareStatement(sql);
+			ps.setInt(1, id);
 			rs = ps.executeQuery();
 			while(rs.next()){
 				amouse.setId(rs.getInt(1));
@@ -203,7 +217,7 @@ public class AmouseDaoimp implements AmouseDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
-			DBUtil.close(rs, ps, con);
+			DBUtil.close(rs, ps, cont2);
 		}
 		
 		return amouse;
@@ -212,12 +226,12 @@ public class AmouseDaoimp implements AmouseDao {
 	public boolean updateById(int id, String image1) {
 		// TODO Auto-generated method stub
 		boolean flag = false;
-        Connection con = DBUtil.getConnection();
+		Connection cont3 = DBUtil.getConnection();
 		String sql3 = "update t_amouse set f_picture=? where pk_id=?";
 		PreparedStatement ps = null;
 		
 		try {
-			ps = con.prepareStatement(sql3);
+			ps = cont3.prepareStatement(sql3);
 			ps.setString(1, image1);
 			ps.setInt(2, id);
 			int row = ps.executeUpdate();
@@ -229,9 +243,13 @@ public class AmouseDaoimp implements AmouseDao {
 			e.printStackTrace();
 		}finally{
 			
-			DBUtil.close(ps, con);
+			DBUtil.close(ps, cont3);
 		}
 		return flag;
+	}
+	public int addAmouse(DiseaseBean diseaselist) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

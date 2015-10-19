@@ -88,7 +88,6 @@ public class areaDataLoad extends HttpServlet{
             req.setAttribute("query", query);
             req.setAttribute("str", str);
             req.setAttribute("option", "haveQuery");
-
             req.setAttribute("queryText", req.getParameter("queryText"));
             req.setAttribute("queryValue", req.getParameter("queryValue"));
             req.getRequestDispatcher("jsp/disastercontrol/areaPanel.jsp").forward(req, resp);

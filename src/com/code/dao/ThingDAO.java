@@ -3,6 +3,7 @@ package com.code.dao;
 import com.code.bean.ThingBean;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by CodeA on 2015/10/14.
@@ -27,4 +28,8 @@ public interface ThingDAO {
 
     //修改信息
     public int updateThing(ThingBean thingBean);
+
+    public ArrayList<ThingBean> getAreaByTime(Date start, Date end, int pageNow, int pageSize);
+
+    public int  getCountsByTime(Date start, Date end);
 }

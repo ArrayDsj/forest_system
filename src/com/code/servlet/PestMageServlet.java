@@ -1,15 +1,14 @@
 package com.code.servlet;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import com.code.bean.PestBean;
+import com.code.service.imp.PestSerxiceImp;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.code.bean.PestBean;
-import com.code.service.imp.PestSerxiceImp;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class PestMageServlet extends HttpServlet {
 
@@ -23,6 +22,7 @@ public class PestMageServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+        //初始化
 		int rownum = Integer.parseInt(this.getServletContext().getInitParameter("ShowRowNum"));
 		
 		PestSerxiceImp PLSI = new PestSerxiceImp();

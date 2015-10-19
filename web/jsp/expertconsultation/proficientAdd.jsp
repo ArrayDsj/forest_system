@@ -24,58 +24,67 @@
         <!--内容-->
         <!--内容-->
         <div style = "margin-left:50px;margin-top: 10px">
-            <form class = "form-horizontal" role = "form" action = "javascript:jump(
-            '#proficientAddDiv','html/proficientPanel.html')" onsubmit = "return add()">
+            
                 <!--left-->
                 <div id = "left" style = "width: 370px;height: 390px;float: left">
-                    <!--第一行-->
+                    <!--第一行 姓名-->
                     <div class = "row" style = "margin-top: 20px">
                         <div class = "form-group" style = "float: left">
-                            <label for = "name" class = "col-lg-4 col-sm-4   control-label ">名称:</label>
+                            <label for = "name" class = "col-lg-4 col-sm-4   control-label ">姓名:</label>
 
                             <div class = "col-lg-8 col-sm-8">
-                                <input type = "text" class = "form-control" id = "name">
+                                <input id = "name" type = "text" class = "form-control" >
                             </div>
                         </div>
                     </div>
-                    <!--第二行-->
+                    <!--第二行 出生年月-->
                     <div class = "row" style = "margin-top: 20px">
                         <div class = "form-group" style = "float: left">
-                            <label for = "birthday" class = "col-lg-4 col-sm-4   control-label ">生日:</label>
-                            <div class = "col-lg-8 col-sm-8">
-                                <input type = "text" class = "form-control" id = "birthday">
-                            </div>
+                            <label for = "birthday" class = "col-lg-4 col-sm-4   control-label ">出生年月:</label>
+                           
+                           
+                            <div id = "datetimepickerStar" class = "input-group date form_date col-lg-8 col-sm-8" style="margin-left: -30px"  data-date = "" data-date-format =
+                                "yyyy-mm-dd"
+                             data-link-format = "yyyy-mm-dd" >
+                            <input id="birthday" class = "form-control" size = "30" type = "text" value = ""  readonly = "readonly" onclick =
+                                    "selectTime()" >
+                            <span  class = "input-group-addon" ><span class = "glyphicon glyphicon-remove" ></span ></span >
+                            <span class = "input-group-addon" ><span class = "glyphicon glyphicon-calendar"
+                                                                     onclick = "selectTime('datetimepickerStar')" ></span ></span >
+                        </div >
+                        
+                        
                         </div>
                     </div>
 
-                    <!--第三行-->
+                    <!--第三行 专长-->
                     <div class = "row" style = "margin-top: 20px">
                         <div class = "form-group" style = "float: left">
                             <label for = "specialty" class = "col-lg-4 col-sm-4   control-label ">专长:</label>
 
                             <div class = "col-lg-8 col-sm-8">
-                                <input type = "text" class = "form-control" id = "specialty">
+                                <input id = "specialty" type = "text" class = "form-control" >
                             </div>
                         </div>
                     </div>
 
-                    <!--第四行-->
+                    <!--第四行 电话-->
                     <div class = "row" style = "margin-top: 20px">
                         <div class = "form-group" style = "float: left">
                             <label for = "phone" class = "col-lg-4 col-sm-4   control-label ">电话:</label>
                             <div class = "col-lg-8 col-sm-8">
-                                <input type = "text" class = "form-control" id = "phone">
+                                <input id = "phone" type = "text" class = "form-control" >
                             </div>
                         </div>
                     </div>
 
-                    <!--第五行-->
+                    <!--第五行 通讯地址-->
                     <div class = "row" style = "margin-top: 20px">
                         <div class = "form-group" style = "float: left">
-                            <label for = "address" class = "col-lg-4 col-sm-4   control-label ">地址:</label>
+                            <label for = "address" class = "col-lg-4 col-sm-4   control-label ">通讯地址:</label>
 
                             <div class = "col-lg-8 col-sm-8">
-                                <input type = "text" class = "form-control" id = "address">
+                                <input id = "address" type = "text" class = "form-control" >
                             </div>
                         </div>
                     </div>
@@ -83,57 +92,58 @@
                 </div>
                 <!--right-->
                 <div id = "right" style = "width: 370px;height: 390px;float: left;margin-left: 10px">
-                    <!--第一行-->
+                    <!--第一行 性别-->
                     <div class = "row" style = "margin-top: 25px;margin-left: 35px">
                         <div class = "form-group" >
                             <label >性别:</label>
-                            <input type = "radio" name="genger" value="1" style = "margin-left: 25px" checked/>男
-                            <input type = "radio" name = "genger" value = "0" style="margin-left: 20px"/>女
+                            <input type = "radio" name="genger" value="男" style = "margin-left: 25px" checked/>男
+                            <input type = "radio" name = "genger" value = "女" style="margin-left: 20px"/>女
                         </div>
                     </div>
-                    <!--第二行-->
+                    <!--第二行 照片-->
 
                     <div class = "row" style = "margin-top: 20px">
                         <div class = "form-group">
                             <div class = "col-lg-4 col-sm-4" style = "float: left;margin-left: 35px">
-                                <label for = "img" class = " control-label ">图片:</label>
+                                <label for = "eveTxt" class = " control-label ">照片:</label>
                             </div>
-                            <div class = "col-lg-4 col-sm-4" style = "float: left;margin-left: -80px">
-                                <input type = "file" class = "form-control" id = "img" style = "display: none">
-                                <input id = "inputImg" type = "text" class = "form-control" style = "width: 150px" />
-                            </div>
-                            <div class = "col-lg-4 col-sm-4" style = "float: left;margin-left: 10px">
-                                <button class = "btn btn-default" onclick = "browse();return false">浏览</button>
-                            </div>
+                            
+                            
+                            <input id="eveTxt" type="text" style="width: 150px;height: 30px;margin-left: -60px" />
+                     		<input id="file" name="file" type="file" onchange="$('#eveTxt').val($(this).val())" style="display:none;"/>
+                   			<input type="button" class="btn btn-xs btn-success" style="width: 80px;height: 30px;margin-left: -4px;margin-top: -3px " onclick="$('#file').click()" value="图片" >
+                        
+                        
+                        
                         </div>
                     </div>
 
-                    <!--第三行-->
+                    <!--第三行 职务-->
                     <div class = "row" style = "margin-top: 20px">
                         <div class = "form-group" style = "float: left">
-                            <label for = "position" class = "col-lg-4 col-sm-4   control-label ">职务:</label>
+                            <label for = "degree" class = "col-lg-4 col-sm-4   control-label ">职务:</label>
                             <div class = "col-lg-8 col-sm-8">
-                                <input type = "text" class = "form-control" id = "position">
+                                <input id = "degree" type = "text" class = "form-control" >
                             </div>
                         </div>
                     </div>
-                    <!--第四行-->
+                    <!--第四行 工作单位-->
                     <div class = "row" style = "margin-top: 20px">
                         <div class = "form-group" style = "float: left">
-                            <label for = "unit" class = "col-lg-4 col-sm-4   control-label ">单位:</label>
+                            <label for = "unit" class = "col-lg-4 col-sm-4   control-label ">工作单位:</label>
 
                             <div class = "col-lg-8 col-sm-8">
-                                <input type = "text" class = "form-control" id = "unit">
+                                <input id = "unit" type = "text" class = "form-control" >
                             </div>
                         </div>
                     </div>
-                    <!--第五行-->
+                    <!--第五行 邮箱-->
                     <div class = "row" style = "margin-top: 20px">
                         <div class = "form-group" style = "float: left">
                             <label for = "email" class = "col-lg-4 col-sm-4   control-label ">邮箱:</label>
 
                             <div class = "col-lg-8 col-sm-8">
-                                <input type = "text" class = "form-control" id = "email">
+                                <input id = "email" type = "text" class = "form-control" >
                             </div>
                         </div>
                     </div>
@@ -143,12 +153,12 @@
                     <div class = "row">
                         <div class = "form-group">
                             <div class = "col-sm-offset-5 col-sm-5" style = "margin-top:10px">
-                                <button type = "submit" class = "btn btn-default">添加</button>
+                                <button id="addBtn" type = "button" class = "btn btn-default" >添加</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>
+           
 
         </div>
 
@@ -157,20 +167,47 @@
 
 <script type="text/javascript">
     //数据验证
-    function add() {
-        alert("验证数据正确性");
-        return true;
-    }
-
-
-    function browse() {
-        //调用文件选择组件的默认点击事件
-        $("#img").click();
-        $("#img").change(function () {
-            //给input设置值
-            $("#inputImg").val($("#img").val());
+  $(function(){
+        $("#addBtn").click(function(){
+            ajaxFileUpload();
+            return false;
         });
-    }
+
+  function ajaxFileUpload(){
+    				// 开始上传显示的图片
+    				$("#wait_loading").ajaxStart(function(){
+    					$(this).show();
+    					//文件上传完将影藏
+    				}).ajaxComplete(function(){
+    					$(this).hide();
+    				});
+    				var jsonData={"name":$("#name").val(),"birthday":$("#birthday").val(),
+    							"specialty":$("#specialty").val(),"phone":$("#phone").val(),
+    							"address":$("#address").val(),
+    							"gender":$('input[name=\'genger\']').filter(":checked").val(),
+    							"degree":$("#degree").val(),"workUnit":$("#unit").val(),
+    							"email":$("#email").val()};
+    					
+    					$.ajaxFileUpload({
+    						url:'../ProficientAddServlet.av',
+    						type:'POST',
+    						secureuri:'false',//一般为false
+    						fileElementId:['file'],//上传文件组件NAME
+    						dataType:'text',//返回值类型，Json,application/json
+    						data:jsonData,//传递json参数键值对到服务器
+    						success:function(data,status){
+    							return jump('#otherHtml','./ProficientQueryServlet.av','-1')
+    						},
+    						error:function(data,status,e){
+    							$.messager.show({title:'操作提示',msg:'上传失败！',showType:'show'});
+    						}
+    					});
+    				};	
+   
+    
+
+});
+    
 </script>
 </body>
 </html>

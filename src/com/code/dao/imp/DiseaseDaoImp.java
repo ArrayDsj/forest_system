@@ -16,7 +16,7 @@ public class DiseaseDaoImp implements DiseaseDao {
 	//增加信息
 	public int addDisease(DiseaseBean disease) {
 		// TODO Auto-generated method stub
-		Connection cont = DBUtil.getCon();
+		Connection cont = DBUtil.getConnection();
 		String sql = "insert into t_diseaselist(f_name,f_source,f_symptoms,f_regularityofdisease,f_picture,f_controlmeasures,f_mainharm)" +
 				"values(?,?,?,?,?,?,?)";
 		String sql1="select max(pk_id) as maxid from t_diseaselist";
@@ -62,7 +62,7 @@ public class DiseaseDaoImp implements DiseaseDao {
 	public ArrayList alldisease(int pageNow, int pageSize) {
 		// TODO Auto-generated method stub
 		ArrayList<DiseaseBean> al = new ArrayList<DiseaseBean>();
-		Connection con = DBUtil.getCon();
+		Connection con = DBUtil.getConnection();
 		String sql1 = "select * from t_diseaselist order by pk_id desc limit ?,?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -104,7 +104,7 @@ public class DiseaseDaoImp implements DiseaseDao {
 	public int Diseases(String con, String value) {
 		// TODO Auto-generated method stub
 		int row = 0;
-		Connection con6 = DBUtil.getCon();
+		Connection con6 = DBUtil.getConnection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		String sql = "select count(*) as count1 from t_diseaselist where "+con+" like '%"+value+"%'";
@@ -128,7 +128,7 @@ public class DiseaseDaoImp implements DiseaseDao {
 	//根据ID查询所有信息
 	public DiseaseBean getDiseaseById(int id) {
 		// TODO Auto-generated method stub
-		Connection cont2 = DBUtil.getCon();
+		Connection cont2 = DBUtil.getConnection();
 		DiseaseBean pes = new DiseaseBean();
 		String sql = "select * from t_diseaselist where pk_id=?";
 		
@@ -162,7 +162,7 @@ public class DiseaseDaoImp implements DiseaseDao {
 			int pageNow, int pageSize) {
 		// TODO Auto-generated method stub
 		ArrayList<DiseaseBean> list = new ArrayList<DiseaseBean>();
-		Connection con5 = DBUtil.getCon();
+		Connection con5 = DBUtil.getConnection();
 		PreparedStatement ps = null;
 		String sql = "select * from t_diseaselist where"+con+"like'%"+value+"%' limit ?,?" ;
 		ResultSet rs = null;
@@ -199,7 +199,7 @@ public class DiseaseDaoImp implements DiseaseDao {
 	public boolean updateById(int id, String image1) {
 		// TODO Auto-generated method stub
 		boolean flag = false;
-		Connection cont3 = DBUtil.getCon();
+		Connection cont3 = DBUtil.getConnection();
 		String sql3 = "update t_diseaselist set f_picture=? where pk_id=?";
 		PreparedStatement ps = null;
 		
@@ -225,7 +225,7 @@ public class DiseaseDaoImp implements DiseaseDao {
 		// TODO Auto-generated method stub
 		
 		int count = 0;
-		Connection con = DBUtil.getCon();
+		Connection con = DBUtil.getConnection();
 		String sql = "select count(*) as allC from t_diseaselist";
 		PreparedStatement ps = null;
 		ResultSet rs = null;

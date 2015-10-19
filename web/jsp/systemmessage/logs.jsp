@@ -162,13 +162,13 @@
 		//点击上一页事件
 		$("#previousPage").click(function(){
 		if(${sessionScope.start == null}){
-			if(${requestScope.currentPage}  ==  1){
+			if(parseInt(${requestScope.currentPage}) ==  1){
 				alert("已经是第一页了");		
 			}else{
 				$("#logsDiv").load("log.av",{"pageNow":${requestScope.currentPage}-1})
 			}			
 		}else{
-			if(${requestScope.currentPage}  ==  1){
+			if(parseInt(${requestScope.currentPage})  ==  1){
 				alert("已经是第一页了");	
 			}else{
 				$("#logsDiv").load("LogQueryByDateServlet.av",{"pageNow":${requestScope.currentPage}-1});

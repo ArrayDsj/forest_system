@@ -132,8 +132,6 @@
 
                                 </div >
                                 <input type = "hidden" id="query" value="${requestScope.str}"/>
-
-
                                 <%--条件输入框--%>
                                 <input id = "inputText" type = "text" class = "form-control" style="width: 130px" value="${requestScope.str}">
                             </div >
@@ -225,8 +223,6 @@
             }else
                 $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": num});
         });
-
-
 
         $("#addArea").click(function(){
             jump('#areaPanelDiv', 'jsp/disastercontrol/areaAdd.jsp')

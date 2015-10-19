@@ -6,6 +6,7 @@ import com.code.dao.imp.ThingDAOImp;
 import com.code.service.ThingService;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by CodeA on 2015/10/14.
@@ -45,5 +46,17 @@ public class ThingServiceImp implements ThingService {
     public boolean updateThing(ThingBean thingBean) {
         ThingDAO thingDAO = new ThingDAOImp();
         return thingDAO.updateThing(thingBean) == 1;
+    }
+
+    @Override
+    public ArrayList<ThingBean> getAreasByTime(Date start, Date end, int pageNow, int pageSize) {
+        ThingDAO thingDAO = new ThingDAOImp();
+        return thingDAO.getAreaByTime(start, end,pageNow,pageSize);
+    }
+
+    @Override
+    public int getCountsByTime(Date start, Date end) {
+        ThingDAO thingDAO = new ThingDAOImp();
+        return thingDAO.getCountsByTime(start, end);
     }
 }

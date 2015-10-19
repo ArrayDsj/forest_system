@@ -1,18 +1,15 @@
 package com.code.servlet;
 
-import java.io.IOException;
+import com.code.bean.PestBean;
+import com.code.service.imp.PestSerxiceImp;
+import com.jspsmart.upload.SmartUpload;
+import com.jspsmart.upload.SmartUploadException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import sun.security.action.GetBooleanAction;
-
-import com.code.bean.PestBean;
-import com.code.service.imp.PestSerxiceImp;
-import com.jspsmart.upload.SmartUpload;
-import com.jspsmart.upload.SmartUploadException;
+import java.io.IOException;
 
 public class PestServlet extends HttpServlet {
 
@@ -73,7 +70,7 @@ public class PestServlet extends HttpServlet {
 		if(id != 0){
 			for(int i = 0; i < su.getFiles().getCount();i++){
 				//创建一个com.jspsmart.upload.File包里的File方法，   把上传文件放在一起，在getFile的第几个
-				com.jspsmart.upload.File file = su.getFiles().getFile(i);    
+				com.jspsmart.upload.File file = su.getFiles().getFile(i);
 				if (file.isMissing()) continue;    	
 				//定义上传后另存为的文件名     
 				 filename1 =id + "_" + i + "."+ file.getFileExt();
@@ -93,7 +90,7 @@ public class PestServlet extends HttpServlet {
 			//设置换一个隐藏属性    showPage是名字，empManage是参数  修改他跳转的页面
 			req.setAttribute("showPage", "empManage");
 			//重定项           跳转到index.jsp这个页面
-			req.getRequestDispatcher("jsp/datamanagement/wormPanel.jsp").forward(req, resp);
+			req.getRequestDispatcher("jsp/index.jsp").forward(req, resp);
 		}
 	}
 }

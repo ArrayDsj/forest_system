@@ -33,7 +33,7 @@ public class ProficientBean implements Serializable {
 	private String address;
 	
 	private String email;
-	
+
 	public ProficientBean() {
 		
 	}

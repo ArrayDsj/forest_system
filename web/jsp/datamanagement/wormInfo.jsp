@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType = "text/html;charset=UTF-8" pageEncoding = "UTF-8" language = "java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang = "en" >
 <head >
@@ -44,49 +45,51 @@
                 </div >
             </div >
             <!--内容-->
+          
             <div style = "margin-left:50px;margin-top: 10px" >
                 <div id = "left" style = "width: 370px;height: 390px;float: left" >
                     <!--第一行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <span class = "col-lg-4  control-label " >名称:</span >
-                        <span class = "col-lg-4  control-label " >黄杨娟野螟</span >
+                        <span class = "col-lg-4  control-label " >${requestScope.empManage2.name}</span >
                     </div >
+                    
                     <!--第二行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <span class = "col-lg-4  control-label " >繁殖:</span >
-                        <span class = "col-lg-4  control-label " >一年6~8胎,每胎7~10只</span >
+                        <span class = "col-lg-4  control-label " >${requestScope.empManage2.breed}</span >
                     </div >
                     <!--第三行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <span class = "col-lg-4  control-label " >寄主:</span >
-                        <span class = "col-lg-4  control-label " >小叶黄杨</span >
+                        <span class = "col-lg-4  control-label " >${requestScope.empManage2.host}</span >
                     </div >
                     <!--第四行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <span class = "col-lg-4  control-label " >天敌:</span >
-                        <span class = "col-lg-4  control-label " >啄木鸟,凹眼蜂,跳小蜂</span >
+                        <span class = "col-lg-4  control-label " >${requestScope.empManage2.sentinel}</span >
                     </div >
                     <!--第五行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <span class = "col-lg-4  control-label " >主要危害:</span >
-                        <span class = "col-lg-4  control-label " >幼虫食叶片,造成数目枯死</span >
+                        <span class = "col-lg-4  control-label " >${requestScope.empManage2.mainharm}</span >
                     </div >
                     <!--第六行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <span class = "col-lg-4  control-label " >防治措施:</span >
-                        <span class = "col-lg-6 col-sm-10 control-label " >修剪清除枯叶危害,结茧的幼虫在成虫发生期用黑光灯诱杀,25%灭有说赶紧上课金额嗡嗡</span >
+                        <span class = "col-lg-6 col-sm-10 control-label " >${requestScope.empManage2.control}</span >
                     </div >
                 </div >
                 <div id = "right" style = "width: 370px;height: 390px;float: left;margin-left: 10px" >
                     <!--第一行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <span class = "col-lg-4  control-label " >幼虫图片:</span >
-                        <img src = "../image/yworm.jpg" />
+                        <img style="height: 150px;width: 150px" src = "../upload1/${requestScope.empManage2.larvapicture}" />
                     </div >
                     <!--第二行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <span class = "col-lg-4  control-label " >成虫图片:</span >
-                        <img src = "../image/worm.jpg" />
+                        <img style="height: 150px;width: 150px" src = "../upload1/${requestScope.empManage2.adultpicture}" />
                     </div >
                 </div >
             </div >
@@ -95,13 +98,22 @@
                 <div class = "row" >
                     <div class = "form-group" >
                         <div class = "col-sm-offset-5 col-sm-5" style = "margin-top:10px" >
-                            <button type = "submit" class = "btn btn-default" onclick = "jump(
-                            '#wormPanelDiv','datamanagement/wormPanel.jsp')" >返回</button >
+                            <button type = "submit" class = "btn btn-default" id="back" >返回</button >
                         </div >
                     </div >
                 </div >
             </div >
         </div >
     </div >
+<script >
+
+    $(function () {
+        $("#back").click(function () {
+            $("#otherHtml").load("../pestmage.av", {"pageNow": 1});
+        })
+    })
+
+
+</script >
 </body >
 </html >
