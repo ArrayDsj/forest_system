@@ -176,7 +176,100 @@
         <url-pattern>/mousePanel.av</url-pattern>
     </servlet-mapping>
 
+    <!-- 刘松-->
 
+    <!-- 用户无条件查询-->
+    <servlet>
+        <servlet-name>userPanel</servlet-name>
+        <servlet-class>com.code.servlet.UserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>userPanel</servlet-name>
+        <url-pattern>/userPanel.av</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- 日志无条件查询-->
+    <servlet>
+        <servlet-name>log</servlet-name>
+        <servlet-class>com.code.servlet.LogQueryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>log</servlet-name>
+        <url-pattern>/log.av</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- 用户有条件查询 -->
+    <servlet>
+        <servlet-name>UserQueryByConditionServlet</servlet-name>
+        <servlet-class>com.code.servlet.UserQueryByConditionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserQueryByConditionServlet</servlet-name>
+        <url-pattern>/userQueryByConditionServlet.av</url-pattern>
+    </servlet-mapping>
+
+    <!-- 日志有条件查询-->
+    <servlet>
+        <servlet-name>LogQueryByDateServlet</servlet-name>
+        <servlet-class>com.code.servlet.LogQueryByDateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogQueryByDateServlet</servlet-name>
+        <url-pattern>/LogQueryByDateServlet.av</url-pattern>
+    </servlet-mapping>
+
+    <!-- 用户添加-->
+    <servlet>
+        <servlet-name>UserAddServlet</servlet-name>
+        <servlet-class>com.code.servlet.UserAddServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserAddServlet</servlet-name>
+        <url-pattern>/UserAddServlet.av</url-pattern>
+    </servlet-mapping>
+
+    <!-- 用户修改-->
+    <servlet>
+        <servlet-name>UserUpdateServlet</servlet-name>
+        <servlet-class>com.code.servlet.UserUpdateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserUpdateServlet</servlet-name>
+        <url-pattern>/UserUpdateServlet.av</url-pattern>
+    </servlet-mapping>
+
+    <!-- 用户删除-->
+    <servlet>
+        <servlet-name>UserDeleteServlet</servlet-name>
+        <servlet-class>com.code.servlet.UserDeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserDeleteServlet</servlet-name>
+        <url-pattern>/UserDeleteServlet.av</url-pattern>
+    </servlet-mapping>
+
+    <!-- 显示要修改的用户信息-->
+    <servlet>
+        <servlet-name>UserShowServlet</servlet-name>
+        <servlet-class>com.code.servlet.UserShowServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserShowServlet</servlet-name>
+        <url-pattern>/UserShowServlet.av</url-pattern>
+    </servlet-mapping>
+
+
+    <context-param>
+        <param-name>pageSize</param-name>
+        <param-value>4</param-value>
+    </context-param>
+
+
+
+
+    <!-- 刘松-->
 
 
     <!--配置创建数据库连接池的监听器-->

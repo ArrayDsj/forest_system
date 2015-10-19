@@ -10,19 +10,32 @@ import java.util.ArrayList;
 public interface UserService {
     //登录
     public UserBean login(UserBean userBean);
-
-    //添加用户
-    public boolean addUser(UserBean userBean);
-
-    //删除用户
-    public boolean deleteUser(UserBean userBean);
-
-    //修改用户信息
-    public boolean updateUser(UserBean userBean);
+    
 
     //查询所有用户信息
-    public ArrayList<UserBean> getAllUsers();
+    public ArrayList<UserBean> getAllUsers(int currentPage, int pageSize);
+    
+    public int getAllNumber();
+    
+    public int queryPageNumberByCondition(String condition, int pageSize);
+    
+	public ArrayList<UserBean> queryUserByCondition(int currentPage, String condition, int pageSize);
 
-    //分页查询
-    public ArrayList<UserBean> getAllUsers(UserBean userBean, int pageNum);
+    //添加用户
+    public boolean addUser(UserBean user);
+
+    //删除用户
+    public boolean deleteUser(int id);
+    
+    public UserBean queryUserInfo(int id);
+
+   //修改用户信息
+	public boolean updateUser(UserBean user);
+
+
+
+	
+
+
+
 }

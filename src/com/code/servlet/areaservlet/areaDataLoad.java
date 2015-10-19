@@ -43,27 +43,56 @@ public class areaDataLoad extends HttpServlet{
 
         // 得到查询条件
         String query = req.getParameter("query");
-
+        System.out.println(query);
         //1. 判断有无条件(无条件,初始化;有条件,按条件分页查询)
         if(query == null){
             //按无条件查询数据
             counts = areaService.getCounts();
-            allAreas = areaService.getInitData(pageNow,pageSize);
-        }else{
+            allAreas = areaService.getInitData(pageNow, pageSize);
+            pageNum = (int) Math.ceil(counts / (pageSize * 1.0));
+            req.setAttribute("allAreas", allAreas);
+            req.setAttribute("pageNum", pageNum);
+            req.setAttribute("pageNow", pageNow);
+            req.setAttribute("query", "");
+            req.setAttribute("str", "");
+            req.setAttribute("queryText","区域名称");
+            req.setAttribute("queryValue","f_name");
+            req.setAttribute("option","noQuery");
+            req.getRequestDispatcher("jsp/disastercontrol/areaPanel.jsp").forward(req, resp);
+        }
+        else if(query.equals("noQuery")){ //无条件分页按钮调用
+            counts = areaService.getCounts();
+            allAreas = areaService.getInitData(pageNow, pageSize);
+            pageNum = (int) Math.ceil(counts / (pageSize * 1.0));
+            req.setAttribute("allAreas", allAreas);
+            req.setAttribute("pageNum", pageNum);
+            req.setAttribute("pageNow", pageNow);
+            req.setAttribute("queryText", "区域名称");
+            req.setAttribute("queryValue", "f_name");
+            req.setAttribute("option", "noQuery");
+
+            req.getRequestDispatcher("jsp/disastercontrol/areaPanel.jsp").forward(req, resp);
+        }
+        else {//有条件分页按钮调用
             //按条件查询
             String str = req.getParameter("str");
             str = new String(str.getBytes(),"UTF-8");
+            System.out.println(str);
             counts = areaService.getCountsByCondition(query, str);
             //有条件查询
             allAreas = areaService.getLimitData(query, str, pageNow,pageSize);
-        }
-        if (allAreas != null) {
-            //计算总页数
             pageNum = (int) Math.ceil(counts / (pageSize * 1.0));
             req.setAttribute("allAreas", allAreas);
-        } else req.setAttribute("info", "无数据");
-        req.setAttribute("pageNum", pageNum);
-        req.setAttribute("pageNow", pageNow);
-        req.getRequestDispatcher("jsp/disastercontrol/areaPanel.jsp").forward(req, resp);
+            req.setAttribute("pageNum", pageNum);
+            req.setAttribute("pageNow", pageNow);
+            req.setAttribute("query", query);
+            req.setAttribute("str", str);
+            req.setAttribute("option", "haveQuery");
+
+            req.setAttribute("queryText", req.getParameter("queryText"));
+            req.setAttribute("queryValue", req.getParameter("queryValue"));
+            req.getRequestDispatcher("jsp/disastercontrol/areaPanel.jsp").forward(req, resp);
+        }
+
     }
 }

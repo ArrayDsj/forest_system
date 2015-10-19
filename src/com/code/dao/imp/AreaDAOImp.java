@@ -196,11 +196,11 @@ public class AreaDAOImp implements AreaDAO{
 
             while (rs.next()) {
                 areaBean = new AreaBean();
-                areaBean.setId(rs.getInt("pk_id"));
-                areaBean.setName(rs.getString("f_name"));
-                areaBean.setForestType(rs.getString("f_foresttype"));
-                areaBean.setLandType(rs.getString("f_landtype"));
-                areaBean.setTreeType(rs.getString("f_treetype"));
+                areaBean.setId(rs.getInt("area.pk_id"));
+                areaBean.setName(rs.getString("area.f_name"));
+                areaBean.setForestType(rs.getString("area.f_foresttype"));
+                areaBean.setLandType(rs.getString("area.f_landtype"));
+                areaBean.setTreeType(rs.getString("area.f_treetype"));
                 ClassBean classBean = new ClassBean();
                 classBean.setName(rs.getString(8));
                 areaBean.setClassBean(classBean);
@@ -226,7 +226,7 @@ public class AreaDAOImp implements AreaDAO{
         Connection connection = DBUtil.getConnection();
 
         String sql = "select count(*) from t_area where " +
-                         queryType + " like " + queryStr ;
+                         queryType + " like '%" + queryStr +"%'";
 
         Statement st     = null;
         ResultSet rs     = null;
@@ -254,8 +254,8 @@ public class AreaDAOImp implements AreaDAO{
         ArrayList<AreaBean> all        = new ArrayList<AreaBean>();
         String sql = "select * from t_area as area  left join  t_class as class\n" +
                 "on area.fk_class = class.pk_id  \n"+
-                "where area." + queryType + " like " + queryStr + "\n" +
-                "order by pk_id desc limit " + (pageNow - 1) * pageSize + "," + pageSize;
+                "where area." + queryType + " like '%" + queryStr + "%'\n" +
+                "order by area.pk_id desc limit " + (pageNow - 1) * pageSize + "," + pageSize;
         Statement st       = null;
         ResultSet rs       = null;
         AreaBean  areaBean = null;
@@ -265,11 +265,11 @@ public class AreaDAOImp implements AreaDAO{
 
             while (rs.next()) {
                 areaBean = new AreaBean();
-                areaBean.setId(rs.getInt("pk_id"));
-                areaBean.setName(rs.getString("f_name"));
-                areaBean.setForestType(rs.getString("f_foresttype"));
-                areaBean.setLandType(rs.getString("f_landtype"));
-                areaBean.setTreeType(rs.getString("f_treetype"));
+                areaBean.setId(rs.getInt("area.pk_id"));
+                areaBean.setName(rs.getString("area.f_name"));
+                areaBean.setForestType(rs.getString("area.f_foresttype"));
+                areaBean.setLandType(rs.getString("area.f_landtype"));
+                areaBean.setTreeType(rs.getString("area.f_treetype"));
                 ClassBean classBean = new ClassBean();
                 classBean.setName(rs.getString(8));
                 areaBean.setClassBean(classBean);
@@ -282,14 +282,4 @@ public class AreaDAOImp implements AreaDAO{
         }
         return all;
     }
-
-
-
-
-
-
-
-
-
-
 }

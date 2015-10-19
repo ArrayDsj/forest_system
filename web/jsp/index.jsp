@@ -70,8 +70,8 @@
                         <div class = "link" ><i class = "glyphicon glyphicon-comment" ></i >系统信息<i
                                 class = "glyphicon glyphicon-chevron-down" style = "margin-left: 160px" ></i ></div >
                         <ul class = "submenu" >
-                            <li ><a href = "#userPanel" onclick = "jump('#otherHtml','systemmessage/userPanel.jsp')" >用户信息</a ></li >
-                            <li ><a href = "#logs" onclick = "jump('#otherHtml','systemmessage/logs.jsp')" >日志一览</a ></li >
+                            <li ><a href = "#用户信息" onclick = "return jump('#otherHtml','./userPanel.av','-1')" >用户信息</a ></li >
+                            <li ><a href = "#日志一览" onclick = "return jump('#otherHtml','./log.av','-1')" >日志一览</a ></li >
                         </ul >
                     </li >
                 </ul >

@@ -2,83 +2,89 @@ package com.code.bean;
 
 import java.io.Serializable;
 
-public class UserBean implements Serializable{
-    private int    id;
-    private String name;
-    private String password;
-    private String realName;
-    private int    right;
+public class UserBean implements Serializable {
+	
+	private int id;
+	
+	private String name;
+	
+	private String password;
+	
+	private String realName;
+	
+	private String degree;
+	
+	public UserBean() {
+	}
 
-    public UserBean() {
-    }
+	
 
-    public UserBean(String name, String passWord) {
-        this.name = name;
-        this.password = passWord;
-    }
+	public UserBean(String name, String password, String realName, String degree) {
+		super();
+		this.name = name;
+		this.password = password;
+		this.realName = realName;
+		this.degree = degree;
+	}
 
-    public UserBean(int id, String realName, int right) {
-        this.id = id;
-        this.realName = realName;
-        this.right = right;
-    }
 
-    public UserBean(int id, String name, String passWord, String realName, int right) {
-        this.id = id;
-        this.name = name;
-        this.password = passWord;
-        this.realName = realName;
-        this.right = right;
-    }
 
-    public int getId() {
-        return this.id;
-    }
+	public UserBean(int id, String name, String password, String realName,
+			String degree) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.password = password;
+		this.realName = realName;
+		this.degree = degree;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
-    public String getName() {
-        return this.name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public String getPassword() {
-        return this.password;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getRealName() {
-        return this.realName;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setRealName(String realName) {
-        this.realName = realName;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public int getRight() {
-        return this.right;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public void setRight(int right) {
-        this.right = right;
-    }
+	public String getRealName() {
+		return realName;
+	}
 
-    @Override
-    public String toString() {
-        return "UserBean{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", realName='" + realName + '\'' +
-                ", right=" + right +
-                '}';
-    }
+	public void setRealName(String realName) {
+		this.realName = realName;
+	}
+
+
+
+	public String getDegree() {
+		return degree;
+	}
+
+
+
+	public void setDegree(String degree) {
+		this.degree = degree;
+	}
+
+	
+
 }

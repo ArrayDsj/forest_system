@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -50,85 +50,63 @@
         <!--表格-->
         <div class = "row-fluid" style = "border: solid">
             <table class = "table table-hover active">
-                <tr >
+                <tr class = "active">
                     <th class = "col-lg-3 col-sm-3">日志内容</th>
                     <th class = "col-lg-3 col-sm-3">日期</th>
                 </tr>
             </table>
-            <div style = "overflow-y: auto;overflow-x: auto;height: 170px;" class = "row-fluid" id = "tableTD">
+            <div></div>
+            <div style = "overflow-y: auto;overflow-x: auto;height: 120px;margin-top: -20px" class = "row-fluid" id = "tableTD">
                 <table class = "table table-striped table-bordered table-hover table-condensed" >
+                   
+                   
+                   <c:forEach items="${requestScope.logList}" var="logs">
                     <tr class="rom">
-                        <td class = "col-lg-3 col-sm-3">资料管理员xxx登陆成功</td>
-                        <td class = "col-lg-3 col-sm-3">2013-04-05 09：13：53</td>
+                        <td class = "col-lg-3 col-sm-3">${logs.content}</td>
+                        <td class = "col-lg-3 col-sm-3">${logs.time}</td>
                     </tr>
-                    <tr>
-                        <td>用户b试图非法登陆</td>
-                        <td>2013-04-10 14：09：10</td>
-                    </tr>
-                    <tr>
-                        <td>灾情防止管理员c登陆成功</td>
-                        <td>2012-11-11 11：11：11</td>
-                    </tr>
-                    <tr>
-                        <td>专家管理员v登陆成功</td>
-                        <td>2011-1-11 12：22：11</td>
-                    </tr>
-                    <tr>
-                        <td>超级管理员admin登陆成功</td>
-                        <td>2013-3-29 13：33：33</td>
-                    </tr>
-                    <tr>
-                        <td>超级管理员cc登陆成功</td>
-                        <td>2013-3-29 13：44：33</td>
-                    </tr>
-                    <tr>
-                        <td>超级管理员dd登陆成功</td>
-                        <td>2013-3-29 13：22：33</td>
-                    </tr>
-                    <tr>
-                        <td>超级管理员gg登陆成功</td>
-                        <td>2013-3-29 13：11：33</td>
-                    </tr>
+                   </c:forEach>
                 </table>
             </div>
-            </table>
+           
         </div>
         <br />
 
         <!--分页按钮-->
-        <div class = "row-fluid" >
-            <div class = "span12" >
-                <div >
-                    <div style = "float:left" >
-                        <button id = "previousPage" class = "btn btn-sm" type = "button" style = "line-height:0px" >
-                            <span class = "glyphicon glyphicon-chevron-left" ></span >
-                        </button >
-                    </div >
-                    <input id = "pageNum" type = "text" class = "form-control" style =
-                            "width: 45px;height: 20px;margin-left: 2px;margin-top: 2px;float:left" />
-                    <label id = "num" name = "num" style = "margin-left: 2px" >/10</label >
-                    <button id = "go" class = "btn btn-sm" type = "button" style = "line-height:0px" >
-                        <span class = "glyphicon glyphicon-step-forward" ></span >
-                    </button >
-                    <button id = "nextPage" class = "btn  btn-sm" type = "button" style = "line-height:0px" >
-                        <span class = "glyphicon glyphicon-chevron-right" ></span >
-                    </button >
-                </div >
-            </div >
-        </div >
+        <div class = "row-fluid">
+            <div class = "span12">
+                <div>
+                    <button id = "previousPage" class = "btn btn-sm" type = "button" style = "line-height:0px">
+                        <span class = "glyphicon glyphicon-chevron-left"></span>
+                    </button>
+                    <input id = "pageNum" type = "text" style = "width: 40px;height: 25px" onkeydown = "onlyNum()" value="${requestScope.currentPage}"/>
+                    <label>
+                   		/ ${sessionScope.pageNumber} 
+                    </label>
+                    <button id = "go" class = "btn btn-sm" type = "button" style = "line-height:0px">
+                        <span class = "glyphicon glyphicon-step-forward"></span>
+                    </button>
+                    <button id = "nextPage" class = "btn  btn-sm" type = "button" style = "line-height:0px">
+                        <span class = "glyphicon glyphicon-chevron-right"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
         <br /><br />
-        <!--按钮-->
-        <div class = "col-xs-3 col-lg-6 col-sm-6  col-sm-offset-4" style = "margin-top: -40px;margin-left: 320px" >
+        
+        
+        
+        <div class = "col-xs-3 col-lg-6 col-sm-6  col-sm-offset-4" style = "margin-left: 440px" >
                 <%--时间控件--%>
                 <form action = "" class = "form-horizontal" role = "form" >
                 <fieldset >
                     <legend >日期查询</legend >
-                    <div class = "form-group " style = "margin-top: -15px" >
+                    <div class = "form-group " style="margin-top: -15px">
                         <label class = "col-md-3 control-label" >起始日期</label >
                         <div id = "datetimepickerStar" class = "input-group date form_date col-md-6" data-date = "" data-date-format =
-                                "dd MM yyyy"
+                                "yyyy-mm-dd"
                              data-link-format = "yyyy-mm-dd" >
-                            <input class = "form-control" size = "10" type = "text" value = "" readonly = "readonly" onclick =
+                            <input id="start" class = "form-control" size = "10" type = "text" value = "" readonly = "readonly" onclick =
                                     "selectTime()" >
                             <span class = "input-group-addon" ><span class = "glyphicon glyphicon-remove" ></span ></span >
                             <span class = "input-group-addon" ><span class = "glyphicon glyphicon-calendar"
@@ -138,47 +116,103 @@
                     <div class = "form-group" style = "margin-top: -15px" >
                         <label class = "col-md-3 control-label" >结束日期</label >
                         <div id = "datetimepickerEnd" class = "input-group date form_date col-md-6" data-date = ""
-                             data-date-format = "dd MM yyyy"
+                             data-date-format = "yyyy-mm-dd"
                              data-link-format = "yyyy-mm-dd" >
-                            <input class = "form-control" size = "10" type = "text" value = "" readonly = "readonly"
-                                   onclick = "selectTime()" >
+                            <input id="end" class = "form-control" size = "10" type = "text" value = "" readonly = "readonly"
+                                   onclick = "selectTime('start')" >
                             <span class = "input-group-addon" ><span class = "glyphicon glyphicon-remove" ></span ></span >
                             <span class = "input-group-addon" ><span class = "glyphicon glyphicon-calendar"
                                                                      onclick = "selectTime('datetimepickerEnd')" ></span ></span >
                         </div >
-                        <button type = "button" class = "btn" onclick = "submitQuery('inputText')"
-                                style = "margin-top: -34px;margin-left: 350px;" >查找
+                        <button id="queryByDate" type = "button" class = "btn"  style="margin-top: -34px;margin-left: 350px;">查找
                         </button >
                     </div >
 
                 </fieldset >
                 </form >
             </div >
+    
+   
+    
+    
     </div>
 </div>
+ 
+<script type="text/javascript">
+		
+	$(function(){	
+		//点击下一页事件
+		$("#nextPage").click(function(){
+		if(${sessionScope.start == null}){
+			if(${requestScope.currentPage}  ==  ${sessionScope.pageNumber}){
+				alert("已经是最后一页了");		
+			}else{
+				$("#logsDiv").load("log.av",{"pageNow":${requestScope.currentPage} + 1})
+			}			
+		}else{
+			if(${requestScope.currentPage} >=  ${sessionScope.pageNumber}){
+				alert("已经是最后一页了");	
+			}else{
+				$("#logsDiv").load("LogQueryByDateServlet.av",{"pageNow":${requestScope.currentPage} + 1});
+			}
+		}
+		});
+		
+		
+		//点击上一页事件
+		$("#previousPage").click(function(){
+		if(${sessionScope.start == null}){
+			if(${requestScope.currentPage}  ==  1){
+				alert("已经是第一页了");		
+			}else{
+				$("#logsDiv").load("log.av",{"pageNow":${requestScope.currentPage}-1})
+			}			
+		}else{
+			if(${requestScope.currentPage}  ==  1){
+				alert("已经是第一页了");	
+			}else{
+				$("#logsDiv").load("LogQueryByDateServlet.av",{"pageNow":${requestScope.currentPage}-1});
+			}
+		}
+		});
+		
+		
+		//选择页面跳转事件
+		$("#go").click(function(){
+			if($("#pageNum").val() < 1 || $("#pageNum").val() > ${sessionScope.pageNumber} ){
+				alert("页数超出范围");
+			}
+			else{
+				if(${sessionScope.start == null}){
+					$("#logsDiv").load("log.av",{"pageNow":$("#pageNum").val()});
+				}else{
+					$("#logsDiv").load("LogQueryByDateServlet.av",{"pageNow":$("#pageNum").val()});
+				}
+			}
+		});
+		
+		$("#queryByDate").click(function(){
+		
+		var start = $("#start").val();
 
-<script>
-    //数据有效性验证
-    $("#pageNum").keydown(function () {
-        //只能输入数字
-    });
+		var end = $("#end").val();
+		
+		if(start>end){		
+			alert("您选择的时间有误，请重新选择！");		
+			$("#logsDiv").load("log.av",{"pageNow":-1});		
+		}else{		
+			$("#logsDiv").load("LogQueryByDateServlet.av",{"pageNow":-1,"start":$("#start").val(),"end":$("#end").val()})
+		}		
+		});
+		
+		
+		
+		
+		
+	});
+	
 
-    //事件处理
-    $("#previousPage").click(function () {
-        //上一页点击事件
-        alert("上一页");
-    });
-    $("#nextPage").click(function () {
-        //下一页点击事件
-        alert("下一页");
-    });
-    $("#go").click(function () {
-        //跳转到指定页点击事件
-        var num = $("#pageNum").val();
-        alert(num);
-    });
-
-    //查询模块事件
+   
 
 </script>
 </body>

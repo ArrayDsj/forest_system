@@ -56,7 +56,7 @@
             </table >
 
             <div id = "tableTD" class = "row-fluid table-responsive" style = "overflow-y: auto;height: 208px;margin-top: -20px" >
-                <table class = "table table-striped table-bordered table-hover table-condensed " >
+                <table id="table" class = "table table-striped table-bordered table-hover table-condensed " >
 
                     <c:if test="${requestScope.info == null}">
                         <c:forEach items = "${requestScope.allAreas}" var = "area" >
@@ -108,7 +108,7 @@
         <!--按钮-->
         <div class = "row-fluid" >
             <div class = "col-lg-3 col-sm-2 col-sm-offset-2" >
-                <button class = "btn" type = "button" onclick = "jump('#areaPanelDiv','disastercontrol/areaAdd.jsp')" >添加区域</button >
+                <button class = "btn" type = "button" id="addArea" >添加区域</button >
             </div >
 
             <!--xs自动 lg>=1200px sm<=768px offset列移动-->
@@ -119,18 +119,23 @@
                         <div class = "col-lg-6 col-sm-6" >
                             <div class = "input-group" >
                                 <div class = "input-group-btn" >
-                                    <button name = "f_name" id = "selected" type = "button" class = "btn btn-default dropdown-toggle" data-toggle = "dropdown" >区域名称<span >&nbsp;</span ><span class = "caret" ></span >
+
+                                    <button name = "${requestScope.queryValue}" id = "selected" type = "button" class = "btn btn-default dropdown-toggle" data-toggle = "dropdown" >${requestScope.queryText}<span >&nbsp;</span ><span class = "caret" ></span >
                                     </button >
                                     <ul id = "ul" class = "dropdown-menu" >
                                         <li ><a id = 'li1' name = "f_foresttype" href = "#"
-                                                onclick = "return querySelect(this,'selected','query')" >林种</a ></li >
+                                                onclick = "return querySelect(this,'selected','query','inputText')" >林种</a ></li >
                                         <li ><a id = 'li2' name = "f_treetype" href = "#"
-                                                onclick = "return querySelect(this,'selected','query')" >优势树种</a ></li >
+                                                onclick = "return querySelect(this,'selected','query','inputText')" >优势树种</a ></li >
                                     </ul >
+
+
                                 </div >
-                                <input type = "hidden" id="query" value="f_name"/>
+                                <input type = "hidden" id="query" value="${requestScope.str}"/>
+
+
                                 <%--条件输入框--%>
-                                <input id = "inputText" type = "text" class = "form-control" style="width: 130px" value="">
+                                <input id = "inputText" type = "text" class = "form-control" style="width: 130px" value="${requestScope.str}">
                             </div >
 
                         </div >
@@ -150,63 +155,83 @@
     * 下拉控件+查询按钮
     **/
 
-
     $(function(){
         //在重新加载网页时取消条件查询
-        var haveQuery = false;
         <!--查询按钮-->
-        var str = "";
 
+        var haveQuery = '${requestScope.option}';
+        var query = "${requestScope.query}";
+        var str = "${requestScope.str}";
         $("#search").click(function(){
-            //只要点击了查询按钮, 以后就一直是带条件查询
-            haveQuery = true;
+            //得到要查询的字段
+             query = $("#query").val();
+            if(query == ""){
+                query = "f_name";
+            }
             //得到条件
-            str = $("#inputText").val();
+             str = $("#inputText").val();
             //得到模糊查询值
-            str = "'%" + str + "%'";
-            alert('query=' + query + '&str=' + str);
-            $("#areaPanelDiv").load('../areaPanel.av', {'pageNow': 1, 'query': query, 'str': str});
+//            alert('query=' + query + '&str=' + str);
+            $("#areaPanelDiv").load('../areaPanel.av', {
+                'pageNow': 1,
+                'query': query,
+                'str': str ,
+                'queryText': document.getElementById("selected").childNodes[0].nodeValue,
+                'queryValue':document.getElementById("query").value }
+            )
         });
 
         //上一页事件
         $("#previousPage").click(function () {
-            if(!haveQuery){
+            if(haveQuery == "noQuery"){
                 if (parseInt(${requestScope.pageNow}) > 1)
-                    $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": ${requestScope.pageNow} -1});
+                    $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": ${requestScope.pageNow} -1,'query':'noQuery'});
                  else alert("已是第一页！");
-
             }else{
-                if (parseInt(${requestScope.pageNow}) > 1) $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": ${requestScope.pageNow} -1, 'query': query, 'str': str });
+                if (parseInt(${requestScope.pageNow}) > 1) $("#areaPanelDiv").load("../areaPanel.av", {
+                    "pageNow": ${requestScope.pageNow} -1,
+                    'query': '${requestScope.query}',
+                    'str': '${requestScope.str}',
+                    'queryText': document.getElementById("selected").childNodes[0].nodeValue,
+                    'queryValue': document.getElementById("query").value
+                });
                  else alert("已是第一页！");
             }
         });
         //下一页事件
         $("#nextPage").click(function () {
-            if (!haveQuery) {
-                if (${requestScope.pageNow} <${requestScope.pageNum}){
-                    //这里是一个json数据格式
-                    $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": ${requestScope.pageNow} +1});
-                }else{
-                    alert("已是最后一页！");
-                }
+            if (haveQuery == "noQuery") {
+                if (${requestScope.pageNow} < ${requestScope.pageNum})
+                    $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": ${requestScope.pageNow} +1, 'query': 'noQuery'});
+                else alert("已是最后一页！");
             }
-            if (${requestScope.pageNow} <${requestScope.pageNum}){
-                //这里是一个json数据格式
-                $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": ${requestScope.pageNow} +1, 'query': query, 'str': str});
-            }else{
-                alert("已是最后一页！");
+            else{
+                if (${requestScope.pageNow} < ${requestScope.pageNum})
+                    $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": ${requestScope.pageNow} +1,
+                        'query': '${requestScope.query}',
+                        'str': '${requestScope.str}',
+                        'queryText': document.getElementById("selected").childNodes[0].nodeValue,
+                        'queryValue': document.getElementById("query").value
+                    });
+                else alert("已是最后一页！");
             }
         });
 
         //跳转到指定页点击事件
         $("#go").click(function () {
             var num = $("#pageNow").val();
-            $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": num});
+            if(num > ${requestScope.pageNum}){
+                alert("大于总页数");
+            }else
+                $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": num});
+        });
+
+
+
+        $("#addArea").click(function(){
+            jump('#areaPanelDiv', 'jsp/disastercontrol/areaAdd.jsp')
         });
     });
-
-
-
 
 </script >
 </body >
