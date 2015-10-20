@@ -154,7 +154,7 @@
                                 <label for = "file" class = " control-label " >灾区图片:</label >
                             </div >
                             <div class = "col-lg-4 col-sm-4" style = "float: left;margin-left: -50px" >
-                                <input id = "file" name="file" type = "file" />
+                                <input id = "file" name="file" type = "file" style="display: none"/>
                                 <input id = "inputImg" type = "text" class = "form-control" style = "width: 150px" />
                             </div >
 
@@ -327,16 +327,13 @@
         var strMessage = "";
         var disasterDataHidden = $("#disasterDataHidden").val();
         var findwayDataHidden = $("#findwayDataHidden").val();
-        var inputImg = $("#inputImg").val();
         var areaDataHidden = $("#areaDataHidden").val().split("&")[0];
-        alert(name+ foundDay + descript + loss + proportion + scheme + stageDataHidden + disasterDataHidden + findwayDataHidden+ inputImg
-                + areaDataHidden);
         if (name == null || name.trim() == "") {
             strMessage += "名称不能为空\n";
         }
-//        if (foundDay.val() == null || foundDay.trim() == "") {
-//            strMessage += "时间不能为空\n";
-//        }
+        if (foundDay == null || foundDay.trim() == "") {
+            strMessage += "时间不能为空\n";
+        }
         if (descript == null || descript.trim() == "") {
             strMessage += "描述不能为空\n";
         }
@@ -357,42 +354,36 @@
         }
 
         function ajaxFileUpload(){
-            alert("传输json");
            // 开始上传文件时显示一个图片
             $("#wait_loading").ajaxStart(function () {
-                alert("显示");
                 $(this).show();
                 // 文件上传完成将图片隐藏起来
             }).ajaxComplete(function () {
-                alert("隐藏");
                 $(this).hide();
             });
             $.ajaxFileUpload({
                 url: "../thingUpload.av",//向数据库中添加数据
                 type: "POST",
                 secureuri: false, //一般设置为false
-                fileElementId: 'file', // 上传文件的id、name属性名
+                fileElementId: ['file'], // 上传文件的id、name属性名
                 dataType: 'JSON', //返回值类型，一般设置为json、application/json
                 data: {
                     'header':'confirmAdd',
-                    "name": name,
-                    "foundDay": foundDay,
-                    "stageDataHidden": stageDataHidden,
-                    "descript": descript,
-                    "areaDataHidden": areaDataHidden,
-                    "loss": loss,
-                    "inputImg": inputImg,
-                    "findwayDataHidden": findwayDataHidden,
-                    "proportion": proportion,
-                    "disasterDataHidden": disasterDataHidden,
-                    "scheme": scheme
+                    "name": encodeURI(name),
+                    "foundDay": encodeURI(foundDay),
+                    "stageDataHidden": encodeURI(stageDataHidden) ,
+                    "descript": encodeURI(descript),
+                    "areaDataHidden": encodeURI(areaDataHidden),
+                    "loss": encodeURI(loss),
+                    "findwayDataHidden": encodeURI(findwayDataHidden),
+                    "proportion": encodeURI(proportion) ,
+                    "disasterDataHidden": encodeURI(disasterDataHidden),
+                    "scheme": encodeURI(scheme)
                 },
                 beforeSend: function (xhr) {
 
                 },
                 success: function (data) {
-                    alert(data);
-
                     jump('#otherHtml', '../thingPanel.av', '1');//如果成功就请求servlet重新加载数据,然后跳转到thingPanel.jsp
                 },
                 complete: function (xhr) {

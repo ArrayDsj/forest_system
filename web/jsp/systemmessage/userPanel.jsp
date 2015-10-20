@@ -54,8 +54,8 @@
                 </tr>
             </table>
 
-            <div style = "overflow-y: auto;overflow-x: auto;height: 125px; margin-top: -20px" class = "row-fluid" id = "tableTD">
-                <table class = "table table-striped table-bordered table-hover table-condensed">
+            <div id = "tableTD" class = "row-fluid" style = "overflow-y: auto;height: 208px;margin-top: -20px" >
+                    <table class = "table table-striped table-bordered table-hover table-condensed" >
                	
 
                   <c:forEach items="${requestScope.userList}" var="alluser">
@@ -109,7 +109,7 @@
             </div>
         </div>
 		<!-- 下拉列表 -->
-        <div class = "row-fluid" id = "rightBtns" style = "float: left; ">
+        <div class = "row-fluid" id = "rightBtns" style = "float: left; margin-top: -40px">
             <!--xs自动 lg>=1200px sm<=768px offset列移动-->
             <div class = "col-xs-3 col-lg-6 col-sm-6  col-sm-offset-4" style = "margin-top: -85px;margin-left: 400px">
                 <fieldset>

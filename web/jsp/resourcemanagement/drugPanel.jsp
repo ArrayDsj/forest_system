@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <%@ page contentType = "text/html;charset=UTF-8" language = "java" pageEncoding = "UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <html lang = "en">
 <head>
     <meta charset = "UTF-8">
@@ -17,6 +19,8 @@
         }
     </style>
 </head>
+	<script type="text/javascript" src="./js/jquery-1.11.3.min.js"></script>
+	
 <body>
 <div id = "drugPanelDiv">
     <div class = "container-fluid">
@@ -41,67 +45,44 @@
 
             <div style = "overflow-y: auto;height: 170px;" class = "row-fluid" id = "tableTD" >
                     <table class = "table table-striped table-bordered table-hover table-condensed" >
+                    <c:forEach items="${requestScope.li}" var="lis">
                     <tr>
-                        <td class = "col-lg-3 col-sm-3">杀鼠迷</td>
-                        <td class = "col-lg-3 col-sm-3">鼠害</td>
-                        <td class = "col-lg-3 col-sm-3">劫家鼠</td>
-                        <td class = "col-lg-3 col-sm-3">柳树，梧桐树等</td>
+                    	
+                        <td class = "col-lg-3 col-sm-3">${lis.name}</td>
+                        <td class = "col-lg-3 col-sm-3">${lis.type}</td>
+                        <td class = "col-lg-3 col-sm-3">${lis.disBean.name}</td>
+                        <td class = "col-lg-3 col-sm-3">${lis.tree}</td>
                     </tr>
-                    <tr>
-                        <td>敌敌畏</td>
-                        <td>鼠害</td>
-                        <td>松鼠</td>
-                        <td>松树</td>
-                    </tr>
-                    <tr>
-                        <td>灭扫利油</td>
-                        <td>虫害</td>
-                        <td>松毛虫</td>
-                        <td>樟树，梧桐树等</td>
-                    </tr>
-                    <tr>
-                        <td>杀鼠迷</td>
-                        <td>鼠害</td>
-                        <td>劫家鼠</td>
-                        <td>柳树，梧桐树等</td>
-                    </tr>
-                    <tr>
-                        <td>杀鼠迷</td>
-                        <td>鼠害</td>
-                        <td>劫家鼠</td>
-                        <td>柳树，梧桐树等</td>
-                    </tr>
+                    </c:forEach>
+          		
                 </table>
             </div>
-            </table>
+          
         </div>
-        <br />
+        <br/>
         <!--分页按钮-->
-        <div class = "row-fluid" >
-            <div class = "span12" >
-                <div >
-                    <div style = "float:left" >
-                        <button id = "previousPage" class = "btn btn-sm" type = "button" style = "line-height:0px" >
-                            <span class = "glyphicon glyphicon-chevron-left" ></span >
-                        </button >
-                    </div >
-                    <input id = "pageNum" type = "text" class = "form-control" style =
-                            "width: 45px;height: 20px;margin-left: 2px;margin-top: 2px;float:left" />
-                    <label id = "num" name = "num" style = "margin-left: 2px" >/10</label >
-                    <button id = "go" class = "btn btn-sm" type = "button" style = "line-height:0px" >
-                        <span class = "glyphicon glyphicon-step-forward" ></span >
-                    </button >
-                    <button id = "nextPage" class = "btn  btn-sm" type = "button" style = "line-height:0px" >
-                        <span class = "glyphicon glyphicon-chevron-right" ></span >
-                    </button >
-                </div >
-            </div >
-        </div >
+        <div class = "row-fluid">
+            <div class = "span12">
+                <div>
+                    <button id = "previousPage" class = "btn btn-sm" type = "button" style = "line-height:0px">
+                        <span class = "glyphicon glyphicon-chevron-left"></span>
+                    </button>
+                    <input id = "pageNum" type = "text" style = "width: 40px;height: 20px" value="${requestScope.currentPage}"/>
+                    <label>/${requestScope.pageNumber}</label>
+                    <button id = "go" class = "btn btn-sm" type = "button" style = "line-height:0px">
+                        <span class = "glyphicon glyphicon-step-forward"></span>
+                    </button>
+                    <button id = "nextPage" class = "btn  btn-sm" type = "button" style = "line-height:0px">
+                        <span class = "glyphicon glyphicon-chevron-right"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
         <br /><br />
         <!--按钮-->
         <div class = "row-fluid">
             <div class = "col-lg-3 col-sm-2 col-sm-offset-2">
-                <button class = "btn" type = "button" onclick = "jump('#drugPanelDiv','resourcemanagement/drugAdd.jsp')">添加药剂</button>
+                <button id="addDrug" class = "btn" type = "button")">添加药剂</button>
             </div>
 
             <!--xs自动 lg>=1200px sm<=768px offset列移动-->
@@ -113,15 +94,15 @@
                             <div class = "input-group">
                                 <div class = "input-group-btn">
                                     <button id = "selected" type = "button" class = "btn btn-default dropdown-toggle" data-toggle =
-                                            "dropdown">药剂名称<span class = "caret"></span><!--这个span的作用是提供一个下拉图标-->
+                                            "dropdown" value="1">药剂名称<span class = "caret"></span><!--这个span的作用是提供一个下拉图标-->
                                     </button>
                                     <ul id = "ul" class = "dropdown-menu">
-                                        <li><a href = "javascript:void(0)">防治类型</a></li>
-                                        <li><a href = "javascript:void(0)">适合病虫害</a></li>
+                                        <li><a href = "" value="2" onclick="return a(this)">防治类型</a></li>
+                                        <li><a href = "" value="3" onclick="return a(this)">适合病虫害</a></li>
                                     </ul>
                                 </div>
                                 <!-- /btn-group -->
-                                <input id = "inputText" type = "text" class = "form-control">
+                                <input id = "inputText"  value="${queryVal}" type = "text" class = "form-control" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')">
                             </div>
                             <!-- /input-group -->
                         </div>
@@ -135,7 +116,64 @@
     </div>
 </div>
 
-<script>
+<script type="text/javascript">
+		$(function(){
+			$("#search").click(function(){    //查询建点击
+				var Val = $("#inputText").val();	
+				var Value = $("#selected").val();		
+				$("#drugPanelDiv").load("drug.av",{"Val":Val,"pageNow":1,"Value":Value});
+			});
+			
+
+			$("#nextPage").click(function(){
+		
+				if(${requestScope.currentPage} < ${requestScope.pageNumber}){
+					$("#drugPanelDiv").load("drug.av",{"pageNow":${requestScope.currentPage} + 1,"Val":$("#inputText").val(),"Value":$("#selected").val()});
+				}
+				else{
+					alert("最后一页了！！！！");
+				}
+			});
+			
+			$("#previousPage").click(function(){
+				if(${requestScope.currentPage} > 1 ){
+					$("#drugPanelDiv").load("drug.av",{"pageNow":${requestScope.currentPage} - 1,"Val":$("#inputText").val(),"Value":$("#selected").val()});
+				}
+				else	alert("第一页了");
+					
+			});
+			$("#go").click(function(){
+				if($("#pageNum").val() <= ${requestScope.pageNumber}  && $("#pageNum").val() >0){
+					$("#drugPanelDiv").load("drug.av",{"pageNow":$("#pageNum").val(),"Val":$("#inputText").val(),"Value":$("#selected").val()});
+				}
+				else{
+					alert("请输入范围以内的数字！！！");
+					$("#drugPanelDiv").load("drug.av",{"pageNow":1,"Val":$("#inputText").val()});
+				}
+			});
+			$("#addDrug").click(function(){
+				$("#drugPanelDiv").load("jsp/resourcemanagement/drugAdd.jsp");
+			});
+		});
+		function a(obj){   //	防治类型点击时对换value值
+			var old = $("#selected").text();
+			var oldVal = $("#selected").val();
+
+			var New = obj.innerHTML;	
+			var NewVal = obj.getAttribute("value");	
+			
+			obj.innerHTML = old;
+			
+			obj.setAttribute("value",oldVal);
+
+			$("#selected").text(New);
+			$("#selected").val(NewVal);
+			return false;
+		}
+	</script>
+
+
+<!--   script>
 
     //数据有效性验证
     $("#pageNum").keydown(function () {
@@ -145,20 +183,20 @@
     //事件处理
     $("#previousPage").click(function () {
         //上一页点击事件
-        alert("上一页");
+       
     });
     $("#nextPage").click(function () {
         //下一页点击事件
-        alert("下一页");
+        
     });
     $("#go").click(function () {
         //跳转到指定页点击事件
         var num = $("#pageNum").val();
-        alert(num);
+        
     });
 
     //查询模块事件
 
-</script>
+</script>-->
 </body>
 </html>

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.code.bean.DiseaseBean;
 
-public interface DiseaseDao {
+public interface DiseaseDao_OLD {
 	
 	//得到无条件下的总记录条数
 	public int DLD();

@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
         loginUser = userService.login(loginUser);
         if(loginUser != null){
             
-        	req.getSession().setAttribute("loginUser",loginUser);
+        	req.getSession().setAttribute("loginUser", loginUser);
         	
         	LogBean log = new LogBean();
         	
@@ -51,7 +51,6 @@ public class LoginServlet extends HttpServlet {
         	LogService ls = new LogServiceImp();
         	
         	ls.addLog(log);
-            
         	req.getRequestDispatcher("jsp/index.jsp").forward(req,resp);
 
         }else{
@@ -67,7 +66,7 @@ public class LoginServlet extends HttpServlet {
         	ls.addLog(log);
 
             req.setAttribute("info", "用户名或密码有误！");
-          
+
             req.getRequestDispatcher("login.jsp").forward(req, resp);
         }
     }

@@ -1,4 +1,4 @@
-<%@ page import = "com.code.bean.ThingBean" %>
+ <%@ page import = "com.code.bean.ThingBean" %>
 <%--
   Created by IntelliJ IDEA.
   User: Code.Ai
@@ -68,14 +68,14 @@
                 <!--第七行-->
                 <div class = "row" style = "margin-top: 15px" >
                     <span class = "col-lg-4  control-label " >专家建议:</span >
-                    <span class = "col-lg-4 control-label " ><%=thingBean.getResult()%></span >
+                    <span class = "col-lg-4 control-label " id="result"></span >
                 </div >
             </div >
             <div id = "right" style = "width: 370px;height: 390px;float: left;margin-left: 10px" >
                 <!--第一行-->
                 <div class = "row" style = "margin-top: 15px" >
                     <span class = "col-lg-4  control-label " >灾区图片:</span >
-                    <img src = "../../image/2.jpg" style = "width: 200px" />
+                    <img src = "../../upload/<%=thingBean.getPhotoPath()%>" style = "width: 200px" />
                 </div >
 
                 <div class = "row" style = "margin-top: 10px" >
@@ -114,6 +114,15 @@
     function back(){
         jump('#thingInfoDiv', '../thingPanel.av', '1');
     }
+
+    $(function(){
+        var result = '<%=thingBean.getResult()%>';
+        result = isNull(result);
+        $("#result").text(result);
+    })
+
+
+
 </script >
 
 

@@ -84,7 +84,7 @@
         <div id = "leftBtns" style = "float: left">
             <div class = "row-fluid">
                 <div class = "col-lg-3 col-sm-2 col-sm-offset-2">
-                    <button  class = "btn" type = "button" onclick = "return jump('#otherHtml','jsp/expertconsultation/proficientAdd.jsp')" >添加专家</button>
+                    <button  class = "btn" type = "button" onclick = "return jump('#proficientPanelDiv','jsp/expertconsultation/proficientAdd.jsp')" >添加专家</button>
                 </div>
                 <div class = "col-lg-3 col-sm-2 col-sm-offset-3">
                     <button id="showBtn" class = "btn" type = "button" >查看专家息</button>
@@ -173,8 +173,8 @@
 				$("#proficientPanelDiv").load("ProficientQueryServlet.av",{"pageNow":${requestScope.currentPage}-1})
 			}			
 		}else{
-			if(parseInt(${requestScope.currentPage})  ==  1){
-				alert("已经是第一页了");	
+			if(parseInt(${requestScope.currentPage}) ==  1){
+				alert("已经是第一页了");
 			}else{
 				$("#proficientPanelDiv").load("ProficientQueryByConditionServlet.av",{"pageNow":${requestScope.currentPage}-1});
 			}
@@ -232,11 +232,12 @@
 		
 		//信息条点击事件
 		function findID(obj1,obj2){
+			
+			$("tr").css("color","brack");
+			obj1.style.color="red";
 			$("#hidden").val(obj2);
-            obj1.style.backgroundColor = "red";
-            $("tr").css("background-color", "white");
-            obj1.style.backgroundColor = "red";
-		}
+
+		};
 
 
 

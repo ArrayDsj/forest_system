@@ -1,7 +1,6 @@
 package com.code.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -10,9 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.code.bean.DiseaseBean;
-import com.code.bean.PestBean;
-import com.code.service.imp.DiseaseServiceimp;
-import com.code.service.imp.PestSerxiceImp;
+import com.code.service.imp.DiseaseServiceimp_old;
 
 public class DiseaseMageServlet extends HttpServlet {
 
@@ -28,7 +25,7 @@ public class DiseaseMageServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		int rownum = Integer.parseInt(this.getServletContext().getInitParameter("ShowRowNum"));
-		DiseaseServiceimp dls = new DiseaseServiceimp();
+		DiseaseServiceimp_old dls = new DiseaseServiceimp_old();
 		int countNumber = dls.DLD();
 		int allPage = 0;
 		if(countNumber % rownum != 0){

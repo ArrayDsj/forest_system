@@ -48,9 +48,6 @@ public class PestDaoImp implements PestDao {
 	//增加信息
 	public int addPest(PestBean pest) {
 		// TODO Auto-generated method stub
-		System.out.println(pest.getLarvapicture());
-		System.out.println(pest.getName());
-		System.out.println(pest.getAdultpicture());
 		Connection cont = DBUtil.getConnection();
 		String sql = "insert into t_pestlist(f_name,f_host,f_breed,f_sentinel,f_larvapicture,f_adultpicture,f_control,f_mainharm)" +
 				"values(?,?,?,?,?,?,?,?)";
@@ -141,7 +138,7 @@ public class PestDaoImp implements PestDao {
 	public PestBean getPestById(int id) {
 		// TODO Auto-generated method stub
 		Connection cont2 = DBUtil.getConnection();
-		PestBean pes = new PestBean();
+		PestBean pes = null;
 		String sql = "select * from t_pestlist where pk_id=?";
 		
 		PreparedStatement ps = null;
@@ -150,7 +147,8 @@ public class PestDaoImp implements PestDao {
 			ps = cont2.prepareStatement(sql);
 			ps.setInt(1, id);
 			rs = ps.executeQuery();
-			while(rs.next()){
+			if(rs.next()){
+                pes = new PestBean();
 				pes.setId(rs.getInt(1));
 				pes.setName(rs.getString(2));
 				pes.setHost(rs.getString(3));
@@ -167,7 +165,6 @@ public class PestDaoImp implements PestDao {
 		}finally{
 			DBUtil.close(rs, ps, cont2);
 		}
-		
 		return pes;
 	}
 	//根据条件查询信息；
@@ -177,7 +174,7 @@ public class PestDaoImp implements PestDao {
 		ArrayList<PestBean> list = new ArrayList<PestBean>();
 		Connection con5 = DBUtil.getConnection();
 		PreparedStatement ps = null;
-		String sql = "select * from t_pestlist where"+con+"like'%"+value+"%' limit ?,?" ;
+		String sql = "select * from t_pestlist where "+con+" like'%"+value+"%' limit ?,?" ;
 		ResultSet rs = null;
 		try {
 			ps = con5.prepareStatement(sql);
@@ -261,6 +258,263 @@ public class PestDaoImp implements PestDao {
 			DBUtil.close(ps, cont3);
 		}
 		return flag;
+	}
+
+	//得到在无条件下查询所有的页数
+	public int getAllNumber(int pageSize) {
+		// TODO Auto-generated method stub
+		int pageNumber = 0;
+		
+		Connection con = DBUtil.getConnection();
+		
+		String sql = "select count(*) from t_pestlist";
+		
+		PreparedStatement ps = null;
+		
+		try {
+			ps=con.prepareStatement(sql);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				pageNumber = (int) Math.ceil((rs.getInt("count(*)")*1.00)/pageSize);
+
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			
+			DBUtil.closeCon(con);
+
+		}
+		
+		
+		return pageNumber;
+	}
+
+	//得到在无条件下查询所有信息
+	public ArrayList<PestBean> getAllPest(int currentPage, int pageSize) {
+		// TODO Auto-generated method stub
+		ArrayList<PestBean> allPest = new ArrayList<PestBean>();
+		
+		Connection con = DBUtil.getConnection();
+		
+		String sql = "select * from t_pestlist order by pk_id desc limit ?,?";
+		
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			
+			ps.setInt(1, (currentPage-1)*pageSize);
+			
+			ps.setInt(2, pageSize);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				
+				PestBean pest = new PestBean();
+				
+				pest.setId(rs.getInt("pk_id"));
+				
+				pest.setName(rs.getString("f_name"));
+				
+				pest.setHost(rs.getString("f_host"));
+				
+				pest.setBreed(rs.getString("f_breed"));
+				
+				pest.setSentinel(rs.getString("f_sentinel"));
+				
+				pest.setLarvapicture(rs.getString("f_larvapicture"));
+				
+				pest.setAdultpicture(rs.getString("f_adultpicture"));
+				
+				pest.setControl(rs.getString("f_control"));
+				
+				pest.setMainharm(rs.getString("f_mainharm"));
+				
+				allPest.add(pest);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			
+			DBUtil.closeCon(con);
+		}
+		
+		return allPest;
+	}
+
+	//得到带条件时查询的总页数
+	public int getPageNumberByCondition(String condition, String value,
+			int pageSize) {
+		// TODO Auto-generated method stub
+		
+		Connection con = DBUtil.getConnection();
+		
+		int pageNumber = 0;
+		
+		if(condition.equals("害虫名")){
+			
+			String sql = "select count(*) from t_pestlist  where f_name like ?";
+			
+			try {
+				PreparedStatement ps = con.prepareStatement(sql);
+				
+				ps.setString(1, "%"+value+"%");
+				
+				ResultSet rs = ps.executeQuery();
+				
+				while(rs.next()){
+					
+					pageNumber = (int) Math.ceil((rs.getInt("count(*)")*1.00)/pageSize);				
+	
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				DBUtil.closeCon(con);
+			}	
+	
+		}else if(condition.equals("寄主")){
+			
+			String sql = "select count(*) from t_pestlist  where f_host like ?";
+
+			try {
+				PreparedStatement ps = con.prepareStatement(sql);
+				
+				ps.setString(1, "%"+value+"%");
+				
+				ResultSet rs = ps.executeQuery();
+				
+				while(rs.next()){
+					
+					pageNumber = (int) Math.ceil((rs.getInt("count(*)")*1.00)/pageSize);				
+	
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				DBUtil.closeCon(con);
+			}	
+	
+		}	
+		return pageNumber;
+	}
+
+	//得到带条件查询时的信息
+	public ArrayList<PestBean> getPestByCondition(String condition,
+			String value, int currentPage, int pageSize) {
+		// TODO Auto-generated method stub
+		
+		ArrayList<PestBean> pestList = new ArrayList<PestBean>();
+		
+		Connection con = DBUtil.getConnection();
+		
+		if(condition.equals("害虫名")){
+
+			String sql = "select * from t_pestlist where f_name like ? order by pk_id desc limit ?,?";
+			
+			try {
+				PreparedStatement ps = con.prepareStatement(sql);
+				
+				ps.setString(1, "%"+value+"%");
+				
+				ps.setInt(2, (currentPage-1)*pageSize);
+				
+				ps.setInt(3, pageSize);
+				
+				ResultSet rs = ps.executeQuery();
+				
+				while(rs.next()){
+					
+					PestBean pest = new PestBean();
+					
+					pest.setId(rs.getInt("pk_id"));
+					
+					pest.setName(rs.getString("f_name"));
+					
+					pest.setHost(rs.getString("f_host"));
+					
+					pest.setBreed(rs.getString("f_breed"));
+					
+					pest.setSentinel(rs.getString("f_sentinel"));
+					
+					pest.setLarvapicture(rs.getString("f_larvapicture"));
+					
+					pest.setAdultpicture(rs.getString("f_adultpicture"));
+					
+					pest.setControl(rs.getString("f_control"));
+					
+					pest.setMainharm(rs.getString("f_mainharm"));
+					
+					pestList.add(pest);
+					
+				}
+	
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				DBUtil.closeCon(con);
+			}
+		}else if(condition.equals("寄主")){
+			
+			String sql = "select * from t_pestlist where f_host like ? order by pk_id desc limit ?,?";
+			
+			try {
+				PreparedStatement ps = con.prepareStatement(sql);
+				
+				ps.setString(1, "%"+value+"%");
+				
+				ps.setInt(2, (currentPage-1)*pageSize);
+				
+				ps.setInt(3, pageSize);
+				
+				ResultSet rs = ps.executeQuery();
+				
+				while(rs.next()){
+					
+					PestBean pest = new PestBean();
+					
+					pest.setId(rs.getInt("pk_id"));
+					
+					pest.setName(rs.getString("f_name"));
+					
+					pest.setHost(rs.getString("f_host"));
+					
+					pest.setBreed(rs.getString("f_breed"));
+					
+					pest.setSentinel(rs.getString("f_sentinel"));
+					
+					pest.setLarvapicture(rs.getString("f_larvapicture"));
+					
+					pest.setAdultpicture(rs.getString("f_adultpicture"));
+					
+					pest.setControl(rs.getString("f_control"));
+					
+					pest.setMainharm(rs.getString("f_mainharm"));
+					
+					pestList.add(pest);
+					
+				}
+				
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				DBUtil.closeCon(con);
+			}
+			
+		}
+		return pestList;
 	}
 
 }

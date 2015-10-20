@@ -35,27 +35,27 @@
                     <!--第一行-->
                     <div class = "row" style = "margin-top: 20px">
                         <span class = "col-lg-4  control-label ">名称:</span>
-                        <span class = "col-lg-4  control-label ">${requestScope.empManage2.name}</span>
+                        <span class = "col-lg-4  control-label ">${requestScope.diseaseBean.name}</span>
                     </div>
                     <!--第二行-->
                     <div class = "row" style = "margin-top: 40px">
                         <span class = "col-lg-4  control-label ">病原:</span>
-                        <span class = "col-lg-4  control-label ">${requestScope.empManage2.source}</span>
+                        <span class = "col-lg-4  control-label ">${requestScope.diseaseBean.source}</span>
                     </div>
                     <!--第三行-->
                     <div class = "row" style = "margin-top: 40px">
                         <span class = "col-lg-4  control-label ">发病状态:</span>
-                        <span class = "col-lg-4  control-label ">${requestScope.empManage2.symptoms}</span>
+                        <span class = "col-lg-4  control-label ">${requestScope.diseaseBean.symptoms}</span>
                     </div>
                     <!--第四行-->
                     <div class = "row" style = "margin-top: 40px">
                         <span class = "col-lg-4  control-label ">发病规律:</span>
-                        <span class = "col-lg-4  control-label ">${requestScope.empManage2.ROD}</span>
+                        <span class = "col-lg-4  control-label ">${requestScope.diseaseBean.regularity}</span>
                     </div>
                     <!--第五行-->
                     <div class = "row" style = "margin-top: 40px">
                         <span class = "col-lg-4  control-label ">主要危害:</span>
-                        <span class = "col-lg-6 col-sm-10  control-label ">${requestScope.empManage2.mainharm}</span>
+                        <span class = "col-lg-6 col-sm-10  control-label ">${requestScope.diseaseBean.mainharm}</span>
                     </div>
 
                 </div>
@@ -63,11 +63,11 @@
                     <!--第一行-->
                     <div class = "row" style = "margin-top: 20px">
                         <span class = "col-lg-4  control-label ">图片:</span>
-                        <img style="height: 150px;width: 150px" src = "../upload1/${requestScope.empManage2.picture}" />
+                        <img style="height: 150px;width: 150px" src = "../upload/images/disease/${requestScope.diseaseBean.picture}" />
                     </div>
                     <div class = "row" style = "margin-top: 40px">
                         <span class = "col-lg-4  control-label ">防治措施:</span>
-                        <span class = "col-lg-6 col-sm-10  control-label ">${requestScope.empManage2.LMA}</span>
+                        <span class = "col-lg-6 col-sm-10  control-label ">${requestScope.diseaseBean.control}</span>
                     </div>
                 </div>
             </div>
@@ -76,7 +76,7 @@
                 <div class = "row">
                     <div class = "form-group">
                         <div class = "col-sm-offset-5 col-sm-5" style = "margin-top:10px">
-                            <button id="back" type = "submit" class = "btn btn-default" >返回</button>
+                            <button id="back" type = "button" class = "btn btn-default" >返回</button>
                         </div>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
 
     $(function(){
         $("#back").click(function(){
-            $("#diseaseInfoDiv").load("../DiseaseMageServlet.av", {"pageNow1": 1});
+            $("#diseaseInfoDiv").load("../diseasePanel.av", {"pageNow1": 1,"option":"init","pageNow":"1"});
         })
     })
 

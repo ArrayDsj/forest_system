@@ -35,9 +35,9 @@
                         <div class = "link" ><i class = "glyphicon glyphicon-book" ></i >资料管理<i class = "glyphicon glyphicon-chevron-down" style = "margin-left: 160px" ></i >
                         </div >
                         <ul class = "submenu" >
-                            <li ><a href = "#虫害一览" id="pestlistID">虫害一览</a ></li >
-                            <li ><a href = "#病害一览" id="diseaseID">病害一览</a ></li >
-                            <li ><a href = "#鼠害一览" id="amouseID">鼠害一览</a ></li >
+                            <li ><a href = "#虫害一览" onclick = "return  jump('#otherHtml','./pestmage.av','-1')" >虫害一览</a ></li >
+                            <li ><a href = "#病害一览" id="diseasePanel">病害一览</a ></li >
+                            <li ><a href = "#鼠害一览" id="mousePanel">鼠害一览</a ></li >
                         </ul >
                     </li >
                     <li >
@@ -52,7 +52,7 @@
                     <li >
                         <div class = "link" ><i class = "glyphicon glyphicon-user" ></i >专家会商<i class = "glyphicon glyphicon-chevron-down" style = "margin-left: 160px" ></i ></div >
                         <ul class = "submenu" >
-                            <li ><a href = "#专家一览" id="proficien" >专家一览</a ></li >
+                            <li ><a href = "#专家一览" onclick = "return jump('#otherHtml','./ProficientQueryServlet.av','-1')" >专家一览</a ></li >
                             <li ><a href = "#会商灾情"  id="conferPanel">会商灾情</a ></li >
                         </ul >
                     </li >
@@ -60,10 +60,9 @@
                         <div class = "link" ><i class = "glyphicon glyphicon-cutlery" ></i >药剂器械出库管理<i
                                 class = "glyphicon glyphicon-chevron-down" style = "margin-left: 160px" ></i ></div >
                         <ul class = "submenu" >
-                            <li ><a href = "#drugPanel" onclick = "jump('#otherHtml','resourcemanagement/drugPanel.jsp')" >药剂管理</a ></li >
-                            <li ><a href = "#apparatusPanel" onclick = "jump('#otherHtml','resourcemanagement/apparatusPanel.jsp')" >器械管理</a ></li >
-                            <li ><a href = "#outwarehousePanel"
-                                    onclick = "jump('#otherHtml','resourcemanagement/outwarehousePanel.jsp')" >出库管理</a ></li >
+                            <li ><a href = "#药剂管理" id="drugPanel">药剂管理</a ></li >
+                            <li ><a href = "#器械管理"  id="apparPanel">器械管理</a ></li >
+                            <li ><a href = "#出库管理" id="outwarehousePanel">出库管理</a ></li >
                         </ul >
                     </li >
                     <li >
@@ -115,14 +114,14 @@
 //    $("#wormPanel").click(function () {
 //        initData('#otherHtml', '../wormPanel.av', {'pageNow': 1, 'option': 'init'});
 //    });
-//    //病害一览
-//    $("#diseasePanel").click(function () {
-//        initData('#otherHtml', '../diseasePanel.av', {'pageNow': 1, 'option': 'init'});
-//    });
-//    //鼠害一览
-//    $("#mousePanel").click(function(){
-//        initData('#otherHtml', '../mousePanel.av', {'pageNow': 1, 'option': 'init'});
-//    });
+    //病害一览
+    $("#diseasePanel").click(function () {
+        initData('#otherHtml', '../diseasePanel.av', {'pageNow': 1, 'option': 'init'});
+    });
+    //鼠害一览
+    $("#mousePanel").click(function(){
+        initData('#otherHtml', '../mousePanel.av', {'pageNow': 1, 'option': 'init'});
+    });
 
     //区域一览初始化
     $("#areaPanel").click(function () {
@@ -139,47 +138,31 @@
         initData('#otherHtml', '../thingPanel.av', {'pageNow': 1, 'option': 'init'});
     });
 
-    //专家一览
-    $("#proficien").click(function () {
-        initData('#otherHtml', '../ProficientQueryServlet.av', {'pageNow': -1, 'option': 'init'});
-    });
-
     //会商灾情初始化
     $("#conferPanel").click(function () {
         initData('#otherHtml', '../conferPanel.av', {'pageNow': 1, 'option': 'init'});
     });
 
 
+    $("#drugPanel").click(function () {
+        $("#otherHtml").load("../drug.av", {"pageNow": 1});
+    });
+
+    $("#apparPanel").click(function () {
+        $("#otherHtml").load("../apparatus.av", {"pageNow": 1});
+    });
+
+    $("#outwarehousePanel").click(function () {
+        $("#otherHtml").load("../outwarehouse.av", {"pageNow": 1})
+    });
+
+
+
+
 
 
 
     /***************************************************/
-//    李阳的
-    $(function () {
-        if ('${requestScope.showPage}' == 'empManage') {
-            $("#otherHtml").load("../pestmage.av", {"pageNow": 1});
-        }else if('${requestScope.showPage}' == 'Disease'){
-            $("#otherHtml").load("../DiseaseMageServlet.av", {"pageNow1": 1});
-        }else if('${requestScope.showPage}' == 'Amouse'){
-            $("#otherHtml").load("../AmouseMageServlet.av", {"pageNow1": 1});
-        }
-    });
-
-    $(function () {
-        $("#pestlistID").click(function () {
-            $("#otherHtml").load("../pestmage.av", {"pageNow": 1});
-            return false;
-        });
-        $("#diseaseID").click(function () {
-            $("#otherHtml").load("../DiseaseMageServlet.av", {"pageNow1": 1});
-            return false;
-        });
-
-        $("#amouseID").click(function () {
-            $("#otherHtml").load("../AmouseMageServlet.av", {"pageNow1": 1});
-            return false;
-        });
-    });
 
     /***************************************************/
 

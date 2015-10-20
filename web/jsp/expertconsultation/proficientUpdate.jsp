@@ -29,22 +29,22 @@
                     <div class = "row" style = "margin-top: 20px">
                          <input type="hidden" id="hiddenID" value="">
                         <span class = "col-lg-4  control-label ">姓名:</span>
-                        <span class = "col-lg-4  control-label ">${pro.name}</span>
+                        <span class = "col-lg-4  control-label ">${requestScope.pro.name}</span>
                     </div>
                     <!--第二行-->
                     <div class = "row" style = "margin-top: 40px">
                         <span class = "col-lg-4  control-label ">出生年月:</span>
-                        <span class = "col-lg-4  control-label ">${pro.birthday}</span>
+                        <span class = "col-lg-4  control-label ">${requestScope.pro.birthday}</span>
                     </div>
                     <!--第三行-->
                     <div class = "row" style = "margin-top: 40px">
                         <span class = "col-lg-4  control-label ">性别:</span>
-                        <span class = "col-lg-4  control-label ">${pro.gender}</span>
+                        <span class = "col-lg-4  control-label ">${requestScope.pro.gender}</span>
                     </div>
 					<!--第四行-->
 					<div class = "row" style = "margin-top: 40px">
                         <span class = "col-lg-4  control-label ">专长:</span>
-                        <span class = "col-lg-4  control-label ">${pro.speciality}</span>
+                        <span class = "col-lg-4  control-label ">${requestScope.pro.speciality}</span>
                     </div>
                     
 
@@ -63,14 +63,16 @@
                     <!--第六行-->
                     <div class = "row" style = "margin-top: 40px">
                         <span class = "col-lg-4  control-label ">通讯地址:</span>
-                        <span class = "col-lg-4  control-label ">${pro.address}</span>
+                        <span class = "col-lg-4  control-label ">${requestScope.pro.address}</span>
                     </div>
                 </div>
                 <div id = "right" style = "width: 370px;height: 390px;float: left;margin-left: 10px">
                     <!--第一行-->
                     <div class = "row" style = "margin-top: 20px">
                         <span class = "col-lg-4  control-label ">照片:</span>
-                        <img src = "image/8.jpg" />
+                       <div style="position: relative;padding-top: 20px;">
+                    <img src = "${pageContext.request.contextPath}/upload/${requestScope.pro.photo}" style="width: 200px;height: 150px;"/>
+                	</div>
                     </div>
                     <!--第二行-->
                     <div class = "row" style = "margin-top: 20px">

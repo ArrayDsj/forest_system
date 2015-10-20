@@ -54,10 +54,10 @@
             <div id = "tableTD" class = "row-fluid" style = "overflow-y: auto;height: 208px;margin-top: -20px" >
                     <table class = "table table-striped table-bordered table-hover table-condensed" >
 
-                    <c:if test = "${requestScope.info != 'null'}" >
+                    <c:if test = "${requestScope.info == null}" >
                     <c:forEach items = "${requestScope.allThings}" var = "thing" >
-                        <tr onclick = "select(this,'#selectID','#stageID','#status')"  >
-                            <input type = "hidden" value = "${thing.id}" status = "${thing.status}"/>
+                        <tr onclick = "select(this,'#selectID','#stageID','#status')" >
+                            <input type = "hidden" value = "${thing.id}" status = "${thing.status}" />
                             <td class = "col-md-2" >${thing.name}</td >
                             <td class = "col-md-2" >${thing.foundDay}</td >
                             <td class = "col-md-2" >${thing.areaBean.name}</td >
@@ -68,9 +68,9 @@
                     </c:if >
                 </table >
                 <%--保存被选中的事件id 和状态--%>
-                <input type = "hidden" value="-1" id="selectID" name="selectID" />
-                <input type = "hidden" value="-1" id="stageID" name="stageID"/>
-                <input type = "hidden" value="-1" id="status" name="status"/>
+                <input type = "hidden" value = "-1" id = "selectID" name = "selectID" />
+                <input type = "hidden" value = "-1" id = "stageID" name = "stageID" />
+                <input type = "hidden" value = "-1" id = "status" name = "status" />
             </div >
         </div >
         <br />
@@ -83,9 +83,9 @@
                             <span class = "glyphicon glyphicon-chevron-left" ></span >
                         </button >
                     </div >
-                     <input id = "pageNow" type = "text"
-                            style = "width: 40px;height: 25px;margin-left: 2px;margin-top: 0px; ime-mode:Disabled;" onkeydown = "onlyNum()"
-                        <%--当前页数--%>
+                    <input id = "pageNum" type = "text" class = "form-control" style =
+                            "width: 45px;height: 25px;margin-left: 2px;margin-top: 2px;float:left"
+                    <%--当前页数--%>
                            value = "${requestScope.pageNow}"
                             />
                     <label id = "num" name = "num" style = "margin-left: 2px" >
@@ -128,7 +128,7 @@
             <div class = "col-xs-3 col-lg-6 col-sm-6  col-sm-offset-4" style = "margin-top: -175px;margin-left: 440px" >
                 <fieldset >
                     <legend >查询事件信息</legend >
-                    <div class = "row" style="margin-top: -15px;margin-left:10px">
+                    <div class = "row" style = "margin-top: -15px;margin-left:10px" >
                         <div class = "col-xs-10 col-sm-6 col-lg-6" >
                             <div class = "input-group" >
                                 <div class = "input-group-btn" >
@@ -143,75 +143,74 @@
                                         </ul >
                                 </div >
                                 <!-- /btn-group -->
-                                <input id = "inputText" type = "text" class = "form-control" style = "width: 130px" value="">
+                                <input id = "inputText" type = "text" class = "form-control" style = "width: 130px" value = "" >
                             </div >
                             <!-- /input-group -->
                         </div >
-                        <div class = "col-lg-5 col-sm-5" style = "margin-left: 20px">
-                            <button  type = "button" class = "btn" onclick = "submitQuery('#inputText','#thingPanelDiv','../thingPanel.av','1')" >查找</button >
+                        <div class = "col-lg-5 col-sm-5" style = "margin-left: 20px" >
+                            <button type = "button" class = "btn"
+                                    onclick = "submitQuery('#inputText','#thingPanelDiv','../thingPanel.av','1')" >查找</button >
                         </div >
                     </div >
                 </fieldset >
             </div >
 
-            <div class = "col-xs-3 col-lg-6 col-sm-6  col-sm-offset-4" style = "margin-top: -100px;margin-left: 440px" >
+            <div class = "col-xs-3 col-lg-6 col-sm-6  col-sm-offset-4" style = "margin-left: 440px;margin-top: -100px" >
                 <%--时间控件--%>
-                <%--<form action = "" class = "form-horizontal" role = "form" >--%>
-                <fieldset >
-                    <legend >日期查询</legend >
-                    <div class = "form-group " style="margin-top: -15px">
-                        <label class = "col-md-3 control-label" >起始日期</label >
-                        <div id = "datetimepickerStar" class = "input-group date form_date col-md-6" data-date = "" data-date-format =
-                                "yyyy-mm-dd"
-                             data-link-format = "yyyy-mm-dd" >
-                            <input id="start" class = "form-control" size = "10" type = "text" value = "" readonly = "readonly" onclick =
-                                    "selectTime()" >
-                            <span class = "input-group-addon" ><span class = "glyphicon glyphicon-remove" ></span ></span >
-                            <span class = "input-group-addon" ><span class = "glyphicon glyphicon-calendar"
-                                                                     onclick = "selectTime('datetimepickerStar')" ></span ></span >
-                        </div >
+            <fieldset >
+                <legend >日期查询</legend >
+                <div class = "form-group " style = "margin-top: -15px" >
+                    <label class = "col-md-3 control-label" >起始日期</label >
+                    <div id = "datetimepickerStar" class = "input-group date form_date col-md-6" data-date = "" data-date-format =
+                            "yyyy-mm-dd"
+                         data-link-format = "yyyy-mm-dd" >
+                        <input id = "start" class = "form-control" size = "10" type = "text" value = "" readonly = "readonly" onclick =
+                                "selectTime()" >
+                        <span class = "input-group-addon" ><span class = "glyphicon glyphicon-remove" ></span ></span >
+                        <span class = "input-group-addon" ><span class = "glyphicon glyphicon-calendar"
+                                                                 onclick = "selectTime('datetimepickerStar')" ></span ></span >
                     </div >
-                    <div class = "form-group" style = "margin-top: -15px" >
-                        <label class = "col-md-3 control-label" >结束日期</label >
-                        <div id = "datetimepickerEnd" class = "input-group date form_date col-md-6" data-date = ""
-                             data-date-format = "yyyy-mm-dd"
-                             data-link-format = "yyyy-mm-dd" >
-                            <input id = "end" class = "form-control" size = "10" type = "text" value = "" readonly = "readonly"
-                                   onclick = "selectTime()" >
-                            <span class = "input-group-addon" ><span class = "glyphicon glyphicon-remove" ></span ></span >
-                            <span class = "input-group-addon" ><span class = "glyphicon glyphicon-calendar"
-                                                                     onclick = "selectTime('datetimepickerEnd')" ></span ></span >
-                        </div >
-                        <button type = "button" class = "btn" id="queryByDate" style="margin-top: -34px;margin-left: 350px;">查找
-                        </button >
+                </div >
+                <div class = "form-group" style = "margin-top: -15px" >
+                    <label class = "col-md-3 control-label" >结束日期</label >
+                    <div id = "datetimepickerEnd" class = "input-group date form_date col-md-6" data-date = ""
+                         data-date-format = "yyyy-mm-dd"
+                         data-link-format = "yyyy-mm-dd" >
+                        <input id = "end" class = "form-control" size = "10" type = "text" value = "" readonly = "readonly"
+                               onclick = "selectTime('start')" >
+                        <span class = "input-group-addon" ><span class = "glyphicon glyphicon-remove" ></span ></span >
+                        <span class = "input-group-addon" ><span class = "glyphicon glyphicon-calendar"
+                                                                 onclick = "selectTime('datetimepickerEnd')" ></span ></span >
                     </div >
-
-                </fieldset >
-                <%--</form >--%>
-            </div >
+                    <button id = "queryByDate" type = "button" class = "btn" style = "margin-top: -34px;margin-left: 350px;" >查找
+                    </button >
+                </div >
+            </fieldset >
         </div >
     </div >
 </div >
 <script type = "text/javascript" >
 
-
-
     function addThing() {
-        $("#thingPanelDiv").load("../thingAdd.av", {'option': 'askAddThing'});
+//        点击添加按钮的时候请求下拉列表数据
+        $("#thingPanelDiv").load("../thingAdd.av", {'header': 'askAddThing'}, function (data) {
+            //jump('#thingPanelDiv', 'disastercontrol/thingAdd.jsp');
+        })
     }
 
-    function showThing(id){
+    function showThing(id) {
         var thingID = $(id).val();
-        if(thingID != -1){
+        if (thingID != -1) {
             //请求初始化数据
-            $("#thingPanelDiv").load("../thingShow.av", { 'thingID': thingID,'header':'showThing'}, function (data) {
+            $("#thingPanelDiv").load("../thingShow.av", {'thingID': thingID, 'header': 'showThing'}, function (data) {
             })
-        }else alert("请选择要查看的列");
+        } else alert("请选择要查看的列");
+
     }
 
     //申请专家会审
     function ask() {
-        var thingID= $("#selectID").val();
+        var thingID = $("#selectID").val();
         var stageID = $("#stageID").val();
         var status = $("#status").val();
         //未选择行报错
@@ -220,14 +219,14 @@
             return false;
         }
         //只有当状态为无法解决的时候才能申请
-        else if(stageID != 3){
+        else if (stageID != 3) {
             alert("无需专家会审");
             return false;
         }
-        else if(status == 1){
+        else if (status == 1) {
             alert("不能再次申请");
             return false;
-        }else{
+        } else {
             //改变事件的状态为1
             $.ajax({
                 type: 'POST',
@@ -250,7 +249,7 @@
     }
 
     //修改信息
-    function updateThing(){
+    function updateThing() {
         var thingID = $("#selectID").val();
         //未选择行报错
         if (thingID == -1) {
@@ -258,38 +257,24 @@
             return false;
         }
         //请求初始化数据
-        $("#thingPanelDiv").load("../thingShow.av", {'header': 'updateThing','thingID': thingID}, function (data) {
+        $("#thingPanelDiv").load("../thingShow.av", {'header': 'updateThing', 'thingID': thingID}, function (data) {
         })
     }
 
 
-
-
-    //数据有效性验证
-    $("#pageNum").keydown(function () {
-        //只能输入数字
-    });
-
     //事件处理
     //上一页事件
     $("#previousPage").click(function () {
-        if (parseInt(${requestScope.pageNow}) > 1 ){
+        if (parseInt${requestScope.pageNow} > 1)
             $("#thingPanelDiv").load("../thingPanel.av", {"pageNow": ${requestScope.pageNow} -1});
-        }
-        else{
-            alert("已是第一页！");
-        }
+        else alert("已是第一页！");
     });
 
     //下一页事件
     $("#nextPage").click(function () {
-        if (${requestScope.pageNow} < ${requestScope.pageNum}){
-            //这里是一个json数据格式
+        if (${requestScope.pageNow} < ${requestScope.pageNum})
             $("#thingPanelDiv").load("../thingPanel.av", {"pageNow": ${requestScope.pageNow} +1});
-        }
-        else{
-            alert("已是最后一页！");
-        }
+        else alert("已是最后一页！");
     });
 
     //跳转到指定页点击事件
@@ -299,17 +284,21 @@
     });
 
 
-    $("#queryByDate").click(function () {
 
+
+
+    $("#queryByDate").click(function () {
         var start = $("#start").val();
         var end = $("#end").val();
-
         if (start > end) {
             alert("您选择的时间有误，请重新选择！");
-        } else {
-            $("#thingPanelDiv").load("../thingTime.av", {"pageNow": 1, "start": $("#start").val(), "end": $("#end").val()})
+            $("#thingPanelDiv").load("../thingTime.av", {"pageNow": 1});
         }
+        else
+            $("#thingPanelDiv").load("../thingTime.av", {"pageNow": 1, "start": $("#start").val(), "end": $("#end").val()})
     });
+
+
 </script >
-</body >
+ </body >
 </html >

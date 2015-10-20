@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by CodeA on 2015/10/19.
@@ -40,27 +43,22 @@ public class thingQueryServlet extends HttpServlet{
         //调用业务
         ThingService thingService = new ThingServiceImp();
         // 得到查询条件
-        String query = req.getParameter("query");
-
-        //1. 判断有无条件(无条件,初始化;有条件,按条件分页查询)
-        if (query == null) {
-            //按无条件查询数据
-            counts = thingService.getCounts();
-            allThings = thingService.getInitData(pageNow, pageSize);
-        } else {
-            //按条件查询
-            String str = req.getParameter("str");
-            str = new String(str.getBytes(), "UTF-8");
-            counts = thingService.getCountsByCondtion(query, str);
-            allThings = thingService.getLimitData(query, str, pageNow, pageSize);
+        String start = req.getParameter("start");
+        String end = req.getParameter("end");
+        SimpleDateFormat sdf  = new SimpleDateFormat("yyyy-MM-dd");//小写的mm表示的是分钟
+        Date startTime = new Date();
+        Date endTime = new Date();
+        try {
+            startTime = sdf.parse(start);
+            endTime = sdf.parse(end);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
-        if (allThings != null) {
-            //计算总页数
-            pageNum = (int) Math.ceil(counts / (pageSize * 1.0));
-            req.setAttribute("allThings", allThings);
-        } else req.setAttribute("info", "null");
-
+        allThings = thingService.getAreasByTime(startTime, endTime, pageNow, pageSize);
+        counts = thingService.getCountsByTime(startTime, endTime);
+        pageNum = (int) Math.ceil(counts / (pageSize * 1.0));
+        req.setAttribute("allThings", allThings);
         req.setAttribute("pageNum", pageNum);
         req.setAttribute("pageNow", pageNow);
         req.getRequestDispatcher("jsp/disastercontrol/thingPanel.jsp").forward(req, resp);

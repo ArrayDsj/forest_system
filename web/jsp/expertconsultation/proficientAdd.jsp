@@ -47,7 +47,7 @@
                                 "yyyy-mm-dd"
                              data-link-format = "yyyy-mm-dd" >
                             <input id="birthday" class = "form-control" size = "30" type = "text" value = ""  readonly = "readonly" onclick =
-                                    "selectTime()" >
+                                    "selectTime('datetimepickerStar')" >
                             <span  class = "input-group-addon" ><span class = "glyphicon glyphicon-remove" ></span ></span >
                             <span class = "input-group-addon" ><span class = "glyphicon glyphicon-calendar"
                                                                      onclick = "selectTime('datetimepickerStar')" ></span ></span >
@@ -105,7 +105,7 @@
                     <div class = "row" style = "margin-top: 20px">
                         <div class = "form-group">
                             <div class = "col-lg-4 col-sm-4" style = "float: left;margin-left: 35px">
-                                <label for = "eveTxt" class = " control-label ">照片:</label>
+                                <label  class = " control-label ">照片:</label>
                             </div>
                             
                             
@@ -168,11 +168,10 @@
 <script type="text/javascript">
     //数据验证
   $(function(){
-        $("#addBtn").click(function(){
-            ajaxFileUpload();
-            return false;
-        });
-
+   		
+   			$("#addBtn").click(function(){
+    			ajaxFileUpload();
+    		});
   function ajaxFileUpload(){
     				// 开始上传显示的图片
     				$("#wait_loading").ajaxStart(function(){
@@ -181,25 +180,28 @@
     				}).ajaxComplete(function(){
     					$(this).hide();
     				});
-    				var jsonData={"name":$("#name").val(),"birthday":$("#birthday").val(),
-    							"specialty":$("#specialty").val(),"phone":$("#phone").val(),
-    							"address":$("#address").val(),
-    							"gender":$('input[name=\'genger\']').filter(":checked").val(),
-    							"degree":$("#degree").val(),"workUnit":$("#unit").val(),
-    							"email":$("#email").val()};
-    					
-    					$.ajaxFileUpload({
-    						url:'../ProficientAddServlet.av',
-    						type:'POST',
-    						secureuri:'false',//一般为false
+				$.ajaxFileUpload({
+    						url:'ProficientAddServlet.av',
+    						type:'post',
+    						secureuri:false,//一般为false
     						fileElementId:['file'],//上传文件组件NAME
     						dataType:'text',//返回值类型，Json,application/json
-    						data:jsonData,//传递json参数键值对到服务器
+    						data:{
+    						    "name":encodeURI($("#name").val()),
+    						    "birthday":encodeURI($("#birthday").val()),
+    							"specialty":encodeURI($("#specialty").val()),
+    							"phone":encodeURI($("#phone").val()),
+    							"address":encodeURI($("#address").val()),
+    							"gender":encodeURI($("input[name='genger']").filter(":checked").val()),
+    							"degree":encodeURI($("#degree").val()),
+    							"workUnit":encodeURI($("#unit").val()),
+    							"email":encodeURI($("#email").val())},//传递json参数键值对到服务器
     						success:function(data,status){
-    							return jump('#otherHtml','./ProficientQueryServlet.av','-1')
+    							$("#proficientPanelDiv").load("ProficientQueryServlet.av",{"pageNow":-1});
+    							//return jump('#proficientPanelDiv','./ProficientQueryServlet.av','-1')
     						},
     						error:function(data,status,e){
-    							$.messager.show({title:'操作提示',msg:'上传失败！',showType:'show'});
+    							alert("错误");
     						}
     					});
     				};	

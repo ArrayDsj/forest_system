@@ -148,6 +148,7 @@ public class ClassDAOImp implements ClassDAO {
         Connection          connection = DBUtil.getConnection();
         ArrayList<ClassBean> all        = new ArrayList<ClassBean>();
         String sql = "select * from t_class  as c join t_area as a on c.pk_id = a.fk_class \n" +
+                "order by c.pk_id desc " +
                 "limit " + (pageNow - 1) * pageSize + "," + pageSize;
         Statement st       = null;
         ResultSet rs       = null;
@@ -215,7 +216,8 @@ public class ClassDAOImp implements ClassDAO {
 
         String sql = "select * from t_class  as c join t_area as a on c.pk_id = a.fk_class \n"+
                 "where " + queryType + " like '%" + queryStr + "%'\n" +
-                "limit " + (pageNow - 1) * pageSize + "," + pageSize;
+                "order by c.pk_id desc "+
+                "limit " + (pageNow - 1) * pageSize + "," + pageSize ;
         Statement st       = null;
         ResultSet rs       = null;
         ClassBean classBean = null;

@@ -78,7 +78,7 @@ public class PestServlet extends HttpServlet {
 				//文件另存为
 				try {
 					//把上传的文件，放入这个文件夹upload
-					file.saveAs("/upload1/"+filename2);
+					file.saveAs("/upload/"+filename2);
 					
 					pst.updateById(id, filename1, filename2);
 				} catch (SmartUploadException e) {

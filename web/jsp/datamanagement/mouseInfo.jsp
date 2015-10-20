@@ -36,38 +36,38 @@
                     <!--第一行-->
                     <div class = "row" style = "margin-top: 20px">
                         <span class = "col-lg-4  control-label ">名称:</span>
-                        <span class = "col-lg-4  control-label ">${requestScope.empManage2.name}</span>
+                        <span class = "col-lg-4  control-label ">${requestScope.mouseBean.name}</span>
                     </div>
                     <!--第二行-->
                     <div class = "row" style = "margin-top: 40px">
                         <span class = "col-lg-4  control-label ">繁殖:</span>
-                        <span class = "col-lg-4  control-label ">${requestScope.empManage2.multiply}</span>
+                        <span class = "col-lg-4  control-label ">${requestScope.mouseBean.breed}</span>
                     </div>
                     <!--第三行-->
                     <div class = "row" style = "margin-top: 40px">
                         <span class = "col-lg-4  control-label ">食物:</span>
-                        <span class = "col-lg-4  control-label ">${requestScope.empManage2.food}</span>
+                        <span class = "col-lg-4  control-label ">${requestScope.mouseBean.food}</span>
                     </div>
                     <!--第四行-->
                     <div class = "row" style = "margin-top: 40px">
                         <span class = "col-lg-4  control-label ">天敌:</span>
-                        <span class = "col-lg-4  control-label ">${requestScope.empManage2.sentinel}</span>
+                        <span class = "col-lg-4  control-label ">${requestScope.mouseBean.enemy}</span>
                     </div>
                     <!--第五行-->
                     <div class = "row" style = "margin-top: 40px">
                         <span class = "col-lg-4   control-label ">防治措施:</span>
-                        <span class = "col-lg-6 col-sm-10 control-label ">${requestScope.empManage2.ctma}</span>
+                        <span class = "col-lg-6 col-sm-10 control-label ">${requestScope.mouseBean.controlMeasures}</span>
                     </div>
                 </div>
                 <div id = "right" style = "width: 370px;height: 390px;float: left;margin-left: 10px">
                     <!--第一行-->
                     <div class = "row" style = "margin-top: 20px">
                         <span class = "col-lg-4  control-label ">图片:</span>
-                        <img style="height: 150px;width: 150px" src = "../upload1/${requestScope.empManage2.picture}" />
+                        <img style="height: 150px;width: 150px" src = "../upload/images/mouse/${requestScope.mouseBean.photo}" />
                     </div>
                     <div class = "row" style = "margin-top: 40px">
                         <span class = "col-lg-4  control-label ">主要危害:</span>
-                        <span class = "col-lg-6 col-sm-10  control-label ">${requestScope.empManage2.MH}</span>
+                        <span class = "col-lg-6 col-sm-10  control-label ">${requestScope.mouseBean.mainHarm}</span>
                     </div>
                 </div>
             </div>
@@ -76,7 +76,7 @@
                 <div class = "row">
                     <div class = "form-group">
                         <div class = "col-sm-offset-5 col-sm-5" style = "margin-top:10px">
-                            <button type = "submit" class = "btn btn-default" id="back">返回</button>
+                            <button type = "button" class = "btn btn-default" id="back">返回</button>
                         </div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
 <script >
      $(function () {
          $("#back").click(function () {
-             $("#otherHtml").load("../AmouseMageServlet.av", {"pageNow1": 1});
+             $("#mouseInfoDiv").load("../mousePanel.av", {"pageNow1": 1, "option": "init", "pageNow": "1"});
          })
      })
 </script >

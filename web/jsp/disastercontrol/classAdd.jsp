@@ -44,10 +44,10 @@
                     <!--第二行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <div class = "form-group" style = "float: left" >
-                            <label for = "phone" class = "col-lg-4 col-sm-4   control-label " >繁殖:</label >
+                            <label for = "phone" class = "col-lg-4 col-sm-4   control-label " >电话:</label >
 
                             <div class = "col-lg-8 col-sm-8" >
-                                <input type = "text" class = "form-control" id = "phone" >
+                                <input type = "text" class = "form-control" id = "phone" onkeydown = "onlyNum()" style = "ime-mode:Disabled">
                             </div >
                         </div >
                     </div >

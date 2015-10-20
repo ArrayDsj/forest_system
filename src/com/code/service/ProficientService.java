@@ -20,7 +20,9 @@ public interface ProficientService {
 	public ProficientBean queryProficientInfo(int id);
 	//修改被选中的专家的信息
 	public boolean updateProficient(ProficientBean pro);
-
-    public boolean addProficient(ProficientBean proficientBean);
+	//添加专家信息
+	public boolean addProficient(ProficientBean pro);
+	
+	
 
 }

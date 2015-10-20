@@ -1,16 +1,15 @@
 package com.code.servlet;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import com.code.bean.ProficientBean;
+import com.code.service.ProficientService;
+import com.code.service.imp.ProficientServicImp;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.code.bean.ProficientBean;
-import com.code.service.ProficientService;
-import com.code.service.imp.ProficientServicImp;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class ProficientQueryByConditionServlet extends HttpServlet {
 
@@ -49,9 +48,11 @@ public class ProficientQueryByConditionServlet extends HttpServlet {
 			
 		}else{
 			
-			req.getSession().setAttribute("condition", condition);
-			
-			req.getSession().setAttribute("value", value);
+			//req.getSession().setAttribute("condition", condition);
+			//
+			//req.getSession().setAttribute("value", value);
+            condition = (String)req.getSession().getAttribute("condition");
+            value = (String) req.getSession().getAttribute("value");
 			
 			ArrayList<ProficientBean> proList = proService.queryProficientByCondition(condition, value, currentPage, pageSize);
 			

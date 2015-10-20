@@ -36,10 +36,8 @@ public class thingAdd extends HttpServlet{
         System.out.println(req.getParameter("header"));
         /************************************************/
         //在thingPanel.jsp中点击添加事件的时候调用
-        if ("askAddThing".equals(req.getParameter("option"))) {
-            //初始化
-            //得到下拉列表数据
-            //1. 灾情阶段数据
+        if ("askAddThing".equals(req.getParameter("header"))) {
+
             ArrayList<StageBean> stageData = null;
             StageService stageService = new StageServiceImp();
             stageData = stageService.getAllStages();
@@ -72,106 +70,6 @@ public class thingAdd extends HttpServlet{
         }
 
         /***********************************************/
-        //在thingAdd.jsp中点击确认添加按钮时调用
-        //else if ("confirmAdd".equals(req.getParameter("header"))) {
-        //    System.out.println("添加方法");
-        //    SmartUpload su = new SmartUpload();
-        //    //初始化上传(必须)
-        //    su.initialize(this.getServletConfig(), req, resp);
-        //    //定义允许上传文件类型
-        //    su.setAllowedFilesList("gif,jpg,JPG");
-        //    //不允许上传文件类型
-        //    //su.setDeniedFilesList("jsp,asp,php,aspx,html.htm");
-        //    //单个文件最大限制(-1代表不限制)
-        //    //su.setMaxFileSize(1024000);
-        //    //总共上传文件限制
-        //    //su.setTotalMaxFileSize(5000000);
-        //    try {
-        //        su.upload();
-        //    } catch (SmartUploadException e) {
-        //        // TODO Auto-generated catch block
-        //        e.printStackTrace();
-        //    }
-        //
-        //    //添加数据
-        //    ThingBean thingBean = new ThingBean();
-        //    String name = su.getRequest().getParameter("name");
-        //    thingBean.setName(name);
-        //
-        //    //添加时间
-        //    String foundDay = su.getRequest().getParameter("foundDay");
-        //    //字符串转Date
-        //    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//小写的mm表示的是分钟
-        //    Date date = new Date();
-        //    try {
-        //        date = sdf.parse(foundDay);
-        //    } catch (ParseException e) {
-        //        e.printStackTrace();
-        //    }
-        //    thingBean.setFoundDay(date);
-        //
-        //    /*************************************************************/
-        //    //上传后保存在数据库中的路径
-        //    String inputImgPath = "";
-        //    String filename = null;
-        //    //文件上传
-        //    for (int i = 0; i < su.getFiles().getCount(); i++) {
-        //        com.jspsmart.upload.SmartFile file = su.getFiles().getFile(i);
-        //        if (file.isMissing()) continue;
-        //        //定义上传后另存为的文件名
-        //        filename = i + "." + file.getFileExt();
-        //        //文件另存为
-        //        try {
-        //            file.saveAs("/upload1/" + filename);
-        //            filename += "&";
-        //        } catch (SmartUploadException e) {
-        //            // TODO Auto-generated catch block
-        //            e.printStackTrace();
-        //        }
-        //    }
-        //    inputImgPath = "/upload/" + filename;
-        //    thingBean.setPhotoPath(inputImgPath);
-        //
-        //    /*************************************************************/
-        //
-        //    String descript = su.getRequest().getParameter("descript");
-        //    thingBean.setDescription(descript);
-        //    String loss = su.getRequest().getParameter("loss");
-        //    thingBean.setLoss(loss);
-        //    String proportion = su.getRequest().getParameter("proportion");
-        //    thingBean.setProportion(proportion);
-        //    String scheme = su.getRequest().getParameter("scheme");
-        //    thingBean.setScheme(scheme);
-        //
-        //    int stageID = Integer.parseInt(su.getRequest().getParameter("stageDataHidden"));
-        //    StageBean stageBean = new StageBean();
-        //    stageBean.setId(stageID);
-        //
-        //    //转换
-        //    String str = su.getRequest().getParameter("areaDataHidden");
-        //    String[] strArr = str.split("&");
-        //    str = strArr[0];
-        //    int areaDataID = Integer.parseInt(str);
-        //
-        //    AreaBean areaBean = new AreaBean();
-        //    areaBean.setId(areaDataID);
-        //    int findwayDataID = Integer.parseInt(su.getRequest().getParameter("findwayDataHidden"));
-        //    FindwayBean findwayBean = new FindwayBean();
-        //    findwayBean.setId(findwayDataID);
-        //    int disasterDataID = Integer.parseInt(su.getRequest().getParameter("disasterDataHidden"));
-        //    DisasterBean disasterBean = new DisasterBean();
-        //    disasterBean.setId(disasterDataID);
-        //    thingBean.setStage(stageBean);
-        //    thingBean.setAreaBean(areaBean);
-        //    thingBean.setDisasterType(disasterBean);
-        //    thingBean.setFindWay(findwayBean);
-        //    //写数据库
-        //    System.out.println("写数据库");
-        //    ThingDAO thingDAO = new ThingDAOImp();
-        //    thingDAO.addThing(thingBean);
-        //}
-
-
 
 
 

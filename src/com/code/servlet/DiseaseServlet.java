@@ -1,7 +1,6 @@
 package com.code.servlet;
 
-import com.code.bean.DiseaseBean;
-import com.code.service.imp.DiseaseServiceimp;
+import com.code.service.imp.DiseaseServiceimp_old;
 import com.jspsmart.upload.SmartUpload;
 import com.jspsmart.upload.SmartUploadException;
 
@@ -10,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLDecoder;
 
 public class DiseaseServlet extends HttpServlet {
 
@@ -46,25 +46,26 @@ public class DiseaseServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		DiseaseServiceimp dls = new DiseaseServiceimp();
+		DiseaseServiceimp_old dls = new DiseaseServiceimp_old();
 		//得到图片
 		String filename1 = ""; 
 		//得到名称
-		String name = new String(su.getRequest().getParameter("name").getBytes(),"UTF-8");
+
+        String name = URLDecoder.decode(su.getRequest().getParameter("name"),"utf-8");
 		//得到病源
-		String pathogen = new String( su.getRequest().getParameter("pathogen").getBytes(),"UTF-8");
-		//得到发病症状
-		String status = new String( su.getRequest().getParameter("status").getBytes(),"UTF-8");
+		String pathogen = URLDecoder.decode(su.getRequest().getParameter("pathogen"), "utf-8");
+        //得到发病症状
+		String status = URLDecoder.decode(su.getRequest().getParameter("status"),"utf-8");
 		//得到发病规律
-		String rules = new String( su.getRequest().getParameter("rules").getBytes(),"UTF-8");
-		//得到防治措施
-		String action =new String( su.getRequest().getParameter("action").getBytes(),"UTF-8");
-		//得到主要危害
-		String harm = new String( su.getRequest().getParameter("harm").getBytes(),"UTF-8");
-		
-		DiseaseBean dl = new DiseaseBean(name, pathogen, status, rules, action, harm);
+		String rules = URLDecoder.decode(su.getRequest().getParameter("rules"), "utf-8");
+        //得到防治措施
+		String action = URLDecoder.decode(su.getRequest().getParameter("action"), "utf-8");
+        //得到主要危害
+		String harm = URLDecoder.decode(su.getRequest().getParameter("harm"), "utf-8");
+
+        //DiseaseBean dl = new DiseaseBean(name, pathogen, status, rules, action, harm);
 		int id = 0;
-		id = dls.addDisease(dl);
+		//id = dls.addDisease(dl);
 		if(id != 0){
 			for(int i = 0; i < su.getFiles().getCount();i++){
 				//创建一个com.jspsmart.upload.File包里的File方法，   把上传文件放在一起，在getFile的第几个

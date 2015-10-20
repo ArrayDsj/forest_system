@@ -51,12 +51,11 @@ public class ProficientServicImp implements ProficientService {
 		// TODO Auto-generated method stub
 		return pdao.updateProficient(pro);
 	}
-
-    @Override
-    public boolean addProficient(ProficientBean proficientBean) {
-
-        return pdao.addProficient(proficientBean);
-    }
-
+	//实现添加专家信息的接口
+	public boolean addProficient(ProficientBean pro) {
+		// TODO Auto-generated method stub
+		return pdao.addProficient(pro);
+	}
+	
 
 }

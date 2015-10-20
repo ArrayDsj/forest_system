@@ -113,9 +113,9 @@
             </div >
         </div >
 
-        <div class = "row-fluid" id = "rightBtns" style = "float: left; " >
+        <div class = "row-fluid" id = "rightBtns" style = "float: left;" >
             <!--xs自动 lg>=1200px sm<=768px offset列移动-->
-            <div class = "col-xs-3 col-lg-6 col-sm-6  col-sm-offset-4" style = "margin-top: -85px;margin-left: 400px" >
+            <div class = "col-xs-3 col-lg-6 col-sm-6  col-sm-offset-4" style = "margin-top: -125px;margin-left: 400px" >
                 <fieldset >
                     <legend >查询小班信息</legend >
                     <div class = "row" >
@@ -127,17 +127,18 @@
                                     </button >
                                     <ul id = "ul" class = "dropdown-menu" >
                                         <li ><a id = 'li1' name = "f_area" href = "#"
-                                                onclick = "return querySelect(this,'selected')" >负责区域</a ></li >
+                                                onclick = "return querySelect(this,'selected','query','str')" >负责区域</a ></li >
                                     </ul >
                                 </div >
-                                <!-- /btn-group -->
-                                <input id = "inputText" type = "text" class = "form-control" style = "width: 130px" >
+                                <%--保存标签的name,查询的字段 query,每次点击之后,下拉列表中的值放在这里--%>
+                                <input type = "hidden" id="query" value="f_name"/>
+                                <%--查询条件 str--%>
+                                <input id = "str" type = "text" class = "form-control" style = "width: 130px" value="">
                             </div >
                             <!-- /input-group -->
                         </div >
                         <div class = "col-lg-4 col-sm-4" style = "margin-left: 40px" >
-                            <button id = "search" type = "button" class = "btn" onclick =
-                                    "submitQuery('#inputText','#classPanelDiv','../classPanel.av','1')" >查找
+                            <button id = "search" type = "button" class = "btn"  >查找
                             </button >
                         </div >
                     </div >
@@ -164,6 +165,7 @@ $(function () {
         if (classID != -1) {
             //请求初始化数据
             $("#classPanelDiv").load("../classShow.av", {'classID': classID, 'header': 'showClass'}, function (data) {
+
             })
         } else alert("请选择要查看的列");
     });
@@ -176,28 +178,49 @@ $(function () {
         } else alert("请选择要查看的列");
     });
 
+    var query ;
+    var str ;
+    $("#search").click(function () {
+        //点击查询按钮之后
+        //1. 得到查询字段
+         query = $("#query").val();
+        //2. 得到查询条件
+         str = $("#str").val();
+        alert('query=' + query + "  str=" + str);
+        //3. 查询数据库
+        //传入当前的字段和条件
+        $("#classPanelDiv").load("../classPanel.av", {"option": "haveQuery", "pageNow": 1, "query": query, "str": str});
+    });
 
-//上一页事件
+    //上一页事件
     $("#previousPage").click(function () {
-        if (parseInt(${requestScope.pageNow}) > 1) {
-            $("#classPanelDiv").load("../classPanel.av", {"pageNow": ${requestScope.pageNow} -1});
-        } else {
-            alert("已是第一页！");
+        if ('${sessionScope.option}' == 'noQuery') {
+            query = 'f_name';
+            str = "";
+        }else{
+            query = '${requestScope.query}';
+            str = '${requestScope.str}';
         }
+//        alert('query=' + query + "  str=" + str);
+        if (parseInt(${requestScope.pageNow}) > 1)
+            $("#classPanelDiv").load("../classPanel.av", {"option": "haveQuery","pageNow": ${requestScope.pageNow} -1, "query": query, "str": str});
+        else alert("已是第一页！");
     });
 
     //下一页事件
     $("#nextPage").click(function () {
-        if (${requestScope.pageNow} <
-        ${requestScope.pageNum})
-        {
-            //这里是一个json数据格式
-            $("#classPanelDiv").load("../classPanel.av", {"pageNow": ${requestScope.pageNow} +1});
+        if ('${sessionScope.option}' == 'noQuery') {
+            query = 'f_name';
+            str = "";
+        } else {
+            query = '${requestScope.query}';
+            str = '${requestScope.str}';
         }
+//        alert('query=' + query + "  str=" + str);
+        if (${requestScope.pageNow} < ${requestScope.pageNum})
+        $("#classPanelDiv").load("../classPanel.av", {"option": "haveQuery","pageNow": ${requestScope.pageNow} +1, "query": query, "str": str});
         else
-        {
-            alert("已是最后一页！");
-        }
+        alert("已是最后一页！");
     });
 
     //跳转到指定页点击事件
@@ -205,7 +228,6 @@ $(function () {
         var num = $("#pageNow").val();
         $("#classPanelDiv").load("../classPanel.av", {"pageNow": num});
     });
-
 })
 
 </script >

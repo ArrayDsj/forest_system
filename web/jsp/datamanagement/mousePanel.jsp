@@ -37,9 +37,6 @@
             </div >
         </div >
         <!--表格-->
-
-        
-        
               <div class = "row-fluid table-responsive" style = "border: solid" >
             <table class = "table table-hover active table-striped table-bordered" >
                 <tr >
@@ -50,19 +47,20 @@
             </table >
             <div id = "tableTD" class = "row-fluid table-responsive" style = "overflow-y: auto;height: 208px;margin-top: -20px" >
                 <table id = "table" class = "table table-striped table-bordered table-hover table-condensed " >
-                 <c:forEach items="${requestScope.empList}" var = "emp">
-                    <tr onclick="check(this,${emp.id})">
+                    <c:if test = "${requestScope.status != 0}" >
+                 <c:forEach items="${requestScope.allMouses}" var = "mouse">
+                    <tr onclick = "select(this,'#selectID')" >
                         <%--到时候直接循环输入信息--%>
-                        <td id = "id" class = "col-md-3" style="display: none;">${emp.id}</td >
-                        <td id="name" class = "col-md-2" >${emp.name}</td >
-                        <td id="harm" class = "col-md-5" >${emp.food}</td >
-                        <td id="rule" class = "col-md-5" >${emp.MH}</td >
+                        <input type = "hidden" value = "${mouse.id}" />
+                        <td  class = "col-md-2" >${mouse.name}</td >
+                        <td  class = "col-md-5" >${mouse.food}</td >
+                        <td  class = "col-md-5" >${mouse.mainHarm}</td >
                     </tr >
                   </c:forEach>
+                         </c:if >
                 </table >
-                <input type="hidden" id="hid" value="-1"/>
+                <input type = "hidden" value = "-1" id = "selectID" name = "selectID" />
             </div >
-            </table>
         </div >
         
         <br />
@@ -73,8 +71,8 @@
                     <button id = "previousPage" class = "btn btn-sm" type = "button" style = "line-height:0px" >
                         <span class = "glyphicon glyphicon-chevron-left" ></span >
                     </button >
-                    <input id = "pageNum" type = "text" style = "width: 40px;height: 20px" value="${requestScope.currentPage}"/>
-                    <label >/${requestScope.allPage}</label >
+                    <input id = "pageNum" type = "text" style = "width: 40px;height: 20px" value="${requestScope.pageNow}"/>
+                    <label >/${requestScope.pageNum}</label >
                     <button id = "go" class = "btn btn-sm" type = "button" style = "line-height:0px" >
                         <span class = "glyphicon glyphicon-step-forward" ></span >
                     </button >
@@ -88,26 +86,26 @@
         <!--按钮-->
         <div class = "row-fluid" >
             <div class = "col-sm-2 col-lg-2" >
-                <button class = "btn" type = "button" onclick = "jump('#mousePanelDiv','jsp/datamanagement/mouseAdd.jsp')" >添加新鼠害</button >
+                <button class = "btn" type = "button" onclick = "addMouse()" >添加新鼠害</button >
             </div >
             <div class = "col-sm-2 col-lg-2" >
-                <button id="butid3" class = "btn" type = "button">查看详细信息</button >
+                <button id="butid3" class = "btn" type = "button" onclick = "showMouse()">查看详细信息</button >
             </div >
             <!--xs自动 lg>=1200px sm<=768px offset列移动-->
-            <div class = " col-lg-6 col-sm-6 col-lg-offset-1 col-sm-offset-1" >
+            <div class = " col-lg-6 col-sm-6 col-lg-offset-1 col-sm-offset-1" style = "margin-top: -40px">
                 <fieldset >
                     <legend >查询鼠害信息</legend >
                     <div class = "row" >
                         <div class = "form-group" >
                             <div class = "col-lg-4 col-sm-4" style = "float: left;margin-top: 10px" >
-                                <label for = "name" class = "control-label " >名称:</label >
+                                <label  class = "control-label " >名称:</label >
                             </div >
                             <div class = "col-lg-4 col-sm-4" style = "
                            width: 200px ;float: left;margin-left: -100px" >
-                                <input type = "text" class = "form-control"  >
+                                <input type = "text" class = "form-control" id="query" >
                             </div >
                             <div class = "col-lg-4 col-sm-4" style = "float: left" >
-                                <button id = "search" type = "submit" class = "btn" >查找</button >
+                                <button id = "search" type = "button" class = "btn" >查找</button >
                             </div >
                         </div >
                     </div >
@@ -117,62 +115,37 @@
     </div >
 </div >
 <script type="text/javascript">
- function check(obj,id){
-     document.getElementById("hid").value = id;
-     obj.style.backgroundColor = "red";
-     $("tr").css("background-color", "white");
-     obj.style.backgroundColor = "red";
-}
-$(function(){
-  $("#butid3").click(function(){
-    if(document.getElementById("hid").value != -1){
-        $("#mousePanelDiv").load("../AmouseInfoServlet.av", {"id": $("#hid").val()});
-    } else alert("请选择行");
-  });
-});
+    function addMouse(){
+        $("#mousePanelDiv").load("jsp/datamanagement/mouseAdd.jsp");
+    }
 
-</script>
+    function showMouse(){
+        var selectID = $("#selectID").val();
+        if (selectID != -1) {
+            //请求初始化数据
+            $("#mousePanelDiv").load("../mouseShow.av", {'selectID': selectID})
+        } else alert("请选择要查看的列");
+    }
 
-<script >
 
-    //数据有效性验证
-    $("#pageNum").keydown(function () {
-        //只能输入数字
+    $("#search").click(function(){
+        var query = $("#query").val();
+        $("#mousePanelDiv").load("../AmouseMageServlet.av",{"query":query,'pageNow':1});
     });
 
     //事件处理
     $("#previousPage").click(function () {
-        //上一页点击事件
-        if(parseInt(${requestScope.currentPage}) > 1){
-			$("#mousePanelDiv").load("../AmouseMageServlet.av",{"pageNow1":${requestScope.currentPage} - 1});
-	  }else{
-		    alert("已是第一页！");
-	  }
-	  	return false;
+
     });
     $("#nextPage").click(function () {
-        //下一页点击事件
-       if(${requestScope.currentPage} < ${requestScope.allPage}){
-			$("#mousePanelDiv").load("../AmouseMageServlet.av",{"pageNow1":${requestScope.currentPage} + 1});
-		}else{
-			alert("已是最后一页！");
-		}
-		
-		return false;
+
     });
     $("#go").click(function () {
-        //跳转到指定页点击事件
-        var num = $("#pageNum").val();
-        if(num <= ${requestScope.currentPage} && num > 0){
-	           $("#mousePanelDiv").load("../AmouseMageServlet.av",{"pageNow1":num});
-	    }else{
-	           alert("没有该页面，不能跳转");
-	    }
-	        
-	      return false;
+
     });
 
     //查询模块事件
+
 
 </script >
 </body >

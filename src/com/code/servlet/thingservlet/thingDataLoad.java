@@ -59,11 +59,12 @@ public class thingDataLoad extends HttpServlet {
         if (allThings != null) {
             //计算总页数
             pageNum = (int) Math.ceil(counts / (pageSize * 1.0));
+            req.setAttribute("pageNum", pageNum);
+            req.setAttribute("pageNow", pageNow);
             req.setAttribute("allThings", allThings);
-        } else req.setAttribute("info", "null");
-
-        req.setAttribute("pageNum", pageNum);
-        req.setAttribute("pageNow", pageNow);
+        } else req.setAttribute("info", "无数据");
+        //System.out.println(allThings.get(0));
+        //2. 跳转到areaPanel.jsp
         req.getRequestDispatcher("jsp/disastercontrol/thingPanel.jsp").forward(req, resp);
     }
 }

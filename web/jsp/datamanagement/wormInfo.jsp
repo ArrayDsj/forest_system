@@ -51,45 +51,45 @@
                     <!--第一行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <span class = "col-lg-4  control-label " >名称:</span >
-                        <span class = "col-lg-4  control-label " >${requestScope.empManage2.name}</span >
+                        <span class = "col-lg-4  control-label " >${requestScope.wormInfo.name}</span >
                     </div >
                     
                     <!--第二行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <span class = "col-lg-4  control-label " >繁殖:</span >
-                        <span class = "col-lg-4  control-label " >${requestScope.empManage2.breed}</span >
+                        <span class = "col-lg-4  control-label " >${requestScope.wormInfo.breed}</span >
                     </div >
                     <!--第三行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <span class = "col-lg-4  control-label " >寄主:</span >
-                        <span class = "col-lg-4  control-label " >${requestScope.empManage2.host}</span >
+                        <span class = "col-lg-4  control-label " >${requestScope.wormInfo.host}</span >
                     </div >
                     <!--第四行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <span class = "col-lg-4  control-label " >天敌:</span >
-                        <span class = "col-lg-4  control-label " >${requestScope.empManage2.sentinel}</span >
+                        <span class = "col-lg-4  control-label " >${requestScope.wormInfo.sentinel}</span >
                     </div >
                     <!--第五行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <span class = "col-lg-4  control-label " >主要危害:</span >
-                        <span class = "col-lg-4  control-label " >${requestScope.empManage2.mainharm}</span >
+                        <span class = "col-lg-4  control-label " >${requestScope.wormInfo.mainharm}</span >
                     </div >
                     <!--第六行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <span class = "col-lg-4  control-label " >防治措施:</span >
-                        <span class = "col-lg-6 col-sm-10 control-label " >${requestScope.empManage2.control}</span >
+                        <span class = "col-lg-6 col-sm-10 control-label " >${requestScope.wormInfo.control}</span >
                     </div >
                 </div >
                 <div id = "right" style = "width: 370px;height: 390px;float: left;margin-left: 10px" >
                     <!--第一行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <span class = "col-lg-4  control-label " >幼虫图片:</span >
-                        <img style="height: 150px;width: 150px" src = "../upload1/${requestScope.empManage2.larvapicture}" />
+                        <img style="height: 150px;width: 150px" src = "../upload1/${requestScope.wormInfo.larvapicture}" />
                     </div >
                     <!--第二行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <span class = "col-lg-4  control-label " >成虫图片:</span >
-                        <img style="height: 150px;width: 150px" src = "../upload1/${requestScope.empManage2.adultpicture}" />
+                        <img style="height: 150px;width: 150px" src = "../upload1/${requestScope.wormInfo.adultpicture}" />
                     </div >
                 </div >
             </div >
@@ -98,7 +98,7 @@
                 <div class = "row" >
                     <div class = "form-group" >
                         <div class = "col-sm-offset-5 col-sm-5" style = "margin-top:10px" >
-                            <button type = "submit" class = "btn btn-default" id="back" >返回</button >
+                            <button type = "button" class = "btn btn-default" id="back" >返回</button >
                         </div >
                     </div >
                 </div >

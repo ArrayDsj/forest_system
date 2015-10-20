@@ -5,14 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import com.code.bean.DiseaseBean;
-import com.code.bean.PestBean;
-import com.code.dao.DiseaseDao;
+import com.code.dao.DiseaseDao_OLD;
 import com.code.util.DBUtil;
 
-public class DiseaseDaoImp implements DiseaseDao {
+public class DiseaseDaoImp_old implements DiseaseDao_OLD {
 	//增加信息
 	public int addDisease(DiseaseBean disease) {
 		// TODO Auto-generated method stub
@@ -30,9 +28,9 @@ public class DiseaseDaoImp implements DiseaseDao {
 			ps.setString(1, disease.getName());
 			ps.setString(2, disease.getSource());
 			ps.setString(3, disease.getSymptoms());
-			ps.setString(4, disease.getROD());
+			//ps.setString(4, disease.getROD());
 			ps.setString(5, disease.getPicture());
-			ps.setString(6, disease.getLMA());
+			//ps.setString(6, disease.getLMA());
 			ps.setString(7, disease.getMainharm());
 			result = ps.executeUpdate();
 			
@@ -77,9 +75,9 @@ public class DiseaseDaoImp implements DiseaseDao {
 				dl.setName(rs.getString("f_name"));
 				dl.setSource(rs.getString("f_source"));
 				dl.setSymptoms(rs.getString("f_symptoms"));
-				dl.setROD(rs.getString("f_regularityofdisease"));
+				//dl.setROD(rs.getString("f_regularityofdisease"));
 				dl.setPicture(rs.getString("f_picture"));
-				dl.setLMA(rs.getString("f_controlmeasures"));
+				//dl.setLMA(rs.getString("f_controlmeasures"));
 				dl.setMainharm(rs.getString("f_mainharm"));
 				al.add(dl);
 			}
@@ -143,9 +141,9 @@ public class DiseaseDaoImp implements DiseaseDao {
 				pes.setName(rs.getString(2));
 				pes.setSource(rs.getString(3));
 				pes.setSymptoms(rs.getString(4));
-				pes.setROD(rs.getString(5));
+				//pes.setROD(rs.getString(5));
 				pes.setPicture(rs.getString(6));
-				pes.setLMA(rs.getString(7));
+				//pes.setLMA(rs.getString(7));
 				pes.setMainharm(rs.getString(8));
 			}
 		} catch (SQLException e) {
@@ -178,9 +176,9 @@ public class DiseaseDaoImp implements DiseaseDao {
 				dl.setName(rs.getString("f_name"));
 				dl.setSource(rs.getString("f_source"));
 				dl.setSymptoms(rs.getString("f_symptoms"));
-				dl.setROD(rs.getString("f_regularityofdisease"));
+				//dl.setROD(rs.getString("f_regularityofdisease"));
 				dl.setPicture(rs.getString("f_picture"));
-				dl.setLMA(rs.getString("f_controlmeasures"));
+				//dl.setLMA(rs.getString("f_controlmeasures"));
 				dl.setMainharm(rs.getString("f_mainharm"));
 				list.add(dl);
 			}

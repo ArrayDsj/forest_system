@@ -46,4 +46,31 @@ public class PestSerxiceImp implements PestSerxice {
 		return new PestDaoImp().ptst(con, value);
 	}
 
+	
+	
+	//实现在无条件查询得到所有页数的接口
+	public int queryAllNumber(int pageSize) {
+		// TODO Auto-generated method stub
+		return new PestDaoImp().getAllNumber(pageSize);
+	}
+	//实现在无条件查询下得到所有的信息
+	public ArrayList<PestBean> queryAllPest(int currentPage, int pageSize) {
+		// TODO Auto-generated method stub
+		return new PestDaoImp().getAllPest(currentPage,pageSize);
+	}
+
+	//实现得到带条件查询时的总页数
+	public int queryPageNumberBycondition(String condition, String value,
+			int pageSize) {
+		// TODO Auto-generated method stub
+		return new PestDaoImp().getPageNumberByCondition(condition,value,pageSize);
+	}
+
+	//实现得到带条件查询时的所有信息
+	public ArrayList<PestBean> queryPestByCondition(String condition,
+			String value, int currentPage, int pageSize) {
+		// TODO Auto-generated method stub
+		return new PestDaoImp().getPestByCondition(condition,value,currentPage,pageSize);
+	}
+
 }

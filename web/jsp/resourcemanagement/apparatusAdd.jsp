@@ -35,7 +35,7 @@
                                    class = "col-lg-4 col-sm-4   control-label ">名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称:</label>
 
                             <div class = "col-lg-8 col-sm-8">
-                                <input type = "text" class = "form-control" id = "name">
+                                <input type = "text" class = "form-control" id = "nameApparatus">
                             </div>
                         </div>
                     </div>
@@ -45,14 +45,14 @@
                             <label class = " control-label ">防治类型:</label>
 
                             <div class = "btn-group" style = "margin-left: 24px">
-                                <button type = "button" class = "btn btn-default" style = "width: 120px">病害</button>
+                                <button id="typeBtn" type = "button" class = "btn btn-default" style = "width: 120px" value="2">病害</button>
                                 <button type = "button" class = "btn btn-default dropdown-toggle" data-toggle = "dropdown" style="height:35px">
                                     <span class = "caret"></span>
                                     <span class = "sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul class = "dropdown-menu" role = "menu">
-                                    <li><a href = "#">虫害</a></li>
-                                    <li><a href = "#">鼠害</a></li>
+                                    <li><a href = "#" value="1" onclick="return a(this)">虫害</a></li>
+                                    <li><a href = "#" value="3" onclick="return a(this)">鼠害</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                             <label for = "status" class = "col-lg-4 col-sm-4  control-label ">发病状态:</label>
 
                             <div class = "col-lg-8 col-sm-6">
-                                <textarea rows = "5" cols = "30" class = "form-control" id = "status"></textarea>
+                                <textarea id="mainUse" rows = "5" cols = "30" class = "form-control" id = "status"></textarea>
                             </div>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                     <div class = "row">
                         <div class = "form-group">
                             <div class = "col-sm-offset-3 col-sm-5" style = "margin-top:-40px">
-                                <button type = "submit" class = "btn btn-default">添加</button>
+                                <button id="add" type = "submit" class = "btn btn-default">添加</button>
                             </div>
                         </div>
                     </div>
@@ -81,6 +81,33 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+	$(function(){
+		$("#add").click(function(){
+			var name = $("#nameApparatus").val();
+			var type = $("#typeBtn").text();
+			var mainUse = $("#mainUse").val();
+			$("#apparatusAddDiv").load("../addapparatus.av",{"pageNow":1,"name":name,"type":type,"mainUse":mainUse})
+		});
+	});
 
+	function a(obj){
+		var old = $("#typeBtn").text();
+		var oldVal = $("#typeBtn").val();
+
+		var New = obj.innerHTML;
+		var NewVal = obj.getAttribute("value");
+
+		obj.innerHTML = old;
+
+		obj.setAttribute("value", oldVal);
+
+		$("#typeBtn").text(New);
+		$("#typeBtn").val(NewVal);
+		
+		return false;
+	}
+	
+</script>
 </body>
 </html>

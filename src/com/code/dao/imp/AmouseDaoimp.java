@@ -49,7 +49,7 @@ public class AmouseDaoimp implements AmouseDao {
 		Connection con6 = DBUtil.getConnection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String sql = "select count(*) as count1 from t_amouse where like '%"+value+"%'";
+		String sql = "select count(*) as count1 from t_amouse where f_name like '%"+value+"%'";
 		
 		try {
 			ps = con6.prepareStatement(sql);
@@ -113,7 +113,7 @@ public class AmouseDaoimp implements AmouseDao {
 		return result;
 	}
 	//得到无条件下的分页数据
-	public ArrayList allAmouse(int pageNow, int pageSize) {
+	public ArrayList<AmouseBean> allAmouse(int pageNow, int pageSize) {
 		// TODO Auto-generated method stub
 		ArrayList<AmouseBean> amouse3 = new ArrayList<AmouseBean>();
 		Connection con = DBUtil.getConnection();
@@ -155,19 +155,19 @@ public class AmouseDaoimp implements AmouseDao {
 		return amouse3;
 	}
 	//根据条件查询信息；
-	public ArrayList getAmouseInfo(String value, int pageNow, int pageSize) {
+	public ArrayList<AmouseBean> getAmouseInfo(String value, int pageNow, int pageSize) {
 		// TODO Auto-generated method stub
 		ArrayList<AmouseBean> amouse = new ArrayList<AmouseBean>();
 		Connection con5 = DBUtil.getConnection();
 		PreparedStatement ps = null;
-		String sql = "select * from t_diseaselist where like'%"+value+"%' limit ?,?" ;
+		String sql = "select * from t_diseaselist where f_name like'%"+value+"%' limit ?,?" ;
 		ResultSet rs = null;
 		try {
 			ps = con5.prepareStatement(sql);
 			ps.setInt(1, (pageSize-1)*pageNow);
 			ps.setInt(2, pageNow);
 			rs = ps.executeQuery();
-			
+
 			while(rs.next()){
 				AmouseBean dl = new AmouseBean();
 				dl.setId(rs.getInt("pk_id"));
@@ -184,10 +184,10 @@ public class AmouseDaoimp implements AmouseDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
-			
+
 			DBUtil.close(rs, ps, con5);
 		}
-		
+
 		return amouse;
 	}
 	//根据ID查询所有信息
@@ -196,7 +196,7 @@ public class AmouseDaoimp implements AmouseDao {
 		Connection cont2 = DBUtil.getConnection();
 		AmouseBean amouse = new AmouseBean();
 		String sql = "select * from t_amouse where pk_id=?";
-		
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
@@ -219,7 +219,7 @@ public class AmouseDaoimp implements AmouseDao {
 		}finally{
 			DBUtil.close(rs, ps, cont2);
 		}
-		
+
 		return amouse;
 	}
 	//图片
@@ -229,7 +229,7 @@ public class AmouseDaoimp implements AmouseDao {
 		Connection cont3 = DBUtil.getConnection();
 		String sql3 = "update t_amouse set f_picture=? where pk_id=?";
 		PreparedStatement ps = null;
-		
+
 		try {
 			ps = cont3.prepareStatement(sql3);
 			ps.setString(1, image1);
@@ -242,7 +242,7 @@ public class AmouseDaoimp implements AmouseDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
-			
+
 			DBUtil.close(ps, cont3);
 		}
 		return flag;

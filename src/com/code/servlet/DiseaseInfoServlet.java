@@ -1,17 +1,13 @@
 package com.code.servlet;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import com.code.bean.DiseaseBean;
+import com.code.service.imp.DiseaseServiceimp_old;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.code.bean.DiseaseBean;
-import com.code.bean.PestBean;
-import com.code.service.imp.DiseaseServiceimp;
-import com.code.service.imp.PestSerxiceImp;
+import java.io.IOException;
 
 public class DiseaseInfoServlet extends HttpServlet {
 
@@ -26,14 +22,14 @@ public class DiseaseInfoServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		DiseaseServiceimp dls = new DiseaseServiceimp();
+		DiseaseServiceimp_old dls = new DiseaseServiceimp_old();
 		DiseaseBean a = dls.getDiseaseById(Integer.parseInt(req.getParameter("id")));
 		a.getName();
 		a.getSource();
 		a.getSymptoms();
-		a.getROD();
+		//a.getROD();
 		a.getPicture();
-		a.getLMA();
+		//a.getLMA();
 		a.getMainharm();
 		System.out.println(a.getName());
 		req.setAttribute("empManage2",a );

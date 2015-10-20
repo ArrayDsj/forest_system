@@ -56,8 +56,8 @@
                 </tr>
             </table>
             <div></div>
-            <div style = "overflow-y: auto;overflow-x: auto;height: 120px;margin-top: -20px" class = "row-fluid" id = "tableTD">
-                <table class = "table table-striped table-bordered table-hover table-condensed" >
+            <div id = "tableTD" class = "row-fluid" style = "overflow-y: auto;height: 208px;margin-top: -20px" >
+                    <table class = "table table-striped table-bordered table-hover table-condensed" >
                    
                    
                    <c:forEach items="${requestScope.logList}" var="logs">
@@ -96,45 +96,38 @@
         
         
         
-        <div class = "col-xs-3 col-lg-6 col-sm-6  col-sm-offset-4" style = "margin-left: 440px" >
+        <div class = "col-xs-3 col-lg-6 col-sm-6  col-sm-offset-4" style = "margin-left: 440px;margin-top: -50px" >
                 <%--时间控件--%>
-                <form action = "" class = "form-horizontal" role = "form" >
-                <fieldset >
-                    <legend >日期查询</legend >
-                    <div class = "form-group " style="margin-top: -15px">
-                        <label class = "col-md-3 control-label" >起始日期</label >
-                        <div id = "datetimepickerStar" class = "input-group date form_date col-md-6" data-date = "" data-date-format =
-                                "yyyy-mm-dd"
-                             data-link-format = "yyyy-mm-dd" >
-                            <input id="start" class = "form-control" size = "10" type = "text" value = "" readonly = "readonly" onclick =
-                                    "selectTime()" >
-                            <span class = "input-group-addon" ><span class = "glyphicon glyphicon-remove" ></span ></span >
-                            <span class = "input-group-addon" ><span class = "glyphicon glyphicon-calendar"
-                                                                     onclick = "selectTime('datetimepickerStar')" ></span ></span >
-                        </div >
+            <fieldset >
+                <legend >日期查询</legend >
+                <div class = "form-group " style="margin-top: -15px">
+                    <label class = "col-md-3 control-label" >起始日期</label >
+                    <div id = "datetimepickerStar" class = "input-group date form_date col-md-6" data-date = "" data-date-format =
+                            "yyyy-mm-dd"
+                         data-link-format = "yyyy-mm-dd" >
+                        <input id="start" class = "form-control" size = "10" type = "text" value = "" readonly = "readonly" onclick =
+                                "selectTime()" >
+                        <span class = "input-group-addon" ><span class = "glyphicon glyphicon-remove" ></span ></span >
+                        <span class = "input-group-addon" ><span class = "glyphicon glyphicon-calendar"
+                                                                 onclick = "selectTime('datetimepickerStar')" ></span ></span >
                     </div >
-                    <div class = "form-group" style = "margin-top: -15px" >
-                        <label class = "col-md-3 control-label" >结束日期</label >
-                        <div id = "datetimepickerEnd" class = "input-group date form_date col-md-6" data-date = ""
-                             data-date-format = "yyyy-mm-dd"
-                             data-link-format = "yyyy-mm-dd" >
-                            <input id="end" class = "form-control" size = "10" type = "text" value = "" readonly = "readonly"
-                                   onclick = "selectTime('start')" >
-                            <span class = "input-group-addon" ><span class = "glyphicon glyphicon-remove" ></span ></span >
-                            <span class = "input-group-addon" ><span class = "glyphicon glyphicon-calendar"
-                                                                     onclick = "selectTime('datetimepickerEnd')" ></span ></span >
-                        </div >
-                        <button id="queryByDate" type = "button" class = "btn"  style="margin-top: -34px;margin-left: 350px;">查找
-                        </button >
+                </div >
+                <div class = "form-group" style = "margin-top: -15px" >
+                    <label class = "col-md-3 control-label" >结束日期</label >
+                    <div id = "datetimepickerEnd" class = "input-group date form_date col-md-6" data-date = ""
+                         data-date-format = "yyyy-mm-dd"
+                         data-link-format = "yyyy-mm-dd" >
+                        <input id="end" class = "form-control" size = "10" type = "text" value = "" readonly = "readonly"
+                               onclick = "selectTime('start')" >
+                        <span class = "input-group-addon" ><span class = "glyphicon glyphicon-remove" ></span ></span >
+                        <span class = "input-group-addon" ><span class = "glyphicon glyphicon-calendar"
+                                                                 onclick = "selectTime('datetimepickerEnd')" ></span ></span >
                     </div >
-
-                </fieldset >
-                </form >
-            </div >
-    
-   
-    
-    
+                    <button id="queryByDate" type = "button" class = "btn"  style="margin-top: -34px;margin-left: 350px;">查找
+                    </button >
+                </div >
+            </fieldset >
+        </div >
     </div>
 </div>
  
@@ -192,23 +185,15 @@
 		});
 		
 		$("#queryByDate").click(function(){
-		
 		var start = $("#start").val();
-
 		var end = $("#end").val();
-		
-		if(start>end){		
-			alert("您选择的时间有误，请重新选择！");		
-			$("#logsDiv").load("log.av",{"pageNow":-1});		
-		}else{		
+		if(start>end) {
+            alert("您选择的时间有误，请重新选择！");
+            $("#logsDiv").load("log.av", {"pageNow": -1});
+        }
+        else
 			$("#logsDiv").load("LogQueryByDateServlet.av",{"pageNow":-1,"start":$("#start").val(),"end":$("#end").val()})
-		}		
 		});
-		
-		
-		
-		
-		
 	});
 	
 

@@ -44,14 +44,14 @@ public class ThingDAOImp implements ThingDAO{
             query = "t";
         }
         query += ".f_name";
-        String sql = "select * from \n" +
+        String sql = "select count(*) from \n" +
                 "t_thing t, t_findway f, \n" +
                 "t_stage s, t_disastertype d, t_area a\n" +
                 "where t.fk_findway=f.pk_id\n" +
                 "and t.fk_stage=s.pk_id\n" +
                 "and t.fk_area=a.pk_id\n" +
                 "and t.fk_disastertype=d.pk_id \n" +
-                "and " + query + " like " + str + "\n";
+                "and " + query + " like '%" + str + "%'\n";
 
         try {
             st = connection.createStatement();
@@ -167,7 +167,7 @@ public class ThingDAOImp implements ThingDAO{
                     "and t.fk_stage=s.pk_id\n" +
                     "and t.fk_area=a.pk_id\n" +
                     "and t.fk_disastertype=d.pk_id \n" +
-                     "and " + query + " like " + str + "\n" +
+                     "and " + query + " like '%" + str + "%'\n" +
                      "limit " + (pageNow - 1) * pageSize + "," + pageSize;
 
         if (query.equals("f_status.f_name")) {
@@ -402,7 +402,7 @@ public class ThingDAOImp implements ThingDAO{
             ps.setDate(1, new Date(start.getTime()));
             ps.setDate(2, new Date(end.getTime()));
             ps.setInt(3, a); ps.setInt(4, pageSize);
-            rs = ps.executeQuery(sql);
+            rs = ps.executeQuery();
             while (rs.next()) {
                 //方法1:只查询thing表元素数据,再根据数据字段调用其他DAO的方法得到Bean(太浪费资源,不使用)
                 //方法2:多张链表查询(sql太复杂)
@@ -458,7 +458,7 @@ public class ThingDAOImp implements ThingDAO{
     public int getCountsByTime(java.util.Date start, java.util.Date end) {
         Connection        connection   = DBUtil.getConnection();
         ResultSet            rs           = null;
-        Statement st           = null;
+        PreparedStatement ps           = null;
         ArrayList<ThingBean> allThings    = new ArrayList<ThingBean>();
         ThingBean            thingBean    = null;
         FindwayBean          findwayBean  = null;
@@ -476,14 +476,18 @@ public class ThingDAOImp implements ThingDAO{
                 "and t.fk_disastertype=d.pk_id \n" +
                 "and t.f_foundday between ? and ?\n";
         try {
-            st = connection.createStatement();
-
-            rs = st.executeQuery(sql);
+            ps = connection.prepareStatement(sql);
+            ps.setDate(1, new java.sql.Date(start.getTime()));
+            ps.setDate(2, new java.sql.Date(end.getTime()));
+            rs = ps.executeQuery();
             if(rs.next()){
                 result = rs.getInt(1);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+
+            DBUtil.close(rs,ps,connection);
         }
         return result;
     }

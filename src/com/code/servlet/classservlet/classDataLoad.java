@@ -39,37 +39,42 @@ public class classDataLoad extends HttpServlet {
         int pageSize = 2;
         // 数据
         ArrayList<ClassBean> allClasses = null;
-
         // 得到查询条件
         String query = req.getParameter("query");
+        String option = req.getParameter("option");
         //1. 判断有无条件(无条件,初始化;有条件,按条件分页查询)
-        if (query == null) {
+        //if (query == null) {
+        if ("init".equals(req.getParameter("option")) || "noQuery".equals(req.getParameter("option")) ){
             //按无条件查询数据
             counts = classService.getCounts();
-            allClasses = classService.getInitData(pageNow, pageSize);
+            allClasses = classService.getInitData(pageNow, 2);
+            req.getSession().setAttribute("option","noQuery");
+
         } else {
             //有条件查询
             String str = req.getParameter("str");
             str = new String(str.getBytes(), "UTF-8");
             counts = classService.getCountsByCondition(query, str);
             allClasses = classService.getLimitData(query, str, pageNow, pageSize);
+            req.getSession().setAttribute("option", "haveQuery");
+            req.getSession().setAttribute("query", query);
+            req.getSession().setAttribute("str", str);
+            resp.getWriter().print("{'query':'"+query+"','str':'"+str+"'}");
+            //req.setAttribute("query",query);
+            //req.setAttribute("str",str);
         }
-
         if (allClasses != null) {
             //计算总页数
             pageNum = (int) Math.ceil(counts / (pageSize * 1.0));
             req.setAttribute("allClasses", allClasses);
         } else req.setAttribute("info", "null");
-
         req.setAttribute("pageNum", pageNum);
         req.setAttribute("pageNow", pageNow);
-
         /**
          * 得到没有班级管理的地区的数量
          */
         int countsNoClass = new AreaDAOImp().getAreasByClass().size();
         req.setAttribute("countsNoClass", countsNoClass);
-
         req.getRequestDispatcher("jsp/disastercontrol/classPanel.jsp").forward(req, resp);
     }
 }

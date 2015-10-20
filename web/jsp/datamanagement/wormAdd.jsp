@@ -12,7 +12,7 @@
     <meta charset = "UTF-8" >
     <title >添加新害虫</title >
 </head >
-<script type="text/javascript" src="js/uploadpreview.js"></script>
+
 <body >
 
     <div id = "wormAddDiv" >
@@ -28,7 +28,7 @@
             <!--内容-->
             <div style = "margin-left:50px;margin-top: 10px" >
                 <!--表单-->
-                <form class = "form-horizontal" role = "form" action = "../pest.av" onsubmit
+                <form class = "form-horizontal" role = "form" action = "pest.av" onsubmit
                         = "return add()" method="post" enctype="multipart/form-data">
                     <!--左边-->
                     <div id = "left" style = "width: 370px;height: 390px;float: left" >

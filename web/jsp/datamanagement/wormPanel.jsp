@@ -37,7 +37,7 @@
                 </div >
             </div >
             <!--表格-->
-            <div class = "row-fluid table-responsive" style = "border: solid" >
+            <div class = "row-fluid table-responsive" style = "border: solid ;height: 180px" >
             <table class = "table table-hover active table-striped table-bordered" >
                     <tr >
                         <th class = "col-md-2" >名称</th >
@@ -45,23 +45,27 @@
                         <th class = "col-md-5 " >主要危害</th >
                     </tr >
                 </table >
-                
+
                 <div id = "tableTD" class = "row-fluid table-responsive" style = "overflow-y: auto;height: 208px;margin-top: -20px" >
                 <table id = "table" class = "table table-striped table-bordered table-hover table-condensed " >
-					<c:forEach items="${requestScope.empList}" var = "emp">
-                        <tr onclick="check(this,${emp.id})">
+					<c:forEach items="${requestScope.pestList}" var = "pestList">
+                        
+                        <tr  onclick="findID(this,${pestList.id})">
+                        
                             <%--到时候直接循环输入信息--%>
-                            <td id = "id" class = "col-lg-3" style="display: none;">${emp.id}</td >
-                            <td id = "name" class = "col-md-2" >${emp.name}</td >
-                            <td id = "host" class = "col-md-5" >${emp.host}</td >
-                            <td id = "harm" class = "col-md-5" >${emp.mainharm}</td >
+                            <!--  
+                            <td  class = "col-md-3" style="display: none;">${pestList.id}</td >
+                            -->
+                            <td  class = "col-md-2 col-sd-2" >${pestList.name}</td >
+                            <td  class = "col-md-5 col-sd-2" >${pestList.host}</td >
+                            <td  class = "col-md-5 col-sd-2" >${pestList.mainharm}</td >
                         </tr >
 					</c:forEach>
 
                     </table >
-                    <input type="hidden" id="hid" value ="-1"/>
+                    <input type="hidden" id="hiddenid" value ="-1"/>
                 </div >
-                
+
             </div >
             <br />
             <!--分页按钮-->
@@ -79,7 +83,9 @@
                         <span class = "glyphicon glyphicon-chevron-left" ></span >
                     </button >
                     <input id = "pageNum" type = "text" style = "width: 40px;height: 20px" value="${requestScope.currentPage}"/>
-                    <label >/${requestScope.allPage}</label >
+                    <label >
+                    	/${sessionScope.pageNumber}
+                    </label >
                     <button id = "go" class = "btn btn-sm" type = "button" style = "line-height:0px"  >
                         <span class = "glyphicon glyphicon-step-forward" ></span >
                     </button >
@@ -99,108 +105,158 @@
                     <button class = "btn" type = "button" onclick = "jump('#wormPanelDiv','jsp/datamanagement/wormAdd.jsp')" >添加新害虫</button >
                 </div >
                 <div class = "  col-sm-2" >
-                    <button id="butid" class = "btn" type = "button">查看详细信息</button >
+                    <button id="showBtn" class = "btn" type = "button">查看详细信息</button >
                 </div >
-                <!--xs自动 lg>=1200px sm<=768px offset列移动-->
-                <div class = "col-lg-6 col-sm-6 col-lg-offset-1 col-sm-offset-1" >
-                    <fieldset >
-                        <legend >查询虫害信息</legend >
-                        <div class = "row" >
-                            <div class = "col-xs-10 col-sm-6" >
-                                <div class = "input-group" >
-                                    <div class = "input-group-btn" >
-                                    
-                                        <button id = "selected" type = "button" class = "btn btn-default dropdown-toggle" data-toggle =
-                                                "dropdown" >请选择<span>&nbsp;</span><span class = "caret" ></span >
-                                        </button >
-                                        <ul id = "ul" class = "dropdown-menu" >
-                                            <li><a id = 'li1' name="li1" value="0" href = "javascript:querySelect('#li1','selected')" >寄生虫</a ></li >
-                                            <li><a id = 'li2' name="li2" value="1" href = "javascript:querySelect('#li2','selected')" >寄主</a ></li >
-                                        </ul >
-                                    </div >
-                                    <!-- /btn-group -->
-                                    <input id = "inputText" type = "text" class = "form-control" >
-                                </div >
-                                <!-- /input-group -->
-                            </div >
-                            <div class = "col-xs-6 col-sm-6" >
-                                <button id = "search" type = "button" class = "btn" >查找</button >
-                            </div >
-                        </div >
-                    </fieldset >
-                </div >
+               
+               
+               
+               
+        <div class = "row-fluid" id = "rightBtns" style = "float: left; ">
+
+            <!--xs自动 lg>=1200px sm<=768px offset列移动-->
+            <div  style = "margin-top: -84px;margin-left: 440px">
+                <fieldset>
+                    <legend>查询专家信息</legend>
+                    <div class = "row">
+                        <div class = " col-lg-6 col-sm-6">
+                            <div class = "input-group">
+                                <div class = "input-group-btn">
+                                   
+                                   
+                                     <!--  下拉列表控件，带一个hidden域-->
+                                    <button name="Admin" id = "selected" type = "button" class = "btn btn-default dropdown-toggle" data-toggle =
+                                            "dropdown" value="" >害虫名<span >&nbsp;</span ><span class = "caret" ></span ><!--这个span的作用是提供一个下拉图标-->
+                                    </button>
+                                    <ul id = "ul" class = "dropdown-menu">
+                                        <li><a id="li1" name="dataAdmin"  href = "#"
+                                          		onclick="return getSelect(this,'selected','query')" >寄主</a></li>
+                                    </ul>
+                                    <input type="hidden" value="害虫名" id="query">
+                               
+                               
+                               
+                               
+                                </div>
+                                <input id = "str" type = "text" class = "form-control" style = "width: 130px">
+                            </div>
+                        </div>
+                        <div class = "col-lg-6 col-sm-6" style="margin-top: 50px">
+                            <button id = "search" type = "submit" class = "btn" onclick="pestQuery()">查找</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+            
+            
+            
+            
+            
             </div >
         </div >
     </div >
 
 <script type="text/javascript">
- function check(obj,id){
-   document.getElementById("hid").value=id;
-     obj.style.backgroundColor = "red";
-     $("tr").css("background-color", "white");
-     obj.style.backgroundColor = "red";
-}
- //查看按钮
-$(function(){
-    $("#butid").click(function(){
-        if (document.getElementById("hid").value != -1) {
-            $("#wormPanelDiv").load("../PestInfoServlet.av", {"id": $("#hid").val()});
-        } else alert("请选择行");
-    })
-})
+ 
+ 	$(function(){
+	//点击下一页事件
+		$("#nextPage").click(function(){
+		if(${sessionScope.condition == null}){
+			if(${requestScope.currentPage}  ==  ${sessionScope.pageNumber}){
+				alert("已经是最后一页了");		
+			}else{
+
+				$("#wormPanelDiv").load("pestmage.av",{"pageNow":${requestScope.currentPage}+1})
+			}			
+		}else{
+			if(${requestScope.currentPage}  >=  ${sessionScope.pageNumber}){
+				alert("已经是最后一页了");	
+			}else{
+				$("#wormPanelDiv").load("PestQueryByConditionServlet.av",{"pageNow":${requestScope.currentPage} + 1});
+			}
+		}
+		});
+	
+	
+	
+	
+	//点击上一页事件
+		$("#previousPage").click(function(){
+		if(${sessionScope.condition == null}){
+			if(${requestScope.currentPage}  ==  1){
+				alert("已经是第一页了");		
+			}else{
+				$("#wormPanelDiv").load("pestmage.av",{"pageNow":${requestScope.currentPage}-1})
+			}			
+		}else{
+			if(${requestScope.currentPage}  ==  1){
+				alert("已经是第一页了");	
+			}else{
+				$("#wormPanelDiv").load("PestQueryByConditionServlet.av",{"pageNow":${requestScope.currentPage}-1});
+			}
+		}
+		});
+			//选择页面跳转事件
+		$("#go").click(function(){
+			if($("#pageNum").val() < 1 || $("#pageNum").val() > ${sessionScope.pageNumber} ){
+				alert("页数超出范围");
+			}
+			else{
+				if(${sessionScope.condition == null}){
+					$("#wormPanelDiv").load("pestmage.av",{"pageNow":$("#pageNum").val()});
+				}else{
+					$("#wormPanelDiv").load("PestQueryByConditionServlet.av",{"pageNow":$("#pageNum").val()});
+				}
+			}
+		});
+ 
+		  //查看被选中行的的详细信息
+		 $("#showBtn").click(function () {
+		     if (document.getElementById("hiddenid").value != -1) {
+		     
+		         $("#wormPanelDiv").load("PestInfoServlet.av", {'id': $("#hiddenid").val()});
+		         return false;
+		    } else alert("请选择行");
+		});
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	});
+ 
+ 
+ 		//信息条点击事件
+		function findID(obj1,obj2){
+			
+			$("tr").css("color","brack");
+			obj1.style.color="red";
+			$("#hiddenid").val(obj2);
+
+		};
+		//查询按钮的点击事件
+		function pestQuery(){
+		
+			var condition = document.getElementById("query").value;
+			
+			$("#wormPanelDiv").load("PestQueryByConditionServlet.av",{'pageNow':-1,'condition':condition,"value":$("#str").val()});
+			
+		};
+		
+ 
+ 
+ 
+ //function check(obj,id){
+ //  document.getElementById("hid").value=id;
+//     obj.style.backgroundColor = "red";
+//     $("tr").css("background-color", "white");
+//     obj.style.backgroundColor = "red";
+//}
+
+
 </script>
 
-    <script >
-        <%--&lt;%&ndash;分页操作&ndash;%&gt;--%>
-        <%--$(document).ready(function () {--%>
-            <%--$("#pager").pager({pagenumber: 1, pagecount: 15, buttonClickCallback: PageClick});--%>
-        <%--});--%>
-
-        <%--PageClick = function (pageclickednumber) {--%>
-            <%--$("#pager").pager({pagenumber: pageclickednumber, pagecount: 15, buttonClickCallback: PageClick});--%>
-            <%--$("#result").html("Clicked Page " + pageclickednumber);--%>
-        <%--};--%>
-
-
-
-        //事件处理
-        $("#previousPage").click(function () {
-            //上一页点击事件
-            	if(parseInt(${requestScope.currentPage}) > 1){
-					$("#wormPanelDiv").load("../pestmage.av",{"pageNow":${requestScope.currentPage} - 1});
-				}else{
-					alert("已是第一页！");
-				}
-			
-				return false;
-        });
-        $("#nextPage").click(function () {
-            //下一页点击事件
-            	if(${requestScope.currentPage} < ${requestScope.allPage}){
-					$("#wormPanelDiv").load("../pestmage.av",{"pageNow":${requestScope.currentPage} + 1});
-				}else{
-					alert("已是最后一页！");
-				}
-		
-				return false;
-		});
-
-        $("#go").click(function () {
-            //跳转到指定页点击事件
-            var num = $("#pageNum").val();
-	        	if(num <= ${requestScope.currentPage} && num > 0){
-	            	$("#wormPanelDiv").load("../pestmage.av",{"pageNow":num});
-	            }else{
-	            	alert("没有该页面，不能跳转");
-	            }
-	        
-	        return false;
-        });
-        
-        
-        //});
-        //查询模块事件
-    </script >
 </body >
 </html >
 

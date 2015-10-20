@@ -4,14 +4,8 @@ import com.code.bean.ProficientBean;
 import com.code.dao.ProficientDao;
 import com.code.util.DBUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ProficientDaoImp implements ProficientDao {
 
@@ -23,16 +17,12 @@ public class ProficientDaoImp implements ProficientDao {
 		
 		Connection con = DBUtil.getConnection();
 		
-		String sql = "select * from t_proficient where f_status = 1 order by pk_id desc limit ?,?";
+		String sql = "select * from t_proficient where f_status = 1 order by pk_id desc limit "+(currentPage-1)*pageSize +","+pageSize;
 		
 		try {
-			PreparedStatement ps = con.prepareStatement(sql);
-			
-			ps.setInt(1, (currentPage-1)*pageSize);
-			
-			ps.setInt(2, pageSize);
-			
-			ResultSet rs = ps.executeQuery();
+			Statement ps = con.createStatement();
+
+			ResultSet rs = ps.executeQuery(sql);
 			
 			while(rs.next()){
 				
@@ -464,41 +454,51 @@ public class ProficientDaoImp implements ProficientDao {
 		
 		return false;
 	}
+	//添加专家的信息到数据库
+	public boolean addProficient(ProficientBean pro) {
+		// TODO Auto-generated method stub
+		
+		Connection con = DBUtil.getConnection();
+		
+		String sql = "insert into t_proficient(f_name,f_gender,f_birthday,f_photo,f_speciality,f_degree,f_phoneNumber,f_workUnit,f_address,f_email,f_status)values(?,?,?,?,?,?,?,?,?,?,?)";
+		
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			
+			ps.setString(1, pro.getName());
+			ps.setString(2, pro.getGender());
+			ps.setString(3, pro.getBirthday());
+			ps.setString(4, pro.getPhoto());
+			ps.setString(5, pro.getSpeciality());
+			ps.setString(6, pro.getDegree());
+			ps.setString(7, pro.getPhoneNumber());
+			ps.setString(8, pro.getWorkUnit());
+			ps.setString(9, pro.getAddress());
+			ps.setString(10, pro.getEmail());
+			ps.setInt(11, 1);
+			
+			int num = ps.executeUpdate();
+			
+			if(num>0){
+				return true;
+				
+				
+			}
+			
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			DBUtil.closeCon(con);
+			
+		}
+		
+		
+		
+		return false;
+	}
+	
 
-    @Override
-    public boolean addProficient(ProficientBean proficientBean) {
-        Connection con = DBUtil.getConnection();
-        String sql = "insert into t_proficient(f_name,f_gender,f_birthday,f_photo,f_speciality,f_degree,f_phoneNumber,f_workUnit,f_address,f_email) valuse(?,?,?,?,?,?,?,?,?,?)";
-
-        PreparedStatement ps = null;
-        int result = -1;
-
-        try {
-            ps = con.prepareStatement(sql);
-            ps.setString(1, proficientBean.getName());
-            ps.setString(2, proficientBean.getGender());
-            String data = proficientBean.getBirthday();
-            //字符串转Date
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//小写的mm表示的是分钟
-            Date date = new Date();
-            try {
-                date = sdf.parse(data);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            ps.setDate(3, new java.sql.Date(date.getTime()) );
-            ps.setString(4, proficientBean.getPhoto());
-            ps.setString(5, proficientBean.getSpeciality());
-            ps.setString(6, proficientBean.getDegree());
-            ps.setString(7, proficientBean.getPhoneNumber());
-            ps.setString(8, proficientBean.getWorkUnit());
-            ps.setString(9, proficientBean.getAddress());
-            ps.setString(10, proficientBean.getEmail());
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 }
