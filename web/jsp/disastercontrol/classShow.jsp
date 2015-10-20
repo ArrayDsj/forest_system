@@ -102,7 +102,7 @@
 <script >
     $(function(){
         $("#back").click(function(){
-            initData('#classInfoDiv', '../classPanel.av', {'pageNow': 1, 'option': 'init'});
+            initData('#classInfoDiv', '../classPanel.av', {'pageNow': 1, 'option': 'init', 'query': 'f_name', 'str': ''});
         })
     });
 </script >

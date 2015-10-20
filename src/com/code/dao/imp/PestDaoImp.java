@@ -174,7 +174,7 @@ public class PestDaoImp implements PestDao {
 		ArrayList<PestBean> list = new ArrayList<PestBean>();
 		Connection con5 = DBUtil.getConnection();
 		PreparedStatement ps = null;
-		String sql = "select * from t_pestlist where "+con+" like'%"+value+"%' limit ?,?" ;
+		String sql = "select * from t_pestlist where "+con+" like '%"+value+"%' limit ?,?" ;
 		ResultSet rs = null;
 		try {
 			ps = con5.prepareStatement(sql);

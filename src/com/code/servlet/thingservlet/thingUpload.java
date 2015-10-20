@@ -136,7 +136,7 @@ public class thingUpload extends HttpServlet{
              filename = Math.random()*100 + "." + file.getFileExt();
             //文件另存为
             try {
-                file.saveAs("/upload/" + filename);
+                file.saveAs("/upload/images/thing/" + filename);
             } catch (SmartUploadException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

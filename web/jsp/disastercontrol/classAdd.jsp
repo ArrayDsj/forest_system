@@ -154,7 +154,12 @@
                         }, function (data) {
                             var jsonObj = eval("(" + data + ")");
                             if (jsonObj.msg == 'success') {
-                                initData('#classAddDiv', '../classPanel.av', {'pageNow': 1, 'option': 'init'});
+                                initData('#classAddDiv', '../classPanel.av', {
+                                    'pageNow': 1,
+                                    'option': 'init',
+                                    'query': 'f_name',
+                                    'str': ''
+                                });
                             } else if (jsonObj.msg == 'defeat') alert("添加失败");
                             else    alert('系统内部错误');
                         });

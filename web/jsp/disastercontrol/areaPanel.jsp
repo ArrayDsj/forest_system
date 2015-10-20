@@ -70,7 +70,6 @@
                             </tr >
                         </c:forEach >
                     </c:if>
-
                 </table >
             </div >
         </div >
@@ -120,20 +119,17 @@
                             <div class = "input-group" >
                                 <div class = "input-group-btn" >
 
-                                    <button name = "${requestScope.queryValue}" id = "selected" type = "button" class = "btn btn-default dropdown-toggle" data-toggle = "dropdown" >${requestScope.queryText}<span >&nbsp;</span ><span class = "caret" ></span >
+                                    <button name = "f_name" id = "selected" type = "button" class = "btn btn-default dropdown-toggle" data-toggle = "dropdown" >区域名称<span >&nbsp;</span ><span class = "caret" ></span >
                                     </button >
                                     <ul id = "ul" class = "dropdown-menu" >
                                         <li ><a id = 'li1' name = "f_foresttype" href = "#"
-                                                onclick = "return querySelect(this,'selected','query','inputText')" >林种</a ></li >
-                                        <li ><a id = 'li2' name = "f_treetype" href = "#"
-                                                onclick = "return querySelect(this,'selected','query','inputText')" >优势树种</a ></li >
+                                                onclick = "return querySelect(this,'selected','query','str')" >林种</a ></li >
                                     </ul >
 
-
                                 </div >
-                                <input type = "hidden" id="query" value="${requestScope.str}"/>
+                                <input type = "hidden" id="query" value="${requestScope.query}"/>
                                 <%--条件输入框--%>
-                                <input id = "inputText" type = "text" class = "form-control" style="width: 130px" value="${requestScope.str}">
+                                <input id = "str" type = "text" class = "form-control" style="width: 130px" value="${requestScope.str}">
                             </div >
 
                         </div >
@@ -155,79 +151,129 @@
 
     $(function(){
         //在重新加载网页时取消条件查询
-        <!--查询按钮-->
-
-        var haveQuery = '${requestScope.option}';
-        var query = "${requestScope.query}";
-        var str = "${requestScope.str}";
-        $("#search").click(function(){
-            //得到要查询的字段
-             query = $("#query").val();
-            if(query == ""){
-                query = "f_name";
-            }
-            //得到条件
-             str = $("#inputText").val();
-            //得到模糊查询值
-//            alert('query=' + query + '&str=' + str);
-            $("#areaPanelDiv").load('../areaPanel.av', {
-                'pageNow': 1,
-                'query': query,
-                'str': str ,
-                'queryText': document.getElementById("selected").childNodes[0].nodeValue,
-                'queryValue':document.getElementById("query").value }
-            )
-        });
-
-        //上一页事件
-        $("#previousPage").click(function () {
-            if(haveQuery == "noQuery"){
-                if (parseInt(${requestScope.pageNow}) > 1)
-                    $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": ${requestScope.pageNow} -1,'query':'noQuery'});
-                 else alert("已是第一页！");
-            }else{
-                if (parseInt(${requestScope.pageNow}) > 1) $("#areaPanelDiv").load("../areaPanel.av", {
-                    "pageNow": ${requestScope.pageNow} -1,
-                    'query': '${requestScope.query}',
-                    'str': '${requestScope.str}',
-                    'queryText': document.getElementById("selected").childNodes[0].nodeValue,
-                    'queryValue': document.getElementById("query").value
-                });
-                 else alert("已是第一页！");
-            }
-        });
-        //下一页事件
-        $("#nextPage").click(function () {
-            if (haveQuery == "noQuery") {
-                if (${requestScope.pageNow} < ${requestScope.pageNum})
-                    $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": ${requestScope.pageNow} +1, 'query': 'noQuery'});
-                else alert("已是最后一页！");
-            }
-            else{
-                if (${requestScope.pageNow} < ${requestScope.pageNum})
-                    $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": ${requestScope.pageNow} +1,
-                        'query': '${requestScope.query}',
-                        'str': '${requestScope.str}',
-                        'queryText': document.getElementById("selected").childNodes[0].nodeValue,
-                        'queryValue': document.getElementById("query").value
-                    });
-                else alert("已是最后一页！");
-            }
-        });
-
-        //跳转到指定页点击事件
-        $("#go").click(function () {
-            var num = $("#pageNow").val();
-            if(num > ${requestScope.pageNum}){
-                alert("大于总页数");
-            }else
-                $("#areaPanelDiv").load("../areaPanel.av", {"pageNow": num});
-        });
-
         $("#addArea").click(function(){
             jump('#areaPanelDiv', 'jsp/disastercontrol/areaAdd.jsp')
         });
     });
+
+    <%--var haveQuery = '${requestScope.option}';--%>
+    <%--var query = "${requestScope.query}";--%>
+    <%--var str = "${requestScope.str}";--%>
+    <%--$("#search").click(function(){--%>
+    <%--//得到要查询的字段--%>
+    <%--query = $("#query").val();--%>
+    <%--if(query == ""){--%>
+    <%--query = "f_name";--%>
+    <%--}--%>
+    <%--//得到条件--%>
+    <%--str = $("#inputText").val();--%>
+    <%--//得到模糊查询值--%>
+    <%--//            alert('query=' + query + '&str=' + str);--%>
+    <%--$("#areaPanelDiv").load('../areaPanel.av', {--%>
+    <%--'pageNow': 1,--%>
+    <%--'query': query,--%>
+    <%--'str': str ,--%>
+    <%--'queryText': document.getElementById("selected").childNodes[0].nodeValue,--%>
+    <%--'queryValue':document.getElementById("query").value }--%>
+    <%--)--%>
+    <%--});--%>
+
+    <%--//上一页事件--%>
+    <%--$("#previousPage").click(function () {--%>
+    <%--if(haveQuery == "noQuery"){--%>
+    <%--if (parseInt(${requestScope.pageNow}) > 1)--%>
+    <%--$("#areaPanelDiv").load("../areaPanel.av", {"pageNow": ${requestScope.pageNow} -1,'query':'noQuery'});--%>
+    <%--else alert("已是第一页！");--%>
+    <%--}else{--%>
+    <%--if (parseInt(${requestScope.pageNow}) > 1) $("#areaPanelDiv").load("../areaPanel.av", {--%>
+    <%--"pageNow": ${requestScope.pageNow} -1,--%>
+    <%--'query': '${requestScope.query}',--%>
+    <%--'str': '${requestScope.str}',--%>
+    <%--'queryText': document.getElementById("selected").childNodes[0].nodeValue,--%>
+    <%--'queryValue': document.getElementById("query").value--%>
+    <%--});--%>
+    <%--else alert("已是第一页！");--%>
+    <%--}--%>
+    <%--});--%>
+    <%--//下一页事件--%>
+    <%--$("#nextPage").click(function () {--%>
+    <%--if (haveQuery == "noQuery") {--%>
+    <%--if (${requestScope.pageNow} < ${requestScope.pageNum})--%>
+    <%--$("#areaPanelDiv").load("../areaPanel.av", {"pageNow": ${requestScope.pageNow} +1, 'query': 'noQuery'});--%>
+    <%--else alert("已是最后一页！");--%>
+    <%--}--%>
+    <%--else{--%>
+    <%--if (${requestScope.pageNow} < ${requestScope.pageNum})--%>
+    <%--$("#areaPanelDiv").load("../areaPanel.av", {"pageNow": ${requestScope.pageNow} +1,--%>
+    <%--'query': '${requestScope.query}',--%>
+    <%--'str': '${requestScope.str}',--%>
+    <%--'queryText': document.getElementById("selected").childNodes[0].nodeValue,--%>
+    <%--'queryValue': document.getElementById("query").value--%>
+    <%--});--%>
+    <%--else alert("已是最后一页！");--%>
+    <%--}--%>
+    <%--});--%>
+
+    <%--//跳转到指定页点击事件--%>
+    <%--$("#go").click(function () {--%>
+    <%--var num = $("#pageNow").val();--%>
+    <%--if(num > ${requestScope.pageNum}){--%>
+    <%--alert("大于总页数");--%>
+    <%--}else--%>
+    <%--$("#areaPanelDiv").load("../areaPanel.av", {"pageNow": num});--%>
+    <%--});--%>
+
+
+
+
+    //分页查询
+    /**************************************************************************************/
+    //每次刷新网页的时候从请求中取得条件值
+    var query = '${requestScope.query}';
+    var str = '${requestScope.str}';
+    $("#search").click(function () {
+        //点击查询后改变条件(点击下拉列表的时候改变条件)
+        query = $("#query").val();
+        str = $("#str").val();
+        $("#areaPanelDiv").load("../areaPanel.av", {
+            "pageNow": 1, 'query': query, 'str': str
+        });
+    });
+    //事件处理
+    $("#nextPage").click(function () {
+        if (${requestScope.pageNow} <
+        ${requestScope.pageNum})
+        $("#areaPanelDiv").load("../areaPanel.av", {
+            "pageNow": ${requestScope.pageNow} +1,
+            'query': query,
+            'str': str
+        });
+        else
+        alert("已是最后一页！");
+    });
+    $("#previousPage").click(function () {
+        if (parseInt(${requestScope.pageNow}) > 1)
+            $("#areaPanelDiv").load("../areaPanel.av", {
+                "pageNow": ${requestScope.pageNow} -1, 'query': query, 'str': str
+            });
+        else alert("已是第一页！");
+    });
+    $("#go").click(function () {
+        //跳转到指定页点击事件
+        var num = $("#pageNow").val();
+        if (num <= ${requestScope.pageNum}) {
+            $("#areaPanelDiv").load("../areaPanel.av", {
+                "query": query,
+                'str': str,
+                'pageNow': num
+            });
+        } else alert("超出范围了");
+    });
+    /**************************************************************************************/
+
+
+
+
 
 </script >
 </body >

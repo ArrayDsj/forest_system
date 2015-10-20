@@ -86,10 +86,10 @@
                     <label >
                     	/${sessionScope.pageNumber}
                     </label >
-                    <button id = "go" class = "btn btn-sm" type = "button" style = "line-height:0px"  >
+                    <button id = "go" class = "btn btn-sm" type = "button" style = "line-height:0"  >
                         <span class = "glyphicon glyphicon-step-forward" ></span >
                     </button >
-                    <button id = "nextPage" class = "btn  btn-sm" type = "button" style = "line-height:0px" >
+                    <button id = "nextPage" class = "btn  btn-sm" type = "button" style = "line-height:0" >
                         <span class = "glyphicon glyphicon-chevron-right" ></span >
                     </button >
                 </div >
@@ -183,13 +183,13 @@
 	//点击上一页事件
 		$("#previousPage").click(function(){
 		if(${sessionScope.condition == null}){
-			if(${requestScope.currentPage}  ==  1){
+			if(parseInt(${requestScope.pageNow}) ==  1){
 				alert("已经是第一页了");		
 			}else{
 				$("#wormPanelDiv").load("pestmage.av",{"pageNow":${requestScope.currentPage}-1})
 			}			
 		}else{
-			if(${requestScope.currentPage}  ==  1){
+			if(parseInt(${requestScope.pageNow}) ==  1){
 				alert("已经是第一页了");	
 			}else{
 				$("#wormPanelDiv").load("PestQueryByConditionServlet.av",{"pageNow":${requestScope.currentPage}-1});

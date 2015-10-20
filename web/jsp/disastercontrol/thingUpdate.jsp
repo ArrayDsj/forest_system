@@ -111,7 +111,7 @@
                     <!--第一行-->
                     <div class = "row" style = "margin-top: 15px" >
                         <span class = "col-lg-4 col-sm-4 control-label " >灾区图片:</span >
-                        <img src = "../../image/2.jpg" style = "width: 200px" />
+                        <img src = "../upload/images/thing/${requestScope.thingBean.photoPath}" style = "width: 200px" />
                     </div >
                     <div class = "row" style = "margin-top: 10px" >
                         <span class = "col-lg-4 col-sm-4 control-label " >发现途径:</span >
@@ -172,7 +172,7 @@
                     function (data) {
                         var jsonObj = eval("(" + data + ")");
                         if (jsonObj.msg == 'success') {
-                            initData("#thingUpdateDiv", '../thingPanel.av', {'pageNow': 1, 'option': 'init'});
+                            initData("#thingUpdateDiv", '../thingPanel.av', {'pageNow': 1, 'option': 'init', 'query': 'f_name', 'str': ''});
                         }else if(jsonObj.msg == 'defeat'){
                             alert("系统繁忙,请稍后再试");
                         }else alert("系统内部错误");

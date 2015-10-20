@@ -116,26 +116,32 @@
 //    });
     //病害一览
     $("#diseasePanel").click(function () {
-        initData('#otherHtml', '../diseasePanel.av', {'pageNow': 1, 'option': 'init'});
+        initData('#otherHtml', '../diseasePanel.av',
+                {
+                    'pageNow': 1,
+                    'option': 'init',
+                    'query':'f_name',
+                    'str':''
+                });
     });
     //鼠害一览
     $("#mousePanel").click(function(){
-        initData('#otherHtml', '../mousePanel.av', {'pageNow': 1, 'option': 'init'});
+        initData('#otherHtml', '../mousePanel.av', {'pageNow': 1, 'option': 'init','query':''});
     });
 
     //区域一览初始化
     $("#areaPanel").click(function () {
-        initData('#otherHtml', '../areaPanel.av', {'pageNow': 1, 'option': 'init'});
+        initData('#otherHtml', '../areaPanel.av', {'pageNow': 1, 'option': 'init','query':'f_name','str':''});
     });
 
     //小班管理初始化
     $("#classPanel").click(function () {
-        initData('#otherHtml', '../classPanel.av', {'pageNow': 1, 'option': 'init'});
+        initData('#otherHtml', '../classPanel.av', {'pageNow': 1, 'option': 'init', 'query': 'f_name', 'str': ''});
     });
 
     //事件记录初始化
     $("#thingPanel").click(function(){
-        initData('#otherHtml', '../thingPanel.av', {'pageNow': 1, 'option': 'init'});
+        initData('#otherHtml', '../thingPanel.av', {'pageNow': 1, 'option': 'init', 'query': 'f_name', 'str': ''});
     });
 
     //会商灾情初始化

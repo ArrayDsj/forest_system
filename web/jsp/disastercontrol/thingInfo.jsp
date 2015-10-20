@@ -75,7 +75,7 @@
                 <!--第一行-->
                 <div class = "row" style = "margin-top: 15px" >
                     <span class = "col-lg-4  control-label " >灾区图片:</span >
-                    <img src = "../../upload/<%=thingBean.getPhotoPath()%>" style = "width: 200px" />
+                    <img src = "../upload/images/thing/${requestScope.thingBean.photoPath}" style = "width: 200px" />
                 </div >
 
                 <div class = "row" style = "margin-top: 10px" >
@@ -112,7 +112,7 @@
 <script >
     //点击返回,初始化表格数据
     function back(){
-        jump('#thingInfoDiv', '../thingPanel.av', '1');
+        initData('#thingInfoDiv', '../thingPanel.av', {'pageNow': 1, 'option': 'init', 'query': 'f_name', 'str': ''});
     }
 
     $(function(){

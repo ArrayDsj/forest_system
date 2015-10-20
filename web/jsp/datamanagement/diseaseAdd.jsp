@@ -179,7 +179,13 @@
                     'control': encodeURI(control)
                 },
                 success: function (data) {
-                    initData('#diseaseAddDiv', '../diseasePanel.av', {'pageNow': 1, 'option': 'init'});
+                    initData('#diseaseAddDiv', '../diseasePanel.av',
+                            {
+                                'pageNow': 1,
+                                'option': 'init',
+                                'query': 'f_name',
+                                'str': ''
+                            });
                 }
             });
             return false;

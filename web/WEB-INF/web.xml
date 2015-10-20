@@ -585,7 +585,15 @@
     </servlet-mapping>
     <!-- 显示鼠害信息-->
 
-
+    <!--鼠害条件查询-->
+    <servlet>
+        <servlet-name>mouseByQuery</servlet-name>
+        <servlet-class>com.code.servlet.mouseServlet.mouseByQuery</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mouseByQuery</servlet-name>
+        <url-pattern>/mouseByQuery.av</url-pattern>
+    </servlet-mapping>
 
 
 

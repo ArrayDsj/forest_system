@@ -103,9 +103,9 @@ function select(obj,id,stageid,status) {
     $(stageid).val(obj.lastElementChild.getAttribute("stageID"));
     $(status).val(obj.firstElementChild.getAttribute("status"));
     //设置样式
-    obj.style.backgroundColor = "red";
+    obj.style.backgroundColor = "rosybrown";
     $("tr").css("background-color","white");
-    obj.style.backgroundColor = "red";
+    obj.style.backgroundColor = "rosybrown";
 }
 
 /*********************************************************************/

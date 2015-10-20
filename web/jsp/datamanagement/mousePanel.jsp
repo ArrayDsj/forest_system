@@ -71,7 +71,7 @@
                     <button id = "previousPage" class = "btn btn-sm" type = "button" style = "line-height:0px" >
                         <span class = "glyphicon glyphicon-chevron-left" ></span >
                     </button >
-                    <input id = "pageNum" type = "text" style = "width: 40px;height: 20px" value="${requestScope.pageNow}"/>
+                    <input id = "pageNow" type = "text" style = "width: 40px;height: 20px" value="${requestScope.pageNow}"/>
                     <label >/${requestScope.pageNum}</label >
                     <button id = "go" class = "btn btn-sm" type = "button" style = "line-height:0px" >
                         <span class = "glyphicon glyphicon-step-forward" ></span >
@@ -102,7 +102,7 @@
                             </div >
                             <div class = "col-lg-4 col-sm-4" style = "
                            width: 200px ;float: left;margin-left: -100px" >
-                                <input type = "text" class = "form-control" id="query" >
+                                <input type = "text" class = "form-control" id="query" value="${requestScope.query}">
                             </div >
                             <div class = "col-lg-4 col-sm-4" style = "float: left" >
                                 <button id = "search" type = "button" class = "btn" >查找</button >
@@ -130,21 +130,28 @@
 
     $("#search").click(function(){
         var query = $("#query").val();
-        $("#mousePanelDiv").load("../AmouseMageServlet.av",{"query":query,'pageNow':1});
+        $("#mousePanelDiv").load("../mouseByQuery.av",{"query":query,'pageNow':1});
     });
 
-    //事件处理
     $("#previousPage").click(function () {
-
+        var query = $("#query").val();
+        if (parseInt(${requestScope.pageNow}) > 1) $("#mousePanelDiv").load("../mouseByQuery.av", {"query": query, 'pageNow': ${requestScope.pageNow} -1});
+        else alert("已是第一页！");
     });
     $("#nextPage").click(function () {
-
+        var query = $("#query").val();
+        if (${requestScope.pageNow} <
+        ${requestScope.pageNum}) $("#mousePanelDiv").load("../mouseByQuery.av", {
+            "query": query,
+            'pageNow': ${requestScope.pageNow} + 1
+        });
+        else alert("已是最后一页！");
     });
     $("#go").click(function () {
-
+        var num = $("#pageNow").val();
+        var query = $("#query").val();
+        $("#mousePanelDiv").load("../mouseByQuery.av", {"query": query,"pageNow": num});
     });
-
-    //查询模块事件
 
 
 </script >

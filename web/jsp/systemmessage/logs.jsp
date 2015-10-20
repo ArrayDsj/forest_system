@@ -61,7 +61,7 @@
                    
                    
                    <c:forEach items="${requestScope.logList}" var="logs">
-                    <tr class="rom">
+                    <tr class="rom" onclick = "select(this,'#selectID','#stageID','#status')" >
                         <td class = "col-lg-3 col-sm-3">${logs.content}</td>
                         <td class = "col-lg-3 col-sm-3">${logs.time}</td>
                     </tr>

@@ -88,7 +88,13 @@
 
     $(function(){
         $("#back").click(function(){
-            $("#diseaseInfoDiv").load("../diseasePanel.av", {"pageNow1": 1,"option":"init","pageNow":"1"});
+            $("#diseaseInfoDiv").load("../diseasePanel.av",
+                    {
+                        'pageNow': 1,
+                        'option': 'init',
+                        'query': 'f_name',
+                        'str': ''
+                    });
         })
     })
 

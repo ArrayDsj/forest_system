@@ -65,7 +65,7 @@
                     <!--第一行-->
                     <div class = "row" style = "margin-top: 5px">
                         <span class = "col-lg-4  control-label ">幼虫图片:</span>
-                        <img src = "../../image/yworm.jpg" />
+                        <img src = "../upload/images/thing/${requestScope.thingBean.photoPath}" style="width: 200px"/>
                     </div>
                     <!--第二行-->
                     <div class = "row" style = "margin-top: 5px">
@@ -97,14 +97,14 @@
             <!--表格-->
             <div class = "row-fluid table-responsive" style = "border: solid" >
             <table class = "table table-hover active table-striped table-bordered" >
-                    <tr>
+                    <tr style="background-color: lightseagreen">
                         <th class = "col-lg-4 col-sm-4">日期</th>
                         <th class = "col-lg-4 col-sm-4">会商人员</th>
                         <th class = "col-lg-4 col-sm-4">会商结果</th>
                     </tr>
                 </table>
                 <div id = "tableTD" class = "row-fluid" style = "overflow-y: auto;height: 88px;margin-top: -20px" >
-                    <table id="conferInfo" class = "table table-striped table-bordered table-hover table-condensed hover">
+                    <table id="conferInfo" class = "table table-striped  table-hover table-condensed hover">
                         <c:if test = "${requestScope.info == 'have'}" >
                             <c:forEach items = "${requestScope.allConfers}" var = "confer" >
                                 <tr onclick = "select(this,'#selectID','#stageID')" >
@@ -150,7 +150,6 @@
                         //向表格写入数据
                         var jsonObj = eval("(" + data + ")");
                         if(jsonObj.msg == 'success'){
-                            alert(jsonObj.msg);
                             //如果数据库添加成功
                             //2. 添加表格数据
                             var rowTemplate =
@@ -163,6 +162,8 @@
                             var tableHtml = $("#conferInfo tbody").html();
                             tableHtml = rowTemplate + tableHtml;
                             $("#conferInfo tbody").html(tableHtml);
+                            $("#staff").val("");
+                            $("#result").val("");
                         }else alert("系统繁忙,请稍后再试");
                     }
                 });

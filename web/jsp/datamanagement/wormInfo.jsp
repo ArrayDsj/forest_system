@@ -84,12 +84,12 @@
                     <!--第一行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <span class = "col-lg-4  control-label " >幼虫图片:</span >
-                        <img style="height: 150px;width: 150px" src = "../upload1/${requestScope.wormInfo.larvapicture}" />
+                        <img style="height: 150px;width: 150px" src = "../upload/images/worm/${requestScope.wormInfo.larvapicture}" />
                     </div >
                     <!--第二行-->
                     <div class = "row" style = "margin-top: 20px" >
                         <span class = "col-lg-4  control-label " >成虫图片:</span >
-                        <img style="height: 150px;width: 150px" src = "../upload1/${requestScope.wormInfo.adultpicture}" />
+                        <img style="height: 150px;width: 150px" src = "../upload/images/worm/${requestScope.wormInfo.adultpicture}" />
                     </div >
                 </div >
             </div >

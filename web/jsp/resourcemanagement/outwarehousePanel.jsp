@@ -57,7 +57,7 @@ td {
 						<table
 							class="table table-striped table-bordered table-hover table-condensed">
 							<c:forEach items="${requestScope.li}" var="al">
-								<tr>
+								<tr onclick = "select(this,'#selectID','#stageID','#status')" >
 									<td class="col-lg-3 col-sm-3">
 										${al.time}
 									</td>

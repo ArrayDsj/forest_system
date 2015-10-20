@@ -137,19 +137,20 @@
                                     </button >
                                         <ul id = "ul" class = "dropdown-menu" >
                                             <li ><a id = 'li1' name = "s" href = "#"
-                                                    onclick = "return querySelect(this,'selected')" >灾情状况</a ></li >
+                                                    onclick = "return querySelect(this,'selected','query','str')" >灾情状况</a ></li >
                                             <li ><a id = 'li2' name = "a" href = "#"
-                                                    onclick = "return querySelect(this,'selected')" >发生位置</a ></li >
+                                                    onclick = "return querySelect(this,'selected','query','str')" >发生位置</a ></li >
                                         </ul >
                                 </div >
-                                <!-- /btn-group -->
-                                <input id = "inputText" type = "text" class = "form-control" style = "width: 130px" value = "" >
+                                <input type = "hidden" id = "query" value = "${requestScope.query}" />
+                                <%--条件输入框--%>
+                                <input id = "str" type = "text" class = "form-control" style = "width: 130px"
+                                       value = "${requestScope.str}" >
                             </div >
                             <!-- /input-group -->
                         </div >
                         <div class = "col-lg-5 col-sm-5" style = "margin-left: 20px" >
-                            <button type = "button" class = "btn"
-                                    onclick = "submitQuery('#inputText','#thingPanelDiv','../thingPanel.av','1')" >查找</button >
+                            <button id="search" type = "button" class = "btn" >查找</button >
                         </div >
                     </div >
                 </fieldset >
@@ -189,6 +190,7 @@
         </div >
     </div >
 </div >
+</div>
 <script type = "text/javascript" >
 
     function addThing() {
@@ -262,26 +264,77 @@
     }
 
 
+
+
+
+
+    <%--//事件处理--%>
+    <%--//上一页事件--%>
+    <%--$("#previousPage").click(function () {--%>
+        <%--if (parseInt(${requestScope.pageNow}) > 1)--%>
+            <%--$("#thingPanelDiv").load("../thingPanel.av", {"pageNow": ${requestScope.pageNow} -1});--%>
+        <%--else alert("已是第一页！");--%>
+    <%--});--%>
+
+    <%--//下一页事件--%>
+    <%--$("#nextPage").click(function () {--%>
+        <%--if (${requestScope.pageNow} < ${requestScope.pageNum})--%>
+        <%--$("#thingPanelDiv").load("../thingPanel.av", {"pageNow": ${requestScope.pageNow} +1});--%>
+        <%--else alert("已是最后一页！");--%>
+    <%--});--%>
+
+    <%--//跳转到指定页点击事件--%>
+    <%--$("#go").click(function () {--%>
+        <%--var num = $("#pageNow").val();--%>
+        <%--$("#thingPanelDiv").load("../thingPanel.av", {"pageNow": num});--%>
+    <%--});--%>
+
+
+    //分页查询
+    /**************************************************************************************/
+    //每次刷新网页的时候从请求中取得条件值
+    var query = '${requestScope.query}';
+    var str = '${requestScope.str}';
+    $("#search").click(function () {
+        //点击查询后改变条件(点击下拉列表的时候改变条件)
+        query = $("#query").val();
+        str = $("#str").val();
+        $("#thingPanelDiv").load("../thingPanel.av", {
+            "pageNow": 1, 'query': query, 'str': str
+        });
+    });
     //事件处理
-    //上一页事件
+    $("#nextPage").click(function () {
+        if (${requestScope.pageNow} <
+        ${requestScope.pageNum})
+        $("#thingPanelDiv").load("../thingPanel.av", {
+            "pageNow": ${requestScope.pageNow} +1,
+            'query': query,
+            'str': str
+        });
+        else
+        alert("已是最后一页！");
+    });
     $("#previousPage").click(function () {
-        if (parseInt${requestScope.pageNow} > 1)
-            $("#thingPanelDiv").load("../thingPanel.av", {"pageNow": ${requestScope.pageNow} -1});
+        if (parseInt(${requestScope.pageNow}) > 1)
+            $("#thingPanelDiv").load("../thingPanel.av", {
+                "pageNow": ${requestScope.pageNow} -1, 'query': query, 'str': str
+            });
         else alert("已是第一页！");
     });
-
-    //下一页事件
-    $("#nextPage").click(function () {
-        if (${requestScope.pageNow} < ${requestScope.pageNum})
-            $("#thingPanelDiv").load("../thingPanel.av", {"pageNow": ${requestScope.pageNow} +1});
-        else alert("已是最后一页！");
-    });
-
-    //跳转到指定页点击事件
     $("#go").click(function () {
+        //跳转到指定页点击事件
         var num = $("#pageNow").val();
-        $("#thingPanelDiv").load("../thingPanel.av", {"pageNow": num});
+        if (num <= ${requestScope.pageNum}) {
+            $("#thingPanelDiv").load("../thingPanel.av", {
+                "query": query,
+                'str': str,
+                'pageNow': num
+            });
+        } else alert("超出范围了");
     });
+    /**************************************************************************************/
+
 
 
 
@@ -300,5 +353,5 @@
 
 
 </script >
- </body >
-</html >
+</body>
+</html>

@@ -131,9 +131,10 @@
                                     </ul >
                                 </div >
                                 <%--保存标签的name,查询的字段 query,每次点击之后,下拉列表中的值放在这里--%>
-                                <input type = "hidden" id="query" value="f_name"/>
+                                <input type = "hidden" id="query" value = "${requestScope.query}" />
                                 <%--查询条件 str--%>
-                                <input id = "str" type = "text" class = "form-control" style = "width: 130px" value="">
+                                <input id = "str" type = "text" class = "form-control" style = "width: 130px"
+                                       value = "${requestScope.str}" />
                             </div >
                             <!-- /input-group -->
                         </div >
@@ -178,57 +179,104 @@ $(function () {
         } else alert("请选择要查看的列");
     });
 
-    var query ;
-    var str ;
-    $("#search").click(function () {
-        //点击查询按钮之后
-        //1. 得到查询字段
-         query = $("#query").val();
-        //2. 得到查询条件
-         str = $("#str").val();
-        alert('query=' + query + "  str=" + str);
-        //3. 查询数据库
-        //传入当前的字段和条件
-        $("#classPanelDiv").load("../classPanel.av", {"option": "haveQuery", "pageNow": 1, "query": query, "str": str});
-    });
+    <%--var query ;--%>
+    <%--var str ;--%>
+    <%--$("#search").click(function () {--%>
+        <%--//点击查询按钮之后--%>
+        <%--//1. 得到查询字段--%>
+         <%--query = $("#query").val();--%>
+        <%--//2. 得到查询条件--%>
+         <%--str = $("#str").val();--%>
+        <%--alert('query=' + query + "  str=" + str);--%>
+        <%--//3. 查询数据库--%>
+        <%--//传入当前的字段和条件--%>
+        <%--$("#classPanelDiv").load("../classPanel.av", {"option": "haveQuery", "pageNow": 1, "query": query, "str": str});--%>
+    <%--});--%>
 
-    //上一页事件
-    $("#previousPage").click(function () {
-        if ('${sessionScope.option}' == 'noQuery') {
-            query = 'f_name';
-            str = "";
-        }else{
-            query = '${requestScope.query}';
-            str = '${requestScope.str}';
-        }
-//        alert('query=' + query + "  str=" + str);
-        if (parseInt(${requestScope.pageNow}) > 1)
-            $("#classPanelDiv").load("../classPanel.av", {"option": "haveQuery","pageNow": ${requestScope.pageNow} -1, "query": query, "str": str});
-        else alert("已是第一页！");
-    });
+    <%--//上一页事件--%>
+    <%--$("#previousPage").click(function () {--%>
+        <%--if ('${sessionScope.option}' == 'noQuery') {--%>
+            <%--query = 'f_name';--%>
+            <%--str = "";--%>
+        <%--}else{--%>
+            <%--query = '${requestScope.query}';--%>
+            <%--str = '${requestScope.str}';--%>
+        <%--}--%>
+<%--//        alert('query=' + query + "  str=" + str);--%>
+        <%--if (parseInt(${requestScope.pageNow}) > 1)--%>
+            <%--$("#classPanelDiv").load("../classPanel.av", {"option": "haveQuery","pageNow": ${requestScope.pageNow} -1, "query": query, "str": str});--%>
+        <%--else alert("已是第一页！");--%>
+    <%--});--%>
 
-    //下一页事件
-    $("#nextPage").click(function () {
-        if ('${sessionScope.option}' == 'noQuery') {
-            query = 'f_name';
-            str = "";
-        } else {
-            query = '${requestScope.query}';
-            str = '${requestScope.str}';
-        }
-//        alert('query=' + query + "  str=" + str);
-        if (${requestScope.pageNow} < ${requestScope.pageNum})
-        $("#classPanelDiv").load("../classPanel.av", {"option": "haveQuery","pageNow": ${requestScope.pageNow} +1, "query": query, "str": str});
-        else
-        alert("已是最后一页！");
-    });
+    <%--//下一页事件--%>
+    <%--$("#nextPage").click(function () {--%>
+        <%--if ('${sessionScope.option}' == 'noQuery') {--%>
+            <%--query = 'f_name';--%>
+            <%--str = "";--%>
+        <%--} else {--%>
+            <%--query = '${requestScope.query}';--%>
+            <%--str = '${requestScope.str}';--%>
+        <%--}--%>
+<%--//        alert('query=' + query + "  str=" + str);--%>
+        <%--if (${requestScope.pageNow} < ${requestScope.pageNum})--%>
+        <%--$("#classPanelDiv").load("../classPanel.av", {"option": "haveQuery","pageNow": ${requestScope.pageNow} +1, "query": query, "str": str});--%>
+        <%--else--%>
+        <%--alert("已是最后一页！");--%>
+    <%--});--%>
 
-    //跳转到指定页点击事件
-    $("#go").click(function () {
-        var num = $("#pageNow").val();
-        $("#classPanelDiv").load("../classPanel.av", {"pageNow": num});
-    });
+    <%--//跳转到指定页点击事件--%>
+    <%--$("#go").click(function () {--%>
+        <%--var num = $("#pageNow").val();--%>
+        <%--$("#classPanelDiv").load("../classPanel.av", {"pageNow": num});--%>
+    <%--});--%>
 })
+
+
+//分页查询
+/**************************************************************************************/
+//每次刷新网页的时候从请求中取得条件值
+var query = '${requestScope.query}';
+var str = '${requestScope.str}';
+$("#search").click(function () {
+    //点击查询后改变条件(点击下拉列表的时候改变条件)
+    query = $("#query").val();
+    str = $("#str").val();
+    $("#classPanelDiv").load("../classPanel.av", {
+        "pageNow": 1, 'query': query, 'str': str
+    });
+});
+//事件处理
+$("#nextPage").click(function () {
+    if (${requestScope.pageNow} <
+    ${requestScope.pageNum})
+    $("#classPanelDiv").load("../classPanel.av", {
+        "pageNow": ${requestScope.pageNow} +1,
+        'query': query,
+        'str': str
+    });
+    else
+    alert("已是最后一页！");
+});
+$("#previousPage").click(function () {
+    if (parseInt(${requestScope.pageNow}) > 1)
+        $("#classPanelDiv").load("../classPanel.av", {
+            "pageNow": ${requestScope.pageNow} -1, 'query': query, 'str': str
+        });
+    else alert("已是第一页！");
+});
+$("#go").click(function () {
+    //跳转到指定页点击事件
+    var num = $("#pageNow").val();
+    if (num <= ${requestScope.pageNum}) {
+        $("#classPanelDiv").load("../classPanel.av", {
+            "query": query,
+            'str': str,
+            'pageNow': num
+        });
+    } else alert("超出范围了");
+});
+/**************************************************************************************/
+
 
 </script >
 </body >

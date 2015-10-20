@@ -69,7 +69,7 @@
                     <button id = "previousPage" class = "btn btn-sm" type = "button" style = "line-height:0px" >
                         <span class = "glyphicon glyphicon-chevron-left" ></span >
                     </button >
-                    <input id = "pageNum" type = "text" style = "width: 40px;height: 20px" value="${requestScope.pageNow}"/>
+                    <input id = "pageNow" type = "text" style = "width: 40px;height: 20px" value="${requestScope.pageNow}"/>
                     <label >/${requestScope.pageNum}</label >
                     <button id = "go" class = "btn btn-sm" type = "button" style = "line-height:0px" >
                         <span class = "glyphicon glyphicon-step-forward" ></span >
@@ -102,18 +102,19 @@
             data-toggle = "dropdown" >病害名<span class = "caret" ></span ><!--这个span的作用是提供一个下拉图标-->
     </button >
     <ul id = "ul" class = "dropdown-menu" >
-        <li ><a href = "#" name="f_mainharm" onclick = "return querySelect(this,'selected','query','str')" >危害</a ></li >
-        <li ><a href = "#" name="f_symptoms" onclick = "return querySelect(this,'selected','query','str')">发病症状</a ></li >
+        <li ><a id="li1" href = "#" name="f_symptoms" onclick = "return querySelect(this,'selected','query','str')" >发病状态</a ></li >
     </ul >
 
                                 </div >
-    <input type = "hidden" id = "query" value = "" />
-    <input id = "str" type = "text" class = "form-control" style = "width: 130px" value = "" >
+
+    <input type = "hidden" id = "query" value = "${requestScope.query}" />
+                                <input type = "hidden" id=""/>
+    <input id = "str" type = "text" class = "form-control" style = "width: 130px" value = "${requestScope.str}" >
                             </div >
                             <!-- /input-group -->
                         </div >
                         <div class = "col-xs-6 col-sm-6" >
-                            <button id = "search" type = "submit" class = "btn" >查找</button >
+                            <button id = "search" type = "button" class = "btn" >查找</button >
                         </div >
                     </div >
                 </fieldset >
@@ -135,21 +136,48 @@
      } else alert("请选择要查看的列");
  }
 
-
-
- //事件处理
- $("#previousPage").click(function () {
-     //上一页点击事件
-
+ //分页查询
+/**************************************************************************************/
+ //每次刷新网页的时候从请求中取得条件值
+ var query = '${requestScope.query}';
+ var str = '${requestScope.str}';
+ $("#search").click(function () {
+    //点击查询后改变条件(点击下拉列表的时候改变条件)
+     query = $("#query").val();
+     str = $("#str").val();
+     $("#diseasePanelDiv").load("../diseasePanel.av", {
+         "pageNow": 1, 'query': query, 'str': str
+     });
  });
+ //事件处理
  $("#nextPage").click(function () {
-
+     if (${requestScope.pageNow} < ${requestScope.pageNum})
+        $("#diseasePanelDiv").load("../diseasePanel.av", {
+            "pageNow": ${requestScope.pageNow} + 1,
+            'query': query,
+            'str':str
+        });
+     else alert("已是最后一页！");
+ });
+ $("#previousPage").click(function () {
+     if (parseInt(${requestScope.pageNow}) > 1)
+         $("#diseasePanelDiv").load("../diseasePanel.av", {
+             "pageNow": ${requestScope.pageNow} - 1, 'query': query, 'str': str
+         });
+     else alert("已是第一页！");
  });
  $("#go").click(function () {
      //跳转到指定页点击事件
-     var num = $("#pageNum").val();
+     var num = $("#pageNow").val();
+     if(num <= ${requestScope.pageNum}){
+         $("#diseasePanelDiv").load("../diseasePanel.av", {
+             "query": query,
+             'str': str,
+             'pageNow': num
+         });
+     }else alert("超出范围了");
  });
-
+ /**************************************************************************************/
 
 </script >
 </body >

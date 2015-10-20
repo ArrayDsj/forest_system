@@ -384,7 +384,7 @@
 
                 },
                 success: function (data) {
-                    jump('#otherHtml', '../thingPanel.av', '1');//如果成功就请求servlet重新加载数据,然后跳转到thingPanel.jsp
+                    initData('#thingAddDiv', '../thingPanel.av', {'pageNow': 1, 'option': 'init', 'query': 'f_name', 'str': ''});
                 },
                 complete: function (xhr) {
 

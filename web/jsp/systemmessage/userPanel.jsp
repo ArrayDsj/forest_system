@@ -236,19 +236,11 @@
 		
 		//信息条点击事件
 		function findID(obj1,obj2){
-			
 			$("tr").css("color","brack");
 			obj1.style.color="red";
 			$("#hidden").val(obj2);
-			
-			
-		
 		}
-		
-		
-	
-	
-		
+
 	</script>
 
 

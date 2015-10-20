@@ -124,7 +124,7 @@
                     function (data) {
                         var jsonObj = eval("(" + data + ")");
                         if (jsonObj.msg == 'success') {
-                            initData("#classUpdateDiv", '../classPanel.av', {'pageNow': 1, 'option': 'init'});
+                            initData("#classUpdateDiv", '../classPanel.av', {'pageNow': 1, 'option': 'init', 'query': 'f_name', 'str': ''});
                         } else if (jsonObj.msg == 'defeat') {
                             alert("系统繁忙,请稍后再试");
                         } else alert("系统内部错误");

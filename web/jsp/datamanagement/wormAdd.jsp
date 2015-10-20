@@ -153,13 +153,6 @@
     </div >
 
     <script >
-        //数据验证
-        function add() {
-            alert("验证数据正确性");
-            
-            return true;
-        }
-
 
         function browseSon() {
             //调用文件选择组件的默认点击事件
@@ -177,7 +170,6 @@
                 $("#inputBigImg").val($("#bigImg").val());
             });
         }
-
 
     </script >
 </body >

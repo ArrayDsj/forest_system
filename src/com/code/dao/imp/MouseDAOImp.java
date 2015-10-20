@@ -69,7 +69,7 @@ public class MouseDAOImp implements MouseDAO {
     @Override
     public int getCountsByCondtion(String query, String str) {
         Connection connection = DBUtil.getConnection();
-        String     sql        = "select count(*) from t_amouse where " + query + " like '%" + str + "%'";
+        String     sql        = "select count(*) from t_amouse where f_name"  + " like '%" + str + "%'";
         int        result     = -1;
         Statement  st         = null;
         ResultSet  rs         = null;
@@ -92,7 +92,7 @@ public class MouseDAOImp implements MouseDAO {
     public ArrayList<MouseBean> getAllMousesByCondtion(String query, String str, int pageNow, int pageSize) {
         Connection           connection = DBUtil.getConnection();
         ArrayList<MouseBean> all        = new ArrayList<MouseBean>();
-        String sql = "select * from t_amouse where " + query + " like '%" + str + "%' order by pk_id desc limit " + (pageNow - 1) * pageSize + "," + pageSize;
+        String sql = "select * from t_amouse where f_name" + " like '%" + str + "%' order by pk_id desc limit " + (pageNow - 1) * pageSize + "," + pageSize;
         Statement            st         = null;
         ResultSet            rs         = null;
         MouseBean            mouseBean  = null;

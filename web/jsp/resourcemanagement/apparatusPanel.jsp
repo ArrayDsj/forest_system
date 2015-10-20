@@ -49,7 +49,7 @@
             <div style = "overflow-y: auto;height: 170px;" class = "row-fluid" id = "tableTD">
                 <table class = "table table-striped table-bordered table-hover table-condensed">
 					<c:forEach items="${requestScope.al}" var="al">                 
-                    <tr>
+                   <tr onclick = "select(this,'#selectID','#stageID','#status')" >
                         <td class = "col-lg-3 col-sm-3">${al.name}</td>
                         <td class = "col-lg-3 col-sm-3">${al.type}</td>
                         <td class = "col-lg-6 col-sm-6">${al.mainUse}</td>
