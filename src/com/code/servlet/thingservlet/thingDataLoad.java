@@ -53,54 +53,6 @@ public class thingDataLoad extends HttpServlet {
         req.setAttribute("query", query);
         req.setAttribute("str", str);
 
-
-
-
-
-
-
-        //// 初始页
-        //int pageNow = 1;
-        ////记录总条数
-        //int counts = 0;
-        ////总页数
-        //int pageNum = 0;
-        ////分页大小
-        //int pageSize = 2;
-        ////得到当前页数
-        //pageNow = Integer.parseInt(req.getParameter("pageNow"));
-        //// 数据引用
-        //
-        //// 得到查询条件
-        //String query = req.getParameter("query");
-        //
-        ////1. 判断有无条件(无条件,初始化;有条件,按条件分页查询)
-        //if (query == null) {
-        //    //按无条件查询数据
-        //    counts = thingService.getCounts();
-        //    allThings = thingService.getInitData(pageNow, pageSize);
-        //} else {
-        //    //按条件查询
-        //    String str = req.getParameter("str");
-        //    str = new String(str.getBytes(), "UTF-8");
-        //    counts = thingService.getCountsByCondtion(query, str);
-        //    allThings = thingService.getLimitData(query, str, pageNow, pageSize);
-        //}
-        //
-        //if (allThings != null) {
-        //    //计算总页数
-        //    pageNum = (int) Math.ceil(counts / (pageSize * 1.0));
-        //    req.setAttribute("pageNum", pageNum);
-        //    req.setAttribute("pageNow", pageNow);
-        //    req.setAttribute("allThings", allThings);
-        //} else req.setAttribute("info", "无数据");
-        ////System.out.println(allThings.get(0));
-        ////2. 跳转到areaPanel.jsp
-
-
-
-
-
         req.getRequestDispatcher("jsp/disastercontrol/thingPanel.jsp").forward(req, resp);
     }
 }
